@@ -1,29 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d_mathis.h                                     :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/21 14:28:47 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/21 14:32:35 by dmathis          ###   ########.fr       */
+/*   Created: 2024/05/15 17:35:36 by dmathis           #+#    #+#             */
+/*   Updated: 2024/06/13 23:21:34 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
-#include <stdbool.h>
+#include "libft.h"
 
-typedef struct {
-    double x, y;
-} Vector2D;
+size_t	ft_strlcpy(char *dest, const char *src, size_t n)
+{
+	size_t		i;
+	size_t		len;
 
-typedef struct {
-    int width, height;
-    char **map;
-} Map;
-
-typedef struct {
-    Vector2D position;
-    Vector2D direction;
-    double fov;
-} Camera;
+	len = 0;
+	if (*src == '\0')
+	{
+		*dest = '\0';
+		return (0);
+	}
+	while (src[len])
+		len++;
+	if (len < 1)
+		return (len);
+	i = 0;
+	if (n == 0)
+		return (len);
+	while ((i < (n - 1)) && src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (len);
+}
