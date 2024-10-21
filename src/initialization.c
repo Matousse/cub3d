@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:56:30 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/21 16:14:09 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/21 23:47:30 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	init2(t_bag *bag)
 	bag->camera.position.x = 10;
 	bag->camera.position.y = 10;
 	bag->camera.direction.x = 0;
-	bag->camera.direction.y = 0;
+	bag->camera.direction.y = 1;
 	bag->camera.plane.x = 0;
-	bag->camera.plane.y = 0.66;
+	bag->camera.plane.y = 1;
 	bag->camera.fov = 60 * 3.14159265358979323846 / 180;
 	bag->mlx = mlx_init();
 	bag->win = mlx_new_window(bag->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
@@ -36,6 +36,8 @@ void	init_game(t_bag *bag)
 	bag->map.width = 50;
 	bag->map.height = 50;
 	bag->map.map = malloc(sizeof(char *) * bag->map.height);
+	load_texture(bag, 0, "path/to/wall1.xpm");
+	load_texture(bag, 1, "path/to/wall2.xpm");
 	i = 0;
 	while (i < bag->map.height)
 	{

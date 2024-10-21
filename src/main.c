@@ -6,23 +6,11 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:31:40 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/21 16:14:06 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/21 23:36:36 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	render_frame(t_bag *bag)
-{
-	int	x;
-
-	(void)bag;
-	x = 0;
-	while (x < SCREEN_WIDTH)
-	{
-		x++;
-	}
-}
 
 int	key_press(int keycode, t_bag *bag)
 {
@@ -51,8 +39,7 @@ int	key_press(int keycode, t_bag *bag)
 
 int	game_loop(t_bag *bag)
 {
-	render_frame(bag);
-	mlx_put_image_to_window(bag->mlx, bag->win, bag->img, 0, 0);
+	cast_rays(bag);
 	return (0);
 }
 
