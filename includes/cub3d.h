@@ -6,17 +6,18 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/21 15:31:36 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/21 16:29:49 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "cub3d_mathis.h"
-
 # include <math.h>
 # include <stdbool.h>
+# include <math.h>
+# include <stdio.h>
+# include <stdlib.h>
 
 # include "/home/dmathis/42cursus/42_utils/mlx/mlx.h"
 
@@ -60,5 +61,22 @@ typedef struct s_bag
 	t_map		map;
 	t_camera	camera;
 }				t_bag;
+
+//	Functions
+
+// Initialization
+
+void	init_game(t_bag *bag);
+void	init2(t_bag *bag);
+
+// Main
+
+void	render_frame(t_bag *bag);
+int		key_press(int keycode, t_bag *bag);
+int		game_loop(t_bag *bag);
+int		main(void);
+
+// End
+int		close_window(t_bag *bag);
 
 #endif

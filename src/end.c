@@ -1,16 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d_mathis.h                                     :+:      :+:    :+:   */
+/*   end.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/21 14:28:47 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/21 15:07:42 by dmathis          ###   ########.fr       */
+/*   Created: 2024/10/21 15:59:16 by dmathis           #+#    #+#             */
+/*   Updated: 2024/10/21 16:14:00 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_MATHIS_H
-# define CUB3D_MATHIS_H
+#include "cub3d.h"
 
-#endif
+int	close_window(t_bag *bag)
+{
+	int	i;
+
+	i = 0;
+	while (i < bag->map.height)
+	{
+		free(bag->map.map[i]);
+		i++;
+	}
+	free(bag->map.map);
+	mlx_destroy_image(bag->mlx, bag->img);
+	mlx_destroy_window(bag->mlx, bag->win);
+	mlx_destroy_display(bag->mlx);
+	free(bag->mlx);
+	exit(0);
+	return (0);
+}
