@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 20:42:46 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/10/30 21:02:47 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,8 @@ typedef struct s_bag
 {
 	void		*mlx;
 	void		*win;
-	void		*img;
-	char		*addr;
+	void		*db_buff_img;
+	char		*buff_addr;
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;

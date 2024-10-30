@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:54:19 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 14:12:56 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 21:01:46 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	ft_cleanup_textures(t_bag *game)
 void	ft_cleanup(t_bag *game)
 {
 	ft_cleanup_textures(game);
-	if (game->img)
-		mlx_destroy_image(game->mlx, game->img);
+	if (game->db_buff_img)
+		mlx_destroy_image(game->mlx, game->db_buff_img);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)

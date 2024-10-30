@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:56:30 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 20:58:57 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/10/30 21:02:39 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	ft_struct_init(t_bag *game)
 	// MLX
 	game->mlx = NULL;
 	game->win = NULL;
-	game->img = NULL;
-	game->addr = NULL;
+	game->db_buff_img = NULL;
+	game->buff_addr = NULL;
 	// Map
 	game->map.width = 0;
 	game->map.height = 0;
@@ -54,12 +54,12 @@ int	ft_init_mlx(t_bag *game)
 	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
 	if (!game->win)
 		return (0);
-	game->img = mlx_new_image(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	if (!game->img)
+	game->db_buff_img = mlx_new_image(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!game->db_buff_img)
 		return (0);//Leak sur game->win si celui-ci échoue
-	game->addr = mlx_get_data_addr(game->img, &game->bits_per_pixel,
+	game->buff_addraddr = mlx_get_data_addr(game->db_buff_img, &game->bits_per_pixel,
 			&game->line_length, &game->endian);
-	if (!game->addr)
+	if (!game->buff_addraddr)
 		return (0);//Même chose mais pour les 2 du dessus.
 	return (1);
 }

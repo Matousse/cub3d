@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:20 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 14:30:38 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 21:02:41 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_game_loop(t_bag *game)
 {
 	ft_clear_image(game);
 	ft_raycasting(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
+	mlx_put_image_to_window(game->mlx, game->win, game->db_buff_img, 0, 0);
 	return (0);
 }
 
@@ -44,7 +44,7 @@ void	ft_put_pixel(t_bag *game, int x, int y, int color)
 
 	if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
 	{
-		dst = game->addr + (y * game->line_length + x * (game->bits_per_pixel
+		dst = game->buff_addraddr + (y * game->line_length + x * (game->bits_per_pixel
 					/ 8));
 		*(unsigned int *)dst = color;
 	}
