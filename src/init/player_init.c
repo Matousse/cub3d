@@ -6,75 +6,78 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:34:20 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/29 22:14:50 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 03:50:02 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	ft_find_player_pos(t_bag *game)
+int	ft_init_player(t_bag *game)
 {
-	int	i;
-	int	j;
+	printf("Debug: ft_init_player start\n");
 
-	i = 0;
+	// Vérifier si la map est valide
+	if (!game->map.fullmap)
+	{
+		printf("Error: map is NULL\n");
+		return (0);
+	}
+
+	printf("Debug: map dimensions - width: %d, height: %d\n", game->map.width,
+		game->map.height);
+
+	// Afficher le contenu de la map
+	printf("Debug: Current map content:\n");
+	int i = 0;
 	while (i < game->map.height)
 	{
-		j = 0;
-		while (j < game->map.width)
-		{
-			if (game->map.fullmap[i][j] == 'N' || game->map.fullmap[i][j] == 'S'
-				|| game->map.fullmap[i][j] == 'E'
-				|| game->map.fullmap[i][j] == 'W')
-			{
-				game->map.player_x = j;
-				game->map.player_y = i;
-				game->map.player_dir = game->map.fullmap[i][j];
-				return ;
-			}
-			j++;
-		}
+		printf("%s\n", game->map.fullmap[i]);
 		i++;
 	}
-}
 
-void	ft_init_player_dir(t_bag *game)
-{
-	// Set initial position (center of the tile)
-	game->camera.position.x = game->map.player_x + 0.5;
-	game->camera.position.y = game->map.player_y + 0.5;
-	// Set direction and camera plane based on initial direction
-	if (game->map.player_dir == 'N')
-	{
-		game->camera.direction = (t_vector){0, -1};
-		game->camera.plane = (t_vector){0.66, 0};
-	}
-	else if (game->map.player_dir == 'S')
-	{
-		game->camera.direction = (t_vector){0, 1};
-		game->camera.plane = (t_vector){-0.66, 0};
-	}
-	else if (game->map.player_dir == 'E')
-	{
-		game->camera.direction = (t_vector){1, 0};
-		game->camera.plane = (t_vector){0, 0.66};
-	}
-	else if (game->map.player_dir == 'W')
-	{
-		game->camera.direction = (t_vector){-1, 0};
-		game->camera.plane = (t_vector){0, -0.66};
-	}
-}
+	// Initialiser les positions à des valeurs invalides
+	game->map.player_x = -1;
+	game->map.player_y = -1;
+	game->map.player_dir = '\0';
 
-void	ft_init_player(t_bag *game)
-{
-	ft_find_player_pos(game);
-	if (game->map.player_x < 0 || game->map.player_y < 0
-		|| !game->map.player_dir)
+	printf("Debug: Finding player position...\n");
+	if (!ft_find_player_pos(game))
 	{
-		ft_error_map("Invalid player position or direction", game);
-		return ;
+		printf("Error: Could not find player position in map\n");
+		return (0);
 	}
-	ft_init_player_dir(game);
-	game->camera.fov = 60 * M_PI / 180;
-}
+
+	printf("Debug: Player found at (%d, %d) facing %c\n", game->map.player_x,
+		game->map.player_y, game->map.player_dir);
+
+	printf("Debug: Initializing camera...\n");
+
+	int ft_find_player_pos(t_bag * game)
+	{
+		int i;
+		int j;
+
+		i = 0;
+		while (i < game->map.height)
+		{
+			j = 0;
+			while (j < game->map.width)
+			{
+				if (ft_is_player(game->map.fullmap[i][j]))
+				{
+					game->map.player_x = j;
+					game->map.player_y = i;
+					game->map.player_dir = game->map.fullmap[i][j];
+					return (1);
+				}
+				j++;
+			}
+			i++;
+		}
+		return (0);
+	}
+
+	int ft_is_player(char c)
+	{
+		return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
+	}

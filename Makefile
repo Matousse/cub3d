@@ -44,10 +44,14 @@ RAYCAST_SRC	= src/raycasting/raycasting.c \
 INIT_SRC	= src/init/player_init.c \
 			  src/init/initialization.c \
 
+HOOKS_SRC	= src/hooks/hooks.c \
+			  src/hooks/movements.c
+
+
 MAIN_SRC	= $(SRC_DIR)/main.c
 
 # Combine all sources
-SRCS		= $(MAIN_SRC) $(PARSING_SRC) $(RAYCAST_SRC) $(INIT_SRC)
+SRCS		= $(MAIN_SRC) $(PARSING_SRC) $(RAYCAST_SRC) $(INIT_SRC) $(HOOKS_SRC)
 
 # Object files
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

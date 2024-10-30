@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/29 22:09:36 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 03:46:55 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,22 @@ Mettre game.map.is_map_valid à 1 si la map est validée, et à 0 sinon
 /*                                  DEFINES                                     */
 /* ************************************************************************** */
 
-# define SCREEN_WIDTH 800
-# define SCREEN_HEIGHT 600
+# define WINDOW_WIDTH 1280
+# define WINDOW_HEIGHT 720
 # define MOVE_SPEED 0.05
 # define ROTATE_SPEED 0.03
 # define NUM_TEXTURES 2
+
+# define FOV 60
+# define PI 3.14159265359
 
 # define KEY_W 119 // 'w'
 # define KEY_S 115 // 's'
 # define KEY_A 97  // 'a'
 # define KEY_D 100 // 'd'
 # define KEY_ESC 65307
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
 
 /* Colors for output */
 # define RED "\x1b[31m"
@@ -79,8 +84,27 @@ typedef struct s_camera
 	t_vector	position;
 	t_vector	direction;
 	t_vector	plane;
-	double		fov;
+	double		move_speed;
+	double		rot_speed;
 }				t_camera;
+
+typedef struct s_map
+{
+	int			width;
+	int			height;
+	char		**fullmap;
+	char		*no_texture;
+	char		*so_texture;
+	char		*we_texture;
+	char		*ea_texture;
+	int			floor_color;
+	int			ceiling_color;
+	int			player_x;
+	int			player_y;
+	char		player_dir;
+	int			is_map_valid;
+	int			all_info;
+}				t_map;
 
 typedef struct s_texture
 {
@@ -93,53 +117,39 @@ typedef struct s_texture
 	int			endian;
 }				t_texture;
 
-typedef struct s_ray_info
+typedef struct s_bag
+{
+	void		*mlx;
+	void		*win;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+	t_texture	no_texture;
+	t_texture	so_texture;
+	t_texture	we_texture;
+	t_texture	ea_texture;
+	t_map		map;
+	t_camera	camera;
+}				t_bag;
+
+typedef struct s_ray
 {
 	t_vector	dir;
 	t_vector	side_dist;
 	t_vector	delta_dist;
 	double		perp_wall_dist;
+	int			map_x;
+	int			map_y;
+	int			step_x;
+	int			step_y;
+	int			hit;
+	int			side;
 	int			line_height;
 	int			draw_start;
 	int			draw_end;
-	int			side;
-}				t_ray_info;
-
-typedef struct s_map
-{
-	int			width;
-	int			height;
-	char **fullmap;    /* Complete map including walls and spaces */
-	char *no_texture;  /* Path to north texture */
-	char *so_texture;  /* Path to south texture */
-	char *we_texture;  /* Path to west texture */
-	char *ea_texture;  /* Path to east texture */
-	int floor_color;   /* RGB color for floor */
-	int ceiling_color; /* RGB color for ceiling */
-	int player_x;      /* Player starting X position */
-	int player_y;      /* Player starting Y position */
-	char player_dir;   /* Initial player direction (N/S/E/W) */
-	int is_map_valid;  /* Map validation flag */
-	int all_info;      /* Flag for all required info present */
-}				t_map;
-
-typedef struct s_bag
-{
-	void *mlx;             /* MLX instance pointer */
-	void *win;             /* Window pointer */
-	void *img;             /* Current frame image pointer */
-	char *addr;            /* Current frame data address */
-	int bits_per_pixel;    /* Bits per pixel for current frame */
-	int line_length;       /* Line length for current frame */
-	int endian;            /* Endian for current frame */
-	t_texture no_texture;  /* North wall texture */
-	t_texture so_texture;  /* South wall texture */
-	t_texture we_texture;  /* West wall texture */
-	t_texture ea_texture;  /* East wall texture */
-	t_texture textures[6]; /* Array of additional textures */
-	t_map map;             /* Game map data */
-	t_camera camera;       /* Player camera data */
-}				t_bag;
+}				t_ray;
 
 /* ************************************************************************** */
 /*                                PROTOTYPES                                    */
@@ -161,53 +171,57 @@ void			ft_player_check(t_bag *game, int i, int j);
 void			ft_free_array(char **array);
 
 /* Initialization Functions */
-void			ft_mlx_init(t_bag *game);
-void			ft_init_texture(t_bag *game);
-t_texture		ft_load_texture(t_bag *game, char *file_path);
-void			ft_game_init(t_bag *game);
-void			init_game(t_bag *bag);
-void			init2(t_bag *bag);
-void			ft_init_player(t_bag *game);
-int				ft_init_mlx(t_bag *game);
-void			ft_struct_init(t_bag *game);
 
-/* Load textures*/
-int				ft_load_all_textures(t_bag *game);
+void			ft_struct_init(t_bag *game);
+int				ft_init_mlx(t_bag *game);
+void			ft_init_camera(t_bag *game);
+int				ft_init_player(t_bag *game);
+int				ft_find_player_pos(t_bag *game);
+int				ft_is_player(char c);
 
 /* Game Loop and Events */
-int				game_loop(t_bag *bag);
-int				key_press(int keycode, t_bag *bag);
-int				close_window(t_bag *bag);
+
+int				ft_game_loop(t_bag *game);
 
 /* Raycasting Functions */
-void			my_mlx_pixel_put(t_bag *bag, int x, int y, int color);
-void			calculate_ray_dir(t_bag *bag, int x, t_vector *ray_dir);
-void			init_dda(t_bag *bag, t_vector *ray_dir, t_vector *side_dist,
-					t_vector *delta_dist);
-int				perform_dda(t_bag *bag, t_vector *ray_dir, t_vector *side_dist,
-					t_vector *delta_dist);
-double			calculate_perp_wall_dist(t_bag *bag, t_vector *ray_dir,
-					int side, int map_x, int map_y);
-void			draw_vertical_line(t_bag *bag, int x, int draw_start,
-					int draw_end, int color);
-void			cast_single_ray(t_bag *bag, int x);
-void			cast_rays(t_bag *bag);
-void			draw_textured_line(t_bag *bag, int x, t_ray_info *ray);
+
+void			ft_clear_image(t_bag *game);
+void			ft_put_pixel(t_bag *game, int x, int y, int color);
+void			ft_init_camera(t_bag *game);
+void			ft_raycasting(t_bag *game);
+void			ft_init_ray(t_bag *game, t_ray *ray, int x);
+void			ft_calculate_step(t_bag *game, t_ray *ray);
+void			ft_perform_dda(t_bag *game, t_ray *ray);
+void			ft_calculate_wall(t_bag *game, t_ray *ray);
+void			ft_draw_wall(t_bag *game, t_ray *ray, int x);
 
 /* Texture Management */
-t_texture		ft_load_texture(t_bag *game, char *path);
-void			free_textures(t_bag *bag);
+void			ft_draw_wall(t_bag *game, t_ray *ray, int x);
+int				ft_get_texture_color(t_texture *texture, int tex_x, int tex_y);
+t_texture		*ft_select_texture(t_bag *game, t_ray *ray);
+void			ft_draw_texture(t_bag *game, t_ray *ray, int x, int y);
+int				ft_load_texture(t_bag *game, t_texture *texture, char *path);
+int				ft_load_textures(t_bag *game);
+
+/* Movements*/
+
+void			ft_move_forward(t_bag *game);
+void			ft_move_backward(t_bag *game);
+void			ft_move_left(t_bag *game);
+void			ft_move_right(t_bag *game);
+void			ft_rotate_left(t_bag *game);
+void			ft_rotate_right(t_bag *game);
+
+/* Hooks */
+
+void			ft_setup_hooks(t_bag *game);
+int				ft_close_window(t_bag *game);
+int				ft_key_press(int keycode, t_bag *game);
 
 /* End */
 
+void			ft_cleanup_textures(t_bag *game);
 void			ft_cleanup(t_bag *game);
-int				ft_init_mlx(t_bag *game);
-void			ft_cleanup(t_bag *game);
-t_texture		ft_load_texture(t_bag *game, char *path);
-void			draw_textured_line(t_bag *bag, int x, t_ray_info *ray);
-unsigned int	get_texture_color(t_texture *texture, int tex_x, int tex_y);
+int				ft_error_handling(t_bag *game, char *message);
 int				close_window(t_bag *bag);
-
-void			ft_get_player_pos(t_bag *game);
-
 #endif
