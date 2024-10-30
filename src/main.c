@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:31:40 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/29 16:56:54 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 01:04:41 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,12 @@ int	main(int argc, char **argv)
 	ft_struct_init(&game);
 	printf("Starting parsing...\n");
 	ft_parsing(argc, argv, &game);
-	// Si la map n'est pas valide, on arrête tout de suite
 	if (!game.map.is_map_valid)
 	{
 		ft_free_map(&game);
-		return (1);
+		return (-1);
 	}
-	// À partir d'ici, on sait que la map est valide
+	ft_init_player(&game);
 	if (game.map.player_x == -1 || game.map.player_y == -1)
 	{
 		printf("Error: Player position not initialized\n");
@@ -131,8 +130,6 @@ int	main(int argc, char **argv)
 		ft_cleanup(&game);
 		return (1);
 	}
-	printf("Setting up player...\n");
-	ft_init_player(&game);
 	printf("Setting up game hooks...\n");
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_hook(game.win, KeyPress, KeyPressMask, key_press, &game);

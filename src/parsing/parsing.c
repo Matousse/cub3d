@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:12:16 by dloisel           #+#    #+#             */
-/*   Updated: 2024/10/29 16:07:59 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/29 22:03:18 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_parsing(int argc, char **argv, t_bag *game)
 {
 	ft_struct_map_init(game);
 	ft_arg_verif(argc, argv, game);
+	write(1, "\nOUT0\n", 1);
 	ft_map_init(game, argv[1], 0);
 	ft_map_check(game);
 }

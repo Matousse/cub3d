@@ -37,15 +37,17 @@ PARSING_SRC	= src/parsing/arg_verif.c \
 			  src/parsing/map_check2.c
 
 RAYCAST_SRC	= src/raycasting/raycasting.c \
-			  src/raycasting/initialization.c \
 			  src/raycasting/cleanup.c \
 			  src/raycasting/end.c \
 			  src/raycasting/load_textures.c
 
+INIT_SRC	= src/init/player_init.c \
+			  src/init/initialization.c \
+
 MAIN_SRC	= $(SRC_DIR)/main.c
 
 # Combine all sources
-SRCS		= $(MAIN_SRC) $(PARSING_SRC) $(RAYCAST_SRC)
+SRCS		= $(MAIN_SRC) $(PARSING_SRC) $(RAYCAST_SRC) $(INIT_SRC)
 
 # Object files
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

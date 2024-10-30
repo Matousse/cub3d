@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:57:44 by dloisel           #+#    #+#             */
-/*   Updated: 2024/10/29 16:53:06 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/29 22:00:52 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	ft_wall_check3(t_bag *game)
 		j = 1;
 		while (game->map.fullmap[i][j + 1] != '\0')
 		{
-			if (game->map.fullmap[i][j] == '0'
-				&& !ft_zero_map_check(game->map.fullmap, i, j))
-				return ((void)ft_error_map("Missing wall within the map.",
-						game));
+			if (game->map.fullmap[i][j] == '0' \
+			&& !ft_zero_map_check(game->map.fullmap, i, j))
+				return ((void)ft_error_map("Missing wall within the map.", \
+				game));
 			j++;
 		}
 		i++;
@@ -52,13 +52,11 @@ void	ft_wall_check2(t_bag *game)
 			j++;
 		if (game->map.fullmap[i][j] != '1' && game->map.fullmap[i][j] != ' ')
 			return ((void)ft_error_map("Missing wall on the \
-left side of the map.",
-										game));
-		if (game->map.fullmap[i][len - 1] != '1' && game->map.fullmap[i][len
-			- 1] != ' ')
+left side of the map.", game));
+		if (game->map.fullmap[i][len - 1] != '1' \
+		&& game->map.fullmap[i][len - 1] != ' ')
 			return ((void)ft_error_map("Missing wall on the \
-right side of the map.",
-										game));
+right side of the map.", game));
 		i++;
 	}
 }
@@ -76,8 +74,7 @@ void	ft_wall_check1(t_bag *game)
 	{
 		if (game->map.fullmap[0][i] != '1' && game->map.fullmap[0][i] != ' ')
 			return ((void)ft_error_map("Missing wall in the \
-first row of the map.",
-										game));
+first row of the map.", game));
 		i++;
 	}
 	i = 0;
@@ -88,8 +85,7 @@ first row of the map.",
 	{
 		if (game->map.fullmap[i][j] != '1' && game->map.fullmap[i][j] != ' ')
 			return ((void)ft_error_map("Missing wall in the last \
-row of the map.",
-										game));
+row of the map.", game));
 		j++;
 	}
 }
@@ -107,8 +103,8 @@ void	ft_emptyline_check(t_bag *game)
 		is_empty = 1;
 		while (game->map.fullmap[i][j])
 		{
-			if (game->map.fullmap[i][j] != '\n'
-				&& game->map.fullmap[i][j] != ' ')
+			if (game->map.fullmap[i][j] != '\n' && \
+			game->map.fullmap[i][j] != ' ')
 			{
 				is_empty = 0;
 				break ;
@@ -130,6 +126,4 @@ void	ft_map_check(t_bag *game)
 	ft_wall_check2(game);
 	ft_wall_check3(game);
 	ft_player_check(game, 0, 0);
-	if (game->map.is_map_valid)
-		ft_get_player_pos(game);
 }

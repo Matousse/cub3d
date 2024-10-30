@@ -6,12 +6,20 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/29 16:52:27 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/29 22:09:36 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
+
+/* A faire :
+
+Parsing
+
+Mettre game.map.is_map_valid à 1 si la map est validée, et à 0 sinon
+
+*/
 
 /* ************************************************************************** */
 /*                                  INCLUDES                                    */
@@ -195,7 +203,6 @@ void			free_textures(t_bag *bag);
 void			ft_cleanup(t_bag *game);
 int				ft_init_mlx(t_bag *game);
 void			ft_cleanup(t_bag *game);
-void			ft_init_player(t_bag *game);
 t_texture		ft_load_texture(t_bag *game, char *path);
 void			draw_textured_line(t_bag *bag, int x, t_ray_info *ray);
 unsigned int	get_texture_color(t_texture *texture, int tex_x, int tex_y);
