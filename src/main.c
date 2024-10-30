@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:31:40 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 03:49:22 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 14:29:49 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,40 +61,39 @@ int	key_press(int keycode, t_bag *bag)
 
 int	main(int argc, char **argv)
 {
-	t_bag	game;
+	t_bag	*game;
 
+	game = malloc(sizeof(t_bag));
+	if (!game)
+		return (1);
 	printf("Starting program...\n");
-	ft_struct_init(&game);
+	ft_struct_init(game);
 	printf("Structures initialized\n");
 	printf("Starting parsing...\n");
-	ft_parsing(argc, argv, &game);
+	ft_parsing(argc, argv, game);
 	printf("Parsing successful\n");
 	printf("Initializing player...\n");
-	if (!ft_init_player(&game))
-	{
-		printf("Player initialization failed\n");
-		return (ft_error_handling(&game, "Player initialization failed"));
-	}
-	printf("Player initialized at pos: (%d, %d) facing %c\n", game.map.player_x,
-		game.map.player_y, game.map.player_dir);
+	ft_init_player(game);
+	printf("Player initialized at pos: (%d, %d) facing %c\n", game->map.player_x,
+		game->map.player_y, game->map.player_dir);
 	printf("Initializing MLX...\n");
-	if (!ft_init_mlx(&game))
+	if (!ft_init_mlx(game))
 	{
 		printf("MLX initialization failed\n");
-		return (ft_error_handling(&game, "MLX initialization failed"));
+		return (ft_error_handling(game, "MLX initialization failed"));
 	}
 	printf("MLX initialized\n");
 	printf("Loading textures...\n");
-	if (!ft_load_textures(&game))
+	if (!ft_load_textures(game))
 	{
 		printf("Texture loading failed\n");
-		return (ft_error_handling(&game, "Failed to load textures"));
+		return (ft_error_handling(game, "Failed to load textures"));
 	}
 	printf("Textures loaded\n");
 	printf("Setting up hooks...\n");
-	ft_setup_hooks(&game);
+	ft_setup_hooks(game);
 	printf("Hooks set up\n");
 	printf("Starting game loop...\n");
-	mlx_loop(game.mlx);
+	mlx_loop(game->mlx);
 	return (0);
 }

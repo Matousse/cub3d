@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:20 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 03:43:30 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 14:30:38 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,23 @@ void	ft_raycasting(t_bag *game)
 	int		x;
 	t_ray	ray;
 
+	printf("Debug: Starting raycasting\n");
+	printf("Camera position: (%f, %f)\n", game->camera.position.x,
+		game->camera.position.y);
+	printf("Camera direction: (%f, %f)\n", game->camera.direction.x,
+		game->camera.direction.y);
 	x = 0;
 	while (x < WINDOW_WIDTH)
 	{
 		ft_init_ray(game, &ray, x);
-		ft_calculate_step(game, &ray); // Ajout du paramètre game
+		printf("Ray %d: dir(%f, %f), map(%d, %d)\n", x, ray.dir.x, ray.dir.y,
+			ray.map_x, ray.map_y);
+		ft_calculate_step(game, &ray);
+		printf("After step: step(%d, %d), sideDist(%f, %f)\n", ray.step_x,
+			ray.step_y, ray.side_dist.x, ray.side_dist.y);
 		ft_perform_dda(game, &ray);
+		printf("After DDA: hit=%d, side=%d, wallDist=%f\n", ray.hit, ray.side,
+			ray.perp_wall_dist);
 		ft_calculate_wall(game, &ray);
 		ft_draw_wall(game, &ray, x);
 		x++;
@@ -71,13 +82,21 @@ void	ft_init_ray(t_bag *game, t_ray *ray, int x)
 {
 	double	camera_x;
 
+	// Debug camera avant calculs
+	printf("Camera dir: (%f, %f), plane: (%f, %f)\n", game->camera.direction.x,
+		game->camera.direction.y, game->camera.plane.x, game->camera.plane.y);
 	camera_x = 2 * x / (double)WINDOW_WIDTH - 1;
 	ray->dir.x = game->camera.direction.x + game->camera.plane.x * camera_x;
 	ray->dir.y = game->camera.direction.y + game->camera.plane.y * camera_x;
+	// Éviter division par zéro
+	if (ray->dir.x == 0)
+		ray->dir.x = 0.0001;
+	if (ray->dir.y == 0)
+		ray->dir.y = 0.0001;
 	ray->map_x = (int)game->camera.position.x;
 	ray->map_y = (int)game->camera.position.y;
-	ray->delta_dist.x = fabs(1 / ray->dir.x);
-	ray->delta_dist.y = fabs(1 / ray->dir.y);
+	ray->delta_dist.x = fabs(1.0 / ray->dir.x);
+	ray->delta_dist.y = fabs(1.0 / ray->dir.y);
 	ray->hit = 0;
 }
 

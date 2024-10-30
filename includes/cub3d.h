@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 03:46:55 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 14:29:25 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ void			ft_free_array(char **array);
 void			ft_struct_init(t_bag *game);
 int				ft_init_mlx(t_bag *game);
 void			ft_init_camera(t_bag *game);
-int				ft_init_player(t_bag *game);
+void			ft_init_player(t_bag *game);
 int				ft_find_player_pos(t_bag *game);
 int				ft_is_player(char c);
 

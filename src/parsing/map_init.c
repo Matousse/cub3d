@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:32:33 by dloisel           #+#    #+#             */
-/*   Updated: 2024/10/29 22:00:57 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 14:14:18 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,11 @@ void	ft_extract_map(t_bag *game, char *buff, int j, char **temp)
 	ft_copy_previous_map(game->map.fullmap, temp, i);
 	game->map.fullmap[i] = malloc(sizeof(char) * (ft_strlen(buff) + 1));
 	if (!game->map.fullmap[i])
-		return (free(game->map.fullmap), \
-		(void)ft_error_map("Allocation error.", game));
+	{
+		free(game->map.fullmap);
+		ft_error_map("Allocation error.", game);
+		return ;
+	}
 	j = 0;
 	while (buff[j] && buff[j] != '\n')
 	{
@@ -36,6 +39,9 @@ void	ft_extract_map(t_bag *game, char *buff, int j, char **temp)
 	}
 	game->map.fullmap[i][j] = '\0';
 	game->map.fullmap[i + 1] = NULL;
+	game->map.height = i + 1;
+	if (j > game->map.width)
+		game->map.width = j;
 	i++;
 	if (temp)
 		free(temp);
@@ -51,8 +57,8 @@ char	*ft_extract_line_info(char *buff, t_bag *game)
 	i = 0;
 	k = 0;
 	game->map.all_info++;
-	while (buff[i] == 'N' || buff[i] == 'S' || buff[i] == 'W' || buff[i] == 'E' \
-	|| buff[i] == 'A' || buff[i] == 'O' || buff[i] == ' ')
+	while (buff[i] == 'N' || buff[i] == 'S' || buff[i] == 'W' || buff[i] == 'E'
+		|| buff[i] == 'A' || buff[i] == 'O' || buff[i] == ' ')
 		i++;
 	j = i;
 	while (buff[i] != ' ' && buff[i] != '\n' && buff[i] != '\0')
@@ -132,7 +138,7 @@ void	ft_map_init(t_bag *game, char *argv, int fd)
 		free(buff);
 	}
 	if (game->map.all_info < 6)
-		ft_error_map("Missing elements in .cub file (NO, SO, WE, EA, F, C).", \
-		game);
-	close (fd);
+		ft_error_map("Missing elements in .cub file (NO, SO, WE, EA, F, C).",
+			game);
+	close(fd);
 }

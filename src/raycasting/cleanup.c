@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:54:19 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 03:25:51 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 14:12:56 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ft_cleanup(t_bag *game)
 		free(game->mlx);
 	}
 	ft_free_map(game);
+	free(game);
 }
 
 int	ft_error_handling(t_bag *game, char *message)

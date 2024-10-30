@@ -6,78 +6,95 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:34:20 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 03:50:02 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 14:28:59 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	ft_init_player(t_bag *game)
+void	ft_init_player(t_bag *game)
 {
-	printf("Debug: ft_init_player start\n");
-
-	// Vérifier si la map est valide
-	if (!game->map.fullmap)
+	// Réinitialiser la caméra
+	memset(&game->camera, 0, sizeof(t_camera));
+	// Trouver la position du joueur
+	if (!ft_find_player_pos(game))
+		return ;
+	// Initialiser la caméra
+	game->camera.position.x = game->map.player_x + 0.5;
+	game->camera.position.y = game->map.player_y + 0.5;
+	game->camera.move_speed = 0.05;
+	game->camera.rot_speed = 0.03;
+	// Initialiser la direction et le plan basé sur l'orientation initiale
+	if (game->map.player_dir == 'N')
 	{
-		printf("Error: map is NULL\n");
-		return (0);
+		game->camera.direction.x = 0;
+		game->camera.direction.y = -1;
+		game->camera.plane.x = 0.66;
+		game->camera.plane.y = 0;
 	}
+	else if (game->map.player_dir == 'S')
+	{
+		game->camera.direction.x = 0;
+		game->camera.direction.y = 1;
+		game->camera.plane.x = -0.66;
+		game->camera.plane.y = 0;
+	}
+	else if (game->map.player_dir == 'E')
+	{
+		game->camera.direction.x = 1;
+		game->camera.direction.y = 0;
+		game->camera.plane.x = 0;
+		game->camera.plane.y = 0.66;
+	}
+	else if (game->map.player_dir == 'W')
+	{
+		game->camera.direction.x = -1;
+		game->camera.direction.y = 0;
+		game->camera.plane.x = 0;
+		game->camera.plane.y = -0.66;
+	}
+	printf("Camera initialized:\n");
+	printf("Position: (%f, %f)\n", game->camera.position.x,
+		game->camera.position.y);
+	printf("Direction: (%f, %f)\n", game->camera.direction.x,
+		game->camera.direction.y);
+	printf("Plane: (%f, %f)\n", game->camera.plane.x, game->camera.plane.y);
+}
 
-	printf("Debug: map dimensions - width: %d, height: %d\n", game->map.width,
+int	ft_find_player_pos(t_bag *game)
+{
+	int	i;
+	int	j;
+
+	printf("Finding player in map of size %dx%d\n", game->map.width,
 		game->map.height);
-
-	// Afficher le contenu de la map
-	printf("Debug: Current map content:\n");
-	int i = 0;
+	i = 0;
 	while (i < game->map.height)
 	{
-		printf("%s\n", game->map.fullmap[i]);
+		j = 0;
+		while (j < game->map.width)
+		{
+			printf("%c", game->map.fullmap[i][j]); // Print the map
+			if (game->map.fullmap[i][j] == 'N' || game->map.fullmap[i][j] == 'S'
+				|| game->map.fullmap[i][j] == 'E'
+				|| game->map.fullmap[i][j] == 'W')
+			{
+				game->map.player_x = j;
+				game->map.player_y = i;
+				game->map.player_dir = game->map.fullmap[i][j];
+				printf("\nFound player at (%d,%d) facing %c\n", j, i,
+					game->map.fullmap[i][j]);
+				return (1);
+			}
+			j++;
+		}
+		printf("\n");
 		i++;
 	}
+	return (0);
+}
 
-	// Initialiser les positions à des valeurs invalides
-	game->map.player_x = -1;
-	game->map.player_y = -1;
-	game->map.player_dir = '\0';
-
-	printf("Debug: Finding player position...\n");
-	if (!ft_find_player_pos(game))
-	{
-		printf("Error: Could not find player position in map\n");
-		return (0);
-	}
-
-	printf("Debug: Player found at (%d, %d) facing %c\n", game->map.player_x,
-		game->map.player_y, game->map.player_dir);
-
-	printf("Debug: Initializing camera...\n");
-
-	int ft_find_player_pos(t_bag * game)
-	{
-		int i;
-		int j;
-
-		i = 0;
-		while (i < game->map.height)
-		{
-			j = 0;
-			while (j < game->map.width)
-			{
-				if (ft_is_player(game->map.fullmap[i][j]))
-				{
-					game->map.player_x = j;
-					game->map.player_y = i;
-					game->map.player_dir = game->map.fullmap[i][j];
-					return (1);
-				}
-				j++;
-			}
-			i++;
-		}
-		return (0);
-	}
-
-	int ft_is_player(char c)
-	{
-		return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
-	}
+int	ft_is_player(char c)
+{
+	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
+}

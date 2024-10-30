@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:56:30 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 03:48:36 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 14:27:27 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,32 +63,45 @@ int	ft_init_mlx(t_bag *game)
 		return (0);
 	return (1);
 }
+
 void	ft_init_camera(t_bag *game)
 {
-	// Position initiale (centre de la case)
-	game->camera.position.x = game->map.player_x + 0.5;
-	game->camera.position.y = game->map.player_y + 0.5;
+	game->camera.position = (t_vector){game->map.player_x + 0.5,
+		game->map.player_y + 0.5};
 	game->camera.move_speed = 0.05;
 	game->camera.rot_speed = 0.03;
-	// Direction et plan de la caméra selon l'orientation initiale
 	if (game->map.player_dir == 'N')
 	{
-		game->camera.direction = (t_vector){0, -1};
-		game->camera.plane = (t_vector){0.66, 0};
+		game->camera.direction.x = 0;
+		game->camera.direction.y = -1;
+		game->camera.plane.x = 0.66;
+		game->camera.plane.y = 0;
 	}
 	else if (game->map.player_dir == 'S')
 	{
-		game->camera.direction = (t_vector){0, 1};
-		game->camera.plane = (t_vector){-0.66, 0};
+		game->camera.direction.x = 0;
+		game->camera.direction.y = 1;
+		game->camera.plane.x = -0.66;
+		game->camera.plane.y = 0;
 	}
 	else if (game->map.player_dir == 'E')
 	{
-		game->camera.direction = (t_vector){1, 0};
-		game->camera.plane = (t_vector){0, 0.66};
+		game->camera.direction.x = 1;
+		game->camera.direction.y = 0;
+		game->camera.plane.x = 0;
+		game->camera.plane.y = 0.66;
 	}
 	else if (game->map.player_dir == 'W')
 	{
-		game->camera.direction = (t_vector){-1, 0};
-		game->camera.plane = (t_vector){0, -0.66};
+		game->camera.direction.x = -1;
+		game->camera.direction.y = 0;
+		game->camera.plane.x = 0;
+		game->camera.plane.y = -0.66;
 	}
+	printf("Camera initialized:\n");
+	printf("Position: (%f, %f)\n", game->camera.position.x,
+		game->camera.position.y);
+	printf("Direction: (%f, %f)\n", game->camera.direction.x,
+		game->camera.direction.y);
+	printf("Plane: (%f, %f)\n", game->camera.plane.x, game->camera.plane.y);
 }
