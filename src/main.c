@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:31:40 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 14:29:49 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 20:26:29 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	main(int argc, char **argv)
 	ft_parsing(argc, argv, game);
 	printf("Parsing successful\n");
 	printf("Initializing player...\n");
+	if (game->map.is_map_valid == 1)
+		return (1);
 	ft_init_player(game);
 	printf("Player initialized at pos: (%d, %d) facing %c\n", game->map.player_x,
 		game->map.player_y, game->map.player_dir);

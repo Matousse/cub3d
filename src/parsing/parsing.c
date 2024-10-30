@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:12:16 by dloisel           #+#    #+#             */
-/*   Updated: 2024/10/30 14:14:50 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 20:24:24 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ void	ft_parsing(int argc, char **argv, t_bag *game)
 {
 	ft_struct_map_init(game);
 	ft_arg_verif(argc, argv, game);
-	write(1, "\nOUT0\n", 1);
 	ft_map_init(game, argv[1], 0);
 	ft_map_check(game);
-	game->map.is_map_valid = 1;
 }
 // Je check chaque ligne si le premier et dernier caractère est un 1
 // Si je croise un espace je regarde si il est

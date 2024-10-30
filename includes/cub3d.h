@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 18:08:11 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 20:42:46 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,16 @@ Parsing
 Mettre game.map.is_map_valid à 1 si la map est validée, et à 0 sinon
 REgarder ce que ça fait si map pas présente en dessous des indications
 Il y a des trucs qui sont initialisés deux fois, une fois dans parsing et une foit dans initizalization et ça concerne des trucs de la map
-
+Rajouter un flag pour le jeu en general
+Fonction pour tout free
+Dans int	ft_init_mlx(t_bag *game) il y a une première initialisation de game.img et game.addr cependant ceux-ci sont problablement inutile car déjà présent dans le t_texture.
 */
 
 /* ************************************************************************** */
-/*                                  INCLUDES                                    */
+/*                                  INCLUDES                                  */
 /* ************************************************************************** */
 
-# include "/home/dmathis/42cursus/42_utils/mlx/mlx.h"
+# include "/home/dloisel/sgoinfre/minilibx-linux/mlx.h"
 # include "ft_printf/ft_printf.h"
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
@@ -42,11 +44,11 @@ Il y a des trucs qui sont initialisés deux fois, une fois dans parsing et une f
 # include <unistd.h>
 
 /* ************************************************************************** */
-/*                                  DEFINES                                     */
+/*                                  DEFINES                                   */
 /* ************************************************************************** */
 
-# define WINDOW_WIDTH 1280
-# define WINDOW_HEIGHT 720
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
 # define MOVE_SPEED 0.05
 # define ROTATE_SPEED 0.03
 # define NUM_TEXTURES 2
@@ -72,7 +74,7 @@ Il y a des trucs qui sont initialisés deux fois, une fois dans parsing et une f
 # define RESET "\x1b[0m"
 
 /* ************************************************************************** */
-/*                                 STRUCTURES                                   */
+/*                                 STRUCTURES                                 */
 /* ************************************************************************** */
 
 typedef struct s_vector
@@ -154,7 +156,7 @@ typedef struct s_ray
 }				t_ray;
 
 /* ************************************************************************** */
-/*                                PROTOTYPES                                    */
+/*                                PROTOTYPES                                  */
 /* ************************************************************************** */
 
 /* Parsing Functions */
