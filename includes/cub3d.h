@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 14:29:25 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 18:08:11 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 Parsing
 
 Mettre game.map.is_map_valid à 1 si la map est validée, et à 0 sinon
+REgarder ce que ça fait si map pas présente en dessous des indications
+Il y a des trucs qui sont initialisés deux fois, une fois dans parsing et une foit dans initizalization et ça concerne des trucs de la map
 
 */
 

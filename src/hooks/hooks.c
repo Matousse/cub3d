@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 03:20:35 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 03:20:44 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 18:13:36 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	ft_key_press(int keycode, t_bag *game)
 		ft_move_left(game);
 	if (keycode == KEY_D)
 		ft_move_right(game);
-	if (keycode == KEY_LEFT)
-		ft_rotate_left(game);
 	if (keycode == KEY_RIGHT)
+		ft_rotate_left(game);
+	if (keycode == KEY_LEFT)
 		ft_rotate_right(game);
 	return (0);
 }
