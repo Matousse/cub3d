@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:56:30 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 21:02:39 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 21:05:50 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ int	ft_init_mlx(t_bag *game)
 	game->db_buff_img = mlx_new_image(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!game->db_buff_img)
 		return (0);//Leak sur game->win si celui-ci échoue
-	game->buff_addraddr = mlx_get_data_addr(game->db_buff_img, &game->bits_per_pixel,
+	game->buff_addr = mlx_get_data_addr(game->db_buff_img, &game->bits_per_pixel,
 			&game->line_length, &game->endian);
-	if (!game->buff_addraddr)
+	if (!game->buff_addr)
 		return (0);//Même chose mais pour les 2 du dessus.
 	return (1);
 }

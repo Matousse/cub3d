@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:20 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 21:02:41 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/30 21:05:50 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_put_pixel(t_bag *game, int x, int y, int color)
 
 	if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
 	{
-		dst = game->buff_addraddr + (y * game->line_length + x * (game->bits_per_pixel
+		dst = game->buff_addr + (y * game->line_length + x * (game->bits_per_pixel
 					/ 8));
 		*(unsigned int *)dst = color;
 	}
