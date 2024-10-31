@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:54:19 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 21:01:46 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/31 15:30:53 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	ft_cleanup(t_bag *game)
 int	ft_error_handling(t_bag *game, char *message)
 {
 	ft_cleanup(game);
-	if (message)
-		write(2, message, ft_strlen(message));
-	write(2, "\n", 1);
+	ft_printf(RED "%s\n", "Error");
+	ft_printf("%s\n" RESET, message);
+	exit(0);
 	return (0);
 }

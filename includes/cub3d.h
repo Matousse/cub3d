@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 21:02:47 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/31 15:20:56 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void			ft_free_array(char **array);
 /* Initialization Functions */
 
 void			ft_struct_init(t_bag *game);
-int				ft_init_mlx(t_bag *game);
+void			ft_init_mlx(t_bag *game);
 void			ft_init_camera(t_bag *game);
 void			ft_init_player(t_bag *game);
 int				ft_find_player_pos(t_bag *game);
@@ -204,8 +204,7 @@ void			ft_draw_wall(t_bag *game, t_ray *ray, int x);
 int				ft_get_texture_color(t_texture *texture, int tex_x, int tex_y);
 t_texture		*ft_select_texture(t_bag *game, t_ray *ray);
 void			ft_draw_texture(t_bag *game, t_ray *ray, int x, int y);
-int				ft_load_texture(t_bag *game, t_texture *texture, char *path);
-int				ft_load_textures(t_bag *game);
+void			ft_init_texture(t_bag *game);
 
 /* Movements*/
 
