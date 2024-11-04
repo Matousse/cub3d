@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 21:02:47 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/11/03 17:14:24 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ Dans int	ft_init_mlx(t_bag *game) il y a une première initialisation de game.im
 /*                                  INCLUDES                                  */
 /* ************************************************************************** */
 
-# include "/home/dloisel/sgoinfre/minilibx-linux/mlx.h"
+# include "/home/dmathis/42cursus/42_utils/mlx/mlx.h"
 # include "ft_printf/ft_printf.h"
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
@@ -52,6 +52,7 @@ Dans int	ft_init_mlx(t_bag *game) il y a une première initialisation de game.im
 # define MOVE_SPEED 0.05
 # define ROTATE_SPEED 0.03
 # define NUM_TEXTURES 2
+# define MIN_WALL_DISTANCE 0.3
 
 # define FOV 60
 # define PI 3.14159265359
@@ -215,6 +216,8 @@ void			ft_move_left(t_bag *game);
 void			ft_move_right(t_bag *game);
 void			ft_rotate_left(t_bag *game);
 void			ft_rotate_right(t_bag *game);
+int				check_collision(t_bag *game, double new_x, double new_y);
+double			get_distance_to_wall(t_bag *game, double x, double y);
 
 /* Hooks */
 

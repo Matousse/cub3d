@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:56:30 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 21:02:39 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/11/03 17:01:57 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ int	ft_init_mlx(t_bag *game)
 		return (0);
 	game->db_buff_img = mlx_new_image(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!game->db_buff_img)
-		return (0);//Leak sur game->win si celui-ci échoue
-	game->buff_addraddr = mlx_get_data_addr(game->db_buff_img, &game->bits_per_pixel,
-			&game->line_length, &game->endian);
-	if (!game->buff_addraddr)
-		return (0);//Même chose mais pour les 2 du dessus.
+		return (0); // Leak sur game->win si celui-ci échoue
+	game->buff_addr = mlx_get_data_addr(game->db_buff_img,
+			&game->bits_per_pixel, &game->line_length, &game->endian);
+	if (!game->buff_addr)
+		return (0); // Même chose mais pour les 2 du dessus.
 	return (1);
 }
 
@@ -104,4 +104,23 @@ void	ft_init_camera(t_bag *game)
 	printf("Direction: (%f, %f)\n", game->camera.direction.x,
 		game->camera.direction.y);
 	printf("Plane: (%f, %f)\n", game->camera.plane.x, game->camera.plane.y);
+}
+
+void	ft_init_ray(t_bag *game, t_ray *ray, int x)
+{
+	double	camera_x;
+
+	camera_x = 2 * x / (double)WINDOW_WIDTH - 1;
+	ray->dir.x = game->camera.direction.x + game->camera.plane.x * camera_x;
+	ray->dir.y = game->camera.direction.y + game->camera.plane.y * camera_x;
+	ray->map_x = (int)game->camera.position.x;
+	ray->map_y = (int)game->camera.position.y;
+	// Nouveau calcul des delta_dist (plus besoin de vérifier dir.x/y == 0)
+	ray->delta_dist.x = fabs(1.0 / ray->dir.x);
+	ray->delta_dist.y = fabs(1.0 / ray->dir.y);
+	if (ray->dir.x == 0.0)
+		ray->delta_dist.x = 1e30;
+	if (ray->dir.y == 0.0)
+		ray->delta_dist.y = 1e30;
+	ray->hit = 0;
 }

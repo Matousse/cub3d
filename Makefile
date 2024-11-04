@@ -16,7 +16,7 @@ DEBUGFLAGS	= -g
 SRC_DIR		= ./src
 OBJ_DIR		= ./.obj
 INC_DIR		= ./includes
-MLX_DIR		= /home/dloisel/sgoinfre/minilibx-linux
+MLX_DIR		= /home/dmathis/42cursus/42_utils/mlx
 
 # Libraries
 LIBFT		= $(INC_DIR)/libft/libft.a

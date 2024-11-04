@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:20 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 21:02:41 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/11/03 17:07:00 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	ft_put_pixel(t_bag *game, int x, int y, int color)
 
 	if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
 	{
-		dst = game->buff_addraddr + (y * game->line_length + x * (game->bits_per_pixel
-					/ 8));
+		dst = game->buff_addr + (y * game->line_length + x
+				* (game->bits_per_pixel / 8));
 		*(unsigned int *)dst = color;
 	}
 }
@@ -76,28 +76,6 @@ void	ft_raycasting(t_bag *game)
 		ft_draw_wall(game, &ray, x);
 		x++;
 	}
-}
-
-void	ft_init_ray(t_bag *game, t_ray *ray, int x)
-{
-	double	camera_x;
-
-	// Debug camera avant calculs
-	printf("Camera dir: (%f, %f), plane: (%f, %f)\n", game->camera.direction.x,
-		game->camera.direction.y, game->camera.plane.x, game->camera.plane.y);
-	camera_x = 2 * x / (double)WINDOW_WIDTH - 1;
-	ray->dir.x = game->camera.direction.x + game->camera.plane.x * camera_x;
-	ray->dir.y = game->camera.direction.y + game->camera.plane.y * camera_x;
-	// Éviter division par zéro
-	if (ray->dir.x == 0)
-		ray->dir.x = 0.0001;
-	if (ray->dir.y == 0)
-		ray->dir.y = 0.0001;
-	ray->map_x = (int)game->camera.position.x;
-	ray->map_y = (int)game->camera.position.y;
-	ray->delta_dist.x = fabs(1.0 / ray->dir.x);
-	ray->delta_dist.y = fabs(1.0 / ray->dir.y);
-	ray->hit = 0;
 }
 
 void	ft_calculate_step(t_bag *game, t_ray *ray)
@@ -152,11 +130,11 @@ void	ft_perform_dda(t_bag *game, t_ray *ray)
 void	ft_calculate_wall(t_bag *game, t_ray *ray)
 {
 	if (ray->side == 0)
-		ray->perp_wall_dist = (ray->map_x - game->camera.position.x + (1
-					- ray->step_x) / 2) / ray->dir.x;
+		ray->perp_wall_dist = fabs((ray->map_x - game->camera.position.x + (1
+						- ray->step_x) / 2) / ray->dir.x);
 	else
-		ray->perp_wall_dist = (ray->map_y - game->camera.position.y + (1
-					- ray->step_y) / 2) / ray->dir.y;
+		ray->perp_wall_dist = fabs((ray->map_y - game->camera.position.y + (1
+						- ray->step_y) / 2) / ray->dir.y);
 	ray->line_height = (int)(WINDOW_HEIGHT / ray->perp_wall_dist);
 	ray->draw_start = -ray->line_height / 2 + WINDOW_HEIGHT / 2;
 	if (ray->draw_start < 0)
