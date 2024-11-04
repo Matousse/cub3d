@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:20 by dmathis           #+#    #+#             */
-/*   Updated: 2024/11/03 17:07:00 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/11/04 09:40:07 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	ft_put_pixel(t_bag *game, int x, int y, int color)
 
 	if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
 	{
-		dst = game->buff_addr + (y * game->line_length + x
-				* (game->bits_per_pixel / 8));
+		dst = game->buff_addr + (y * game->line_length + x * (game->bits_per_pixel
+					/ 8));
 		*(unsigned int *)dst = color;
 	}
 }
