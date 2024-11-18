@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:32:33 by dloisel           #+#    #+#             */
-/*   Updated: 2024/10/30 14:14:18 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/10/31 15:49:45 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,8 @@ void	ft_extract_map(t_bag *game, char *buff, int j, char **temp)
 	ft_copy_previous_map(game->map.fullmap, temp, i);
 	game->map.fullmap[i] = malloc(sizeof(char) * (ft_strlen(buff) + 1));
 	if (!game->map.fullmap[i])
-	{
-		free(game->map.fullmap);
-		ft_error_map("Allocation error.", game);
-		return ;
-	}
+		return (free(game->map.fullmap), \
+		(void)ft_error_map("Allocation error.", game));
 	j = 0;
 	while (buff[j] && buff[j] != '\n')
 	{
@@ -39,9 +36,6 @@ void	ft_extract_map(t_bag *game, char *buff, int j, char **temp)
 	}
 	game->map.fullmap[i][j] = '\0';
 	game->map.fullmap[i + 1] = NULL;
-	game->map.height = i + 1;
-	if (j > game->map.width)
-		game->map.width = j;
 	i++;
 	if (temp)
 		free(temp);

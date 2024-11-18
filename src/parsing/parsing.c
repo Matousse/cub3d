@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:12:16 by dloisel           #+#    #+#             */
-/*   Updated: 2024/10/30 20:24:24 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/11/08 21:06:53 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,35 @@ void	ft_struct_map_init(t_bag *game)
 	game->map.ceiling_color = 0;
 }
 
+void	ft_get_width_height(t_bag *game)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	if (game->map.is_map_valid == 1)
+		return ;
+	while (game->map.fullmap[i])
+	{
+		while (game->map.fullmap[i][j])
+			j++;
+		if (game->map.width < j)
+			game->map.width = j;
+		i++;
+	}
+	game->map.height = i;
+}
+
 void	ft_parsing(int argc, char **argv, t_bag *game)
 {
 	ft_struct_map_init(game);
 	ft_arg_verif(argc, argv, game);
 	ft_map_init(game, argv[1], 0);
 	ft_map_check(game);
+	ft_get_width_height(game);
+	if (game->map.is_map_valid == 1)
+		ft_error_handling(game, NULL);
 }
 // Je check chaque ligne si le premier et dernier caractère est un 1
 // Si je croise un espace je regarde si il est

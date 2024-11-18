@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2024/11/03 17:14:24 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/11/18 14:15:14 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ Dans int	ft_init_mlx(t_bag *game) il y a une première initialisation de game.im
 /*                                  INCLUDES                                  */
 /* ************************************************************************** */
 
-# include "/home/dmathis/42cursus/42_utils/mlx/mlx.h"
+# include "minilibx-linux/mlx.h"
 # include "ft_printf/ft_printf.h"
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
@@ -174,11 +174,12 @@ int				ft_space_map_check(char **map, int i, int j);
 int				ft_zero_map_check(char **map, int i, int j);
 void			ft_player_check(t_bag *game, int i, int j);
 void			ft_free_array(char **array);
+void			ft_invalid_char_check(t_bag *game);
 
 /* Initialization Functions */
 
 void			ft_struct_init(t_bag *game);
-int				ft_init_mlx(t_bag *game);
+void			ft_init_mlx(t_bag *game);
 void			ft_init_camera(t_bag *game);
 void			ft_init_player(t_bag *game);
 int				ft_find_player_pos(t_bag *game);
@@ -205,8 +206,7 @@ void			ft_draw_wall(t_bag *game, t_ray *ray, int x);
 int				ft_get_texture_color(t_texture *texture, int tex_x, int tex_y);
 t_texture		*ft_select_texture(t_bag *game, t_ray *ray);
 void			ft_draw_texture(t_bag *game, t_ray *ray, int x, int y);
-int				ft_load_texture(t_bag *game, t_texture *texture, char *path);
-int				ft_load_textures(t_bag *game);
+void			ft_init_texture(t_bag *game);
 
 /* Movements*/
 

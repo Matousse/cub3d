@@ -6,38 +6,38 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 03:25:16 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 20:58:53 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/10/31 15:32:15 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	ft_load_textures(t_bag *game)
+t_texture	ft_load_texture(t_bag *game, char *file_path)
 {
-	if (!ft_load_texture(game, &game->no_texture, game->map.no_texture))
-		return (ft_error_handling(game, "Failed to load North texture"));
-	if (!ft_load_texture(game, &game->so_texture, game->map.so_texture))
-		return (ft_error_handling(game, "Failed to load South texture"));
-	if (!ft_load_texture(game, &game->we_texture, game->map.we_texture))
-		return (ft_error_handling(game, "Failed to load West texture"));
-	if (!ft_load_texture(game, &game->ea_texture, game->map.ea_texture))
-		return (ft_error_handling(game, "Failed to load East texture"));
-	return (1);
+	t_texture	texture;
+
+	texture.img = mlx_xpm_file_to_image(game->mlx, file_path, &texture.width, \
+	&texture.height);
+	if (!texture.img)
+	{
+		ft_printf(RED "%s\n", "Error");
+		ft_printf("%s%s%s\n", "Couldn't load the texture at '", \
+		file_path, "' does it exist ?"RESET);
+		ft_error_handling(game, NULL);
+	}
+	texture.addr = mlx_get_data_addr(texture.img, &texture.bits_per_pixel, \
+	&texture.line_length, &texture.endian);
+	return (texture);
 }
 
-int	ft_load_texture(t_bag *game, t_texture *texture, char *path)
+void	ft_init_texture(t_bag *game)
 {
-	if (!path)
-		return (0);
-	texture->img = mlx_xpm_file_to_image(game->mlx, path, &texture->width,
-			&texture->height);
-	if (!texture->img)
-		return (0);
-	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
-			&texture->line_length, &texture->endian);
-	if (!texture->addr)
-		return (0);
-	return (1);
+	if (game->map.is_map_valid == 1)
+		return ;
+	game->no_texture = ft_load_texture(game, game->map.no_texture);
+	game->so_texture = ft_load_texture(game, game->map.so_texture);
+	game->we_texture = ft_load_texture(game, game->map.we_texture);
+	game->ea_texture = ft_load_texture(game, game->map.ea_texture);
 }
 
 void	ft_draw_texture(t_bag *game, t_ray *ray, int x, int y)

@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:31:40 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 20:26:29 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/10/31 15:52:58 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,24 +73,14 @@ int	main(int argc, char **argv)
 	ft_parsing(argc, argv, game);
 	printf("Parsing successful\n");
 	printf("Initializing player...\n");
-	if (game->map.is_map_valid == 1)
-		return (1);
 	ft_init_player(game);
 	printf("Player initialized at pos: (%d, %d) facing %c\n", game->map.player_x,
 		game->map.player_y, game->map.player_dir);
 	printf("Initializing MLX...\n");
-	if (!ft_init_mlx(game))
-	{
-		printf("MLX initialization failed\n");
-		return (ft_error_handling(game, "MLX initialization failed"));
-	}
+	ft_init_mlx(game);
 	printf("MLX initialized\n");
 	printf("Loading textures...\n");
-	if (!ft_load_textures(game))
-	{
-		printf("Texture loading failed\n");
-		return (ft_error_handling(game, "Failed to load textures"));
-	}
+	ft_init_texture(game);
 	printf("Textures loaded\n");
 	printf("Setting up hooks...\n");
 	ft_setup_hooks(game);

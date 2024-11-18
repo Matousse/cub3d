@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:56:30 by dmathis           #+#    #+#             */
-/*   Updated: 2024/11/04 09:39:50 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/11/18 14:14:21 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,21 @@ void	ft_struct_init(t_bag *game)
 	printf("Game structure initialized\n");
 }
 
-int	ft_init_mlx(t_bag *game)
+void	ft_init_mlx(t_bag *game)
 {
 	game->mlx = mlx_init();
 	if (!game->mlx)
-		return (0);
+		ft_error_handling(game, "MLX initialization failed");
 	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
 	if (!game->win)
-		return (0);
+		ft_error_handling(game, "MLX window initialization failed");
 	game->db_buff_img = mlx_new_image(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!game->db_buff_img)
-		return (0);//Leak sur game->win si celui-ci échoue
-	game->buff_addr = mlx_get_data_addr(game->db_buff_img, &game->bits_per_pixel,
-			&game->line_length, &game->endian);
+		ft_error_handling(game, "MLX image buffer initialization failed");
+	game->buff_addr = mlx_get_data_addr(game->db_buff_img, \
+	&game->bits_per_pixel, &game->line_length, &game->endian);
 	if (!game->buff_addr)
-		return (0);//Même chose mais pour les 2 du dessus.
-	return (1);
+		ft_error_handling(game, "MLX address buffer initialization failed");
 }
 
 void	ft_init_camera(t_bag *game)
