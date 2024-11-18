@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:54:19 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/31 15:30:53 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/11/08 21:07:37 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,11 @@ void	ft_cleanup(t_bag *game)
 int	ft_error_handling(t_bag *game, char *message)
 {
 	ft_cleanup(game);
-	ft_printf(RED "%s\n", "Error");
-	ft_printf("%s\n" RESET, message);
+	if (message)
+	{
+		ft_printf(RED "%s\n", "Error");
+		ft_printf("%s\n" RESET, message);
+	}
 	exit(0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/31 15:20:56 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/11/08 21:21:58 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ Dans int	ft_init_mlx(t_bag *game) il y a une première initialisation de game.im
 /*                                  INCLUDES                                  */
 /* ************************************************************************** */
 
-# include "/home/dloisel/sgoinfre/minilibx-linux/mlx.h"
+# include "minilibx-linux/mlx.h"
 # include "ft_printf/ft_printf.h"
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
@@ -173,6 +173,7 @@ int				ft_space_map_check(char **map, int i, int j);
 int				ft_zero_map_check(char **map, int i, int j);
 void			ft_player_check(t_bag *game, int i, int j);
 void			ft_free_array(char **array);
+void			ft_invalid_char_check(t_bag *game);
 
 /* Initialization Functions */
 

@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:57:44 by dloisel           #+#    #+#             */
-/*   Updated: 2024/10/31 15:36:26 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/11/08 21:22:08 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void	ft_map_check(t_bag *game)
 	if (!game->map.fullmap)
 		return ((void)ft_error_handling(game, "No map in the .cub file."));
 	ft_emptyline_check(game);
+	ft_invalid_char_check(game);
 	ft_wall_check1(game);
 	ft_wall_check2(game);
 	ft_wall_check3(game);

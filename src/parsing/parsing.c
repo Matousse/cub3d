@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:12:16 by dloisel           #+#    #+#             */
-/*   Updated: 2024/10/31 15:52:49 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/11/08 21:06:53 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	ft_get_width_height(t_bag *game)
 
 	i = 0;
 	j = 0;
+	if (game->map.is_map_valid == 1)
+		return ;
 	while (game->map.fullmap[i])
 	{
 		while (game->map.fullmap[i][j])
