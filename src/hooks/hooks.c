@@ -1,46 +1,63 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   hooks.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 03:20:35 by dmathis           #+#    #+#             */
-/*   Updated: 2024/10/30 18:13:36 by dmathis          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/cub3d.h"
 
-void	ft_setup_hooks(t_bag *game)
+/* Gestion des touches */
+int key_press(int keycode, t_game *game)
 {
-	mlx_hook(game->win, 17, 0, ft_close_window, game);
-	mlx_hook(game->win, 2, 1L << 0, ft_key_press, game);
-	mlx_loop_hook(game->mlx, ft_game_loop, game);
+    double old_dir_x;
+    double old_plane_x;
+
+    if (keycode == 65307) /* ESC */
+        exit(0);
+    else if (keycode == 122) /* Z - Avancer */
+    {
+        if (!game->map[(int)(game->player.pos_x + game->player.dir_x * MOVE_SPEED)]
+                      [(int)game->player.pos_y])
+            game->player.pos_x += game->player.dir_x * MOVE_SPEED;
+        if (!game->map[(int)game->player.pos_x]
+                      [(int)(game->player.pos_y + game->player.dir_y * MOVE_SPEED)])
+            game->player.pos_y += game->player.dir_y * MOVE_SPEED;
+    }
+    else if (keycode == 115) /* S - Reculer */
+    {
+        if (!game->map[(int)(game->player.pos_x - game->player.dir_x * MOVE_SPEED)]
+                      [(int)game->player.pos_y])
+            game->player.pos_x -= game->player.dir_x * MOVE_SPEED;
+        if (!game->map[(int)game->player.pos_x]
+                      [(int)(game->player.pos_y - game->player.dir_y * MOVE_SPEED)])
+            game->player.pos_y -= game->player.dir_y * MOVE_SPEED;
+    }
+    else if (keycode == 65363) /* Flèche gauche */
+    {
+        old_dir_x = game->player.dir_x;
+        game->player.dir_x = game->player.dir_x * cos(ROTATION_SPEED) 
+                          - game->player.dir_y * sin(ROTATION_SPEED);
+        game->player.dir_y = old_dir_x * sin(ROTATION_SPEED) 
+                          + game->player.dir_y * cos(ROTATION_SPEED);
+        old_plane_x = game->player.plane_x;
+        game->player.plane_x = game->player.plane_x * cos(ROTATION_SPEED) 
+                            - game->player.plane_y * sin(ROTATION_SPEED);
+        game->player.plane_y = old_plane_x * sin(ROTATION_SPEED) 
+                            + game->player.plane_y * cos(ROTATION_SPEED);
+    }
+    else if (keycode == 65361) /* Flèche droite */
+    {
+        old_dir_x = game->player.dir_x;
+        game->player.dir_x = game->player.dir_x * cos(-ROTATION_SPEED) 
+                          - game->player.dir_y * sin(-ROTATION_SPEED);
+        game->player.dir_y = old_dir_x * sin(-ROTATION_SPEED) 
+                          + game->player.dir_y * cos(-ROTATION_SPEED);
+        old_plane_x = game->player.plane_x;
+        game->player.plane_x = game->player.plane_x * cos(-ROTATION_SPEED) 
+                            - game->player.plane_y * sin(-ROTATION_SPEED);
+        game->player.plane_y = old_plane_x * sin(-ROTATION_SPEED) 
+                            + game->player.plane_y * cos(-ROTATION_SPEED);
+    }
+    return (0);
 }
 
-int	ft_close_window(t_bag *game)
+int close_window(t_game *game)
 {
-	ft_cleanup(game);
-	exit(0);
-	return (0);
-}
-
-int	ft_key_press(int keycode, t_bag *game)
-{
-	if (keycode == KEY_ESC)
-		ft_close_window(game);
-	if (keycode == KEY_W)
-		ft_move_forward(game);
-	if (keycode == KEY_S)
-		ft_move_backward(game);
-	if (keycode == KEY_A)
-		ft_move_left(game);
-	if (keycode == KEY_D)
-		ft_move_right(game);
-	if (keycode == KEY_RIGHT)
-		ft_rotate_left(game);
-	if (keycode == KEY_LEFT)
-		ft_rotate_right(game);
-	return (0);
+    mlx_destroy_window(game->mlx, game->win);
+    exit(0);
+    return (0);
 }

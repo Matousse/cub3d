@@ -1,0 +1,572 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   arg_verif.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/24 19:04:14 by dloisel           #+#    #+#             */
+/*   Updated: 2024/10/29 22:00:47 by dmathis          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/cub3d.h"
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while ((s1[i] == s2[i]) && (s1[i] != '\0' || s2[i] != '\0'))
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+void	ft_arg_verif(int argc, char **argv, t_bag *game)
+{
+	char	*format;
+	int		len;
+
+	format = ".cub";
+	if (argc != 2)
+	{
+		if (argc > 2)
+			ft_error_map("Only 1 argument please.", game);
+		else
+			ft_error_map("There must be at least 1 argument.", game);
+		return ;
+	}
+	len = ft_strlen(argv[1]);
+	if (len < 4)
+	{
+		ft_error_map("The map file must be in .cub format.", game);
+		return ;
+	}
+	if (ft_strcmp(argv[1] + len - 4, format) != 0)
+	{
+		ft_error_map("The map file must be in .cub format.", game);
+		return ;
+	}
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_parsing.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/25 16:36:06 by dloisel           #+#    #+#             */
+/*   Updated: 2024/10/29 22:00:49 by dmathis          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/cub3d.h"
+
+void	ft_free_array(char **array)
+{
+	int	i;
+
+	if (!array)
+		return ;
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+	i++;
+	}
+	free(array);
+}
+
+void	ft_error_map(char *msg, t_bag *game)
+{
+	if (game->map->fullmap)
+		ft_free_array(game->map->fullmap);
+	ft_printf(RED "%s\n", "Error");
+	ft_printf("%s\n" RESET, msg);
+	game->map->is_map_valid = 1;
+	game->map->fullmap = NULL;
+}
+
+void	ft_free_map(t_bag *game)
+{
+	if (game->map->fullmap)
+		ft_free_array(game->map->fullmap);
+	if (game->map->no_texture)
+		free(game->map->no_texture);
+	if (game->map->so_texture)
+		free(game->map->so_texture);
+	if (game->map->we_texture)
+		free(game->map->we_texture);
+	if (game->map->ea_texture)
+		free(game->map->ea_texture);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_check1.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/25 16:57:44 by dloisel           #+#    #+#             */
+/*   Updated: 2024/11/08 21:22:08 by dloisel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/cub3d.h"
+
+void	ft_wall_check3(t_bag *game)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	if (game->map->is_map_valid == 1)
+		return ;
+	while (game->map->fullmap[i + 1] != NULL)
+	{
+		j = 1;
+		while (game->map->fullmap[i][j + 1] != '\0')
+		{
+			if (game->map->fullmap[i][j] == '0' \
+			&& !ft_zero_map_check(game->map->fullmap, i, j))
+				return ((void)ft_error_map("Missing wall within the map.", \
+				game));
+			j++;
+		}
+		i++;
+	}
+}
+
+void	ft_wall_check2(t_bag *game)
+{
+	int		i;
+	int		j;
+	size_t	len;
+
+	i = 0;
+	if (game->map->is_map_valid == 1)
+		return ;
+	while (game->map->fullmap[i])
+	{
+		j = 0;
+		len = ft_strlen(game->map->fullmap[i]);
+		while (game->map->fullmap[i][j] == ' ')
+			j++;
+		if (game->map->fullmap[i][j] != '1' && game->map->fullmap[i][j] != ' ')
+			return ((void)ft_error_map("Missing wall on the \
+left side of the map.", game));
+		if (game->map->fullmap[i][len - 1] != '1' \
+		&& game->map->fullmap[i][len - 1] != ' ')
+			return ((void)ft_error_map("Missing wall on the \
+right side of the map.", game));
+		i++;
+	}
+}
+
+void	ft_wall_check1(t_bag *game)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	if (game->map->is_map_valid == 1)
+		return ;
+	while (game->map->fullmap[0][i])
+	{
+		if (game->map->fullmap[0][i] != '1' && game->map->fullmap[0][i] != ' ')
+			return ((void)ft_error_map("Missing wall in the \
+first row of the map.", game));
+		i++;
+	}
+	i = 0;
+	while (game->map->fullmap[i])
+		i++;
+	i--;
+	while (game->map->fullmap[i][j])
+	{
+		if (game->map->fullmap[i][j] != '1' && game->map->fullmap[i][j] != ' ')
+			return ((void)ft_error_map("Missing wall in the last \
+row of the map.", game));
+		j++;
+	}
+}
+
+void	ft_emptyline_check(t_bag *game)
+{
+	int	i;
+	int	j;
+	int	is_empty;
+
+	i = 0;
+	while (game->map->fullmap[i])
+	{
+		j = 0;
+		is_empty = 1;
+		while (game->map->fullmap[i][j])
+		{
+			if (game->map->fullmap[i][j] != '\n' && \
+			game->map->fullmap[i][j] != ' ')
+			{
+				is_empty = 0;
+				break ;
+			}
+			j++;
+		}
+		if (is_empty)
+			return ((void)ft_error_map("Empty line in the map.", game));
+		i++;
+	}
+}
+
+void	ft_map_check(t_bag *game)
+{
+	if (game->map->is_map_valid == 1)
+		return ;
+	if (!game->map->fullmap)
+		return ((void)ft_error_handling(game, "No map in the .cub file."));
+	ft_emptyline_check(game);
+	ft_invalid_char_check(game);
+	ft_wall_check1(game);
+	ft_wall_check2(game);
+	ft_wall_check3(game);
+	ft_player_check(game, 0, 0);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_check2.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/25 20:29:15 by dloisel           #+#    #+#             */
+/*   Updated: 2024/11/08 21:31:23 by dloisel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/cub3d.h"
+
+void ft_player_check(t_bag *game, int i, int j)
+{
+    int player_count;
+
+    player_count = 0;
+    printf("Checking for player starting at i=%d, j=%d\n", i, j);  // Debug
+    if (game->map->is_map_valid == 1)
+        return;
+    while (game->map->fullmap[i])
+    {
+        j = 0;
+        while (game->map->fullmap[i][j])
+        {
+            printf("Checking position [%d][%d]: '%c'\n", i, j, game->map->fullmap[i][j]);  // Debug
+            if (game->map->fullmap[i][j] == 'N' || 
+                game->map->fullmap[i][j] == 'S' || 
+                game->map->fullmap[i][j] == 'E' || 
+                game->map->fullmap[i][j] == 'W')
+            {
+                printf("Found player: pos=%d,%d dir=%c\n", j, i, game->map->fullmap[i][j]);  // Debug
+                game->map->player_x = j;
+                game->map->player_y = i;
+                game->map->player_dir = game->map->fullmap[i][j];
+                player_count++;
+            }
+            j++;
+        }
+        i++;
+    }
+    printf("Player count: %d\n", player_count);  // Debug
+    printf("Final player state: x=%d, y=%d, dir=%c\n", 
+           game->map->player_x, game->map->player_y, game->map->player_dir);  // Debug
+}
+
+void	ft_invalid_char_check(t_bag *game)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (game->map->fullmap[i])
+	{
+		j = 0;
+		while (game->map->fullmap[i][j])
+		{
+			if (game->map->fullmap[i][j] != '1' && game->map->fullmap[i][j] != '0'
+			&& game->map->fullmap[i][j] != ' ' && game->map->fullmap[i][j] != 'N'
+			&& game->map->fullmap[i][j] != 'W' && game->map->fullmap[i][j] != 'E'
+			&&game->map->fullmap[i][j] != 'S')
+				return ((void)ft_error_map("Invalid character within the map.", \
+				game));
+			j++;
+		}
+		i++;
+	}
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_init.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/24 19:32:33 by dloisel           #+#    #+#             */
+/*   Updated: 2024/10/31 15:49:45 by dloisel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/cub3d.h"
+
+void	ft_extract_map(t_bag *game, char *buff, int j, char **temp)
+{
+	static int	i;
+
+	j = 0;
+	if (buff[0] == '\n' && game->map->fullmap == NULL)
+		return ;
+	temp = game->map->fullmap;
+	game->map->fullmap = malloc(sizeof(char *) * (i + 2));
+	if (!game->map->fullmap)
+		ft_error_map("Allocation error.", game);
+	ft_copy_previous_map(game->map->fullmap, temp, i);
+	game->map->fullmap[i] = malloc(sizeof(char) * (ft_strlen(buff) + 1));
+	if (!game->map->fullmap[i])
+		return (free(game->map->fullmap), \
+		(void)ft_error_map("Allocation error.", game));
+	j = 0;
+	while (buff[j] && buff[j] != '\n')
+	{
+		game->map->fullmap[i][j] = buff[j];
+		j++;
+	}
+	game->map->fullmap[i][j] = '\0';
+	game->map->fullmap[i + 1] = NULL;
+	i++;
+	if (temp)
+		free(temp);
+}
+
+char	*ft_extract_line_info(char *buff, t_bag *game)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	*info;
+
+	i = 0;
+	k = 0;
+	game->map->all_info++;
+	while (buff[i] == 'N' || buff[i] == 'S' || buff[i] == 'W' || buff[i] == 'E'
+		|| buff[i] == 'A' || buff[i] == 'O' || buff[i] == ' ')
+		i++;
+	j = i;
+	while (buff[i] != ' ' && buff[i] != '\n' && buff[i] != '\0')
+		i++;
+	info = malloc(sizeof(char) * ((i - j) + 1));
+	if (!info)
+		return (ft_error_map("Allocation error.", game), NULL);
+	while (j < i)
+	{
+		info[k] = buff[j];
+		k++;
+		j++;
+	}
+	info[k] = '\0';
+	return (info);
+}
+
+int	ft_extract_color(char *buff, t_bag *game)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	game->map->all_info++;
+	while (*buff == 'F' || *buff == 'C' || *buff == ' ')
+		buff++;
+	r = ft_atoi(buff);
+	while (*buff && *buff != ',')
+		buff++;
+	buff++;
+	g = ft_atoi(buff);
+	while (*buff && *buff != ',')
+		buff++;
+	buff++;
+	b = ft_atoi(buff);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+		return (ft_error_map("RGB values are incorrect.", game), 0);
+	return (ft_rgb_to_int(r, g, b));
+}
+
+void	ft_extract_info(t_bag *game, char *buff)
+{
+	while (*buff == ' ' || *buff == '\t')
+		buff++;
+	if (!ft_strncmp(buff, "NO ", 3))
+		game->map->no_texture = ft_extract_line_info(buff, game);
+	else if (!ft_strncmp(buff, "SO ", 3))
+		game->map->so_texture = ft_extract_line_info(buff, game);
+	else if (!ft_strncmp(buff, "WE ", 3))
+		game->map->we_texture = ft_extract_line_info(buff, game);
+	else if (!ft_strncmp(buff, "EA ", 3))
+		game->map->ea_texture = ft_extract_line_info(buff, game);
+	else if (!ft_strncmp(buff, "F ", 2))
+		game->map->floor_color = ft_extract_color(buff, game);
+	else if (!ft_strncmp(buff, "C ", 2))
+		game->map->ceiling_color = ft_extract_color(buff, game);
+}
+
+void	ft_map_init(t_bag *game, char *argv, int fd)
+{
+	char	*buff;
+
+	if (game->map->is_map_valid == 1)
+		return ;
+	fd = open(argv, O_RDONLY);
+	if (fd == -1)
+		ft_error_map("The map couldn't be opened.", game);
+	while (1)
+	{
+		buff = get_next_line(fd);
+		if (buff == NULL)
+			break ;
+		if (!ft_is_map_line(buff) && game->map->all_info < 6)
+			ft_extract_info(game, buff);
+		else
+			ft_extract_map(game, buff, 0, NULL);
+		free(buff);
+	}
+	if (game->map->all_info < 6)
+		ft_error_map("Missing elements in .cub file (NO, SO, WE, EA, F, C).",
+			game);
+	close(fd);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/24 19:12:16 by dloisel           #+#    #+#             */
+/*   Updated: 2024/11/08 21:06:53 by dloisel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/cub3d.h"
+
+void	ft_struct_map_init(t_bag *game)
+{
+	game->map->fullmap = NULL;
+	game->map->width = 0;
+	game->map->height = 0;
+	game->map->is_map_valid = 0;
+	game->map->all_info = 0;
+	game->map->player_x = -1;
+	game->map->player_y = -1;
+	game->map->player_dir = '\0';
+	game->map->floor_color = 0;
+	game->map->ceiling_color = 0;
+}
+
+void	ft_get_width_height(t_bag *game)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	if (game->map->is_map_valid == 1)
+		return ;
+	while (game->map->fullmap[i])
+	{
+		while (game->map->fullmap[i][j])
+			j++;
+		if (game->map->width < j)
+			game->map->width = j;
+		i++;
+	}
+	game->map->height = i;
+}
+
+void	ft_parsing(int argc, char **argv, t_bag *game)
+{
+	ft_struct_map_init(game);
+	ft_arg_verif(argc, argv, game);
+	ft_map_init(game, argv[1], 0);
+	ft_map_check(game);
+	ft_get_width_height(game);
+	if (game->map->is_map_valid == 1)
+		ft_error_handling(game, NULL);
+}
+// Je check chaque ligne si le premier et dernier caractère est un 1
+// Si je croise un espace je regarde si il est
+// Je check chaque 0 si il est entouré de soit un 0 ou un 1
+// Je check chaque espace si il est entouré de soit un 1 ou un autre espace
+// Défauts du parsing :
+//	- Si la première ou derniére ligne a des 0 qui dépassent alors la map est
+//		alors que la map est techniquement jouable.
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/25 10:24:15 by dloisel           #+#    #+#             */
+/*   Updated: 2024/10/29 22:01:00 by dmathis          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/cub3d.h"
+
+int	ft_rgb_to_int(int r, int g, int b)
+{
+	return ((r << 16) | (g << 8) | b);
+}
+
+int	ft_is_map_line(char *line)
+{
+	int	i;
+	int	has_valid_char;
+
+	i = 0;
+	has_valid_char = 0;
+	while (line[i])
+	{
+		if (line[i] == '\n')
+			break ;
+		if (line[i] != ' ' && line[i] != '1' && line[i] != '0' && \
+		line[i] != 'N' && line[i] != 'S' && line[i] != 'E' && line[i] != 'W')
+			return (0);
+		if (line[i] != ' ')
+			has_valid_char = 1;
+		i++;
+	}
+	return (has_valid_char);
+}
+
+void	ft_copy_previous_map(char **new_map, char **old_map, int size)
+{
+	int	j;
+
+	j = 0;
+	while (old_map && old_map[j] && j < size)
+	{
+		new_map[j] = old_map[j];
+		j++;
+	}
+}
+
+int	ft_zero_map_check(char **map, int i, int j)
+{
+	if ((map[i - 1][j] != '1' && map[i - 1][j] != '0' && map[i - 1][j] != 'N' &&
+		map[i - 1][j] != 'S' && map[i - 1][j] != 'W' && map[i - 1][j] != 'E') ||
+		(map[i + 1][j] != '1' && map[i + 1][j] != '0' && map[i + 1][j] != 'N' &&
+		map[i + 1][j] != 'S' && map[i + 1][j] != 'W' && map[i + 1][j] != 'E') ||
+		(map[i][j - 1] != '1' && map[i][j - 1] != '0' && map[i][j - 1] != 'N' &&
+		map[i][j - 1] != 'S' && map[i][j - 1] != 'W' && map[i][j - 1] != 'E') ||
+		(map[i][j + 1] != '1' && map[i][j + 1] != '0' && map[i][j + 1] != 'N' &&
+		map[i][j + 1] != 'S' && map[i][j + 1] != 'W' && map[i][j + 1] != 'E'))
+		return (0);
+	return (1);
+}

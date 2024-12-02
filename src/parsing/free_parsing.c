@@ -29,24 +29,24 @@ void	ft_free_array(char **array)
 
 void	ft_error_map(char *msg, t_bag *game)
 {
-	if (game->map.fullmap)
-		ft_free_array(game->map.fullmap);
+	if (game->map->fullmap)
+		ft_free_array(game->map->fullmap);
 	ft_printf(RED "%s\n", "Error");
 	ft_printf("%s\n" RESET, msg);
-	game->map.is_map_valid = 1;
-	game->map.fullmap = NULL;
+	game->map->is_map_valid = 1;
+	game->map->fullmap = NULL;
 }
 
 void	ft_free_map(t_bag *game)
 {
-	if (game->map.fullmap)
-		ft_free_array(game->map.fullmap);
-	if (game->map.no_texture)
-		free(game->map.no_texture);
-	if (game->map.so_texture)
-		free(game->map.so_texture);
-	if (game->map.we_texture)
-		free(game->map.we_texture);
-	if (game->map.ea_texture)
-		free(game->map.ea_texture);
+	if (game->map->fullmap)
+		ft_free_array(game->map->fullmap);
+	if (game->map->no_texture)
+		free(game->map->no_texture);
+	if (game->map->so_texture)
+		free(game->map->so_texture);
+	if (game->map->we_texture)
+		free(game->map->we_texture);
+	if (game->map->ea_texture)
+		free(game->map->ea_texture);
 }

@@ -24,34 +24,23 @@ PRINTF		= $(INC_DIR)/ft_printf/libftprintf.a
 GNL			= $(INC_DIR)/get_next_line/get_next_line.a
 
 # MLX configuration
-MLX_LIB		= -L$(MLX_DIR) -lmlx
-MLX_FLAGS	= -lXext -lX11 -lm -lz
+MLX_LIB		= $(MLX_DIR)/libmlx.a
+MLX_FLAGS	= -L$(MLX_DIR) -lXext -lX11 -lm -lz
 
 # Source files
-PARSING_SRC	= src/parsing/arg_verif.c \
-			  src/parsing/parsing.c \
-			  src/parsing/map_init.c \
-			  src/parsing/parsing_utils.c \
-			  src/parsing/free_parsing.c \
-			  src/parsing/map_check1.c \
-			  src/parsing/map_check2.c
-
 RAYCAST_SRC	= src/raycasting/raycasting.c \
-			  src/raycasting/cleanup.c \
-			  src/raycasting/end.c \
-			  src/raycasting/load_textures.c
 
-INIT_SRC	= src/init/player_init.c \
-			  src/init/initialization.c \
+INIT_SRC	= src/init/init.c \
 
 HOOKS_SRC	= src/hooks/hooks.c \
-			  src/hooks/movements.c
-
 
 MAIN_SRC	= $(SRC_DIR)/main.c
 
+REN_SRC		= src/rendering/pixels.c \
+				src/rendering/textures.c
+
 # Combine all sources
-SRCS		= $(MAIN_SRC) $(PARSING_SRC) $(RAYCAST_SRC) $(INIT_SRC) $(HOOKS_SRC)
+SRCS		= $(MAIN_SRC) $(RAYCAST_SRC) $(INIT_SRC) $(HOOKS_SRC) $(REN_SRC)
 
 # Object files
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -65,8 +54,9 @@ LDFLAGS		= -lreadline
 # Main targets
 all: pre_build $(NAME)
 
-$(NAME): $(LIBFT) $(PRINTF) $(GNL) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(PRINTF) $(GNL) $(MLX_LIB) $(MLX_FLAGS) -o $(NAME) $(LDFLAGS)
+# Main compilation
+$(NAME): $(LIBFT) $(PRINTF) $(GNL) $(MLX_LIB) $(OBJS)
+	@$(CC) $(OBJS) $(LIBFT) $(PRINTF) $(GNL) $(MLX_LIB) $(MLX_FLAGS) -o $(NAME) $(LDFLAGS)
 	@echo
 	@echo "$(GREEN) █████╗ ██╗   ██╗██████╗ ██████╗ ██████╗ "
 	@echo "$(GREEN)██╔══██╗██║   ██║██╔══██╗╚════██╗██╔══██╗"
@@ -95,6 +85,10 @@ $(GNL):
 	@echo "$(YELLOW)Making GNL...$(RESET)"
 	@make --no-print-directory -C $(INC_DIR)/get_next_line
 
+$(MLX_LIB):
+	@echo "$(YELLOW)Making minilibx...$(RESET)"
+	@make --no-print-directory -C $(MLX_DIR)
+
 # Utility targets
 pre_build:
 	@echo "$(BLUE)Starting build process...$(RESET)"
@@ -108,6 +102,7 @@ clean:
 	@make clean --no-print-directory -C $(INC_DIR)/libft
 	@make clean --no-print-directory -C $(INC_DIR)/ft_printf
 	@make clean --no-print-directory -C $(INC_DIR)/get_next_line
+	@make clean --no-print-directory -C $(MLX_DIR)
 
 fclean: clean
 	@echo "$(RED)Cleaning everything...$(RESET)"
