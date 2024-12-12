@@ -1,3 +1,5 @@
+//pixels.c
+
 #include "../../includes/cub3d.h"
 
 /* Fonction pour obtenir la couleur d'un pixel dans une texture */
@@ -13,6 +15,16 @@ void put_pixel(t_game *game, int x, int y, int color)
 {
     char *dst;
 
-    dst = game->addr + (y * game->line_length + x * (game->bits_per_pixel / 8));
+    if (!game || !game->addr || x < 0 || x >= WINDOW_WIDTH || y < 0 || y >= WINDOW_HEIGHT)
+        return;
+
+    // Calculer l'offset en octets
+    long offset = y * game->line_length + x * (game->bits_per_pixel / 8);
+    
+    // Vérifier que l'offset ne dépasse pas la taille de l'image
+    if (offset >= WINDOW_WIDTH * WINDOW_HEIGHT * (game->bits_per_pixel / 8))
+        return;
+
+    dst = game->addr + offset;
     *(unsigned int*)dst = color;
 }

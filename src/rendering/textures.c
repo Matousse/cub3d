@@ -1,3 +1,5 @@
+//textures.c
+
 #include "../../includes/cub3d.h"
 
 /* Fonction pour charger une texture */

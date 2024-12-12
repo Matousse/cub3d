@@ -34,7 +34,8 @@ INIT_SRC	= src/init/init.c \
 
 HOOKS_SRC	= src/hooks/hooks.c \
 
-MAIN_SRC	= $(SRC_DIR)/main.c
+MAIN_SRC	= $(SRC_DIR)/main.c \
+				$(SRC_DIR)/exit.c
 
 REN_SRC		= src/rendering/pixels.c \
 				src/rendering/textures.c

@@ -64,7 +64,7 @@ typedef struct s_player {
     double plane_y;
 } t_player;
 
-/* Structure pour la gestion de la fenêtre et du rendu */
+/* Structure pour la gestion de la fenêtre et du rendu =!*/
 typedef struct s_game {
     void *mlx;
     void *win;
@@ -75,12 +75,12 @@ typedef struct s_game {
     int endian;
     t_player player;
     t_textures textures;
-    int **map;
+    char **map;  // Changé de int** à char**
     int map_width;
     int map_height;
 } t_game;
 
-extern int default_map[8][8]; 
+extern char default_map[8][8]; 
 
 
 void init_game(t_game *game);
@@ -91,6 +91,8 @@ void put_pixel(t_game *game, int x, int y, int color);
 int load_texture(t_game *game, t_texture *texture, char *path);
 int load_textures(t_game *game);
 int render(t_game *game);
-
+void cleanup_game(t_game *game);
+void debug_print_map(t_game *game);
+void destroy_textures(t_game *game);
 
 #endif

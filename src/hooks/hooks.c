@@ -1,3 +1,5 @@
+//hooks.c
+
 #include "../../includes/cub3d.h"
 
 /* Gestion des touches */
@@ -10,20 +12,20 @@ int key_press(int keycode, t_game *game)
         exit(0);
     else if (keycode == 122) /* Z - Avancer */
     {
-        if (!game->map[(int)(game->player.pos_x + game->player.dir_x * MOVE_SPEED)]
-                      [(int)game->player.pos_y])
+        if (game->map[(int)(game->player.pos_x + game->player.dir_x * MOVE_SPEED)]
+                     [(int)game->player.pos_y] != '1')
             game->player.pos_x += game->player.dir_x * MOVE_SPEED;
-        if (!game->map[(int)game->player.pos_x]
-                      [(int)(game->player.pos_y + game->player.dir_y * MOVE_SPEED)])
+        if (game->map[(int)game->player.pos_x]
+                     [(int)(game->player.pos_y + game->player.dir_y * MOVE_SPEED)] != '1')
             game->player.pos_y += game->player.dir_y * MOVE_SPEED;
     }
     else if (keycode == 115) /* S - Reculer */
     {
-        if (!game->map[(int)(game->player.pos_x - game->player.dir_x * MOVE_SPEED)]
-                      [(int)game->player.pos_y])
+        if (game->map[(int)(game->player.pos_x - game->player.dir_x * MOVE_SPEED)]
+                     [(int)game->player.pos_y] != '1')
             game->player.pos_x -= game->player.dir_x * MOVE_SPEED;
-        if (!game->map[(int)game->player.pos_x]
-                      [(int)(game->player.pos_y - game->player.dir_y * MOVE_SPEED)])
+        if (game->map[(int)game->player.pos_x]
+                     [(int)(game->player.pos_y - game->player.dir_y * MOVE_SPEED)] != '1')
             game->player.pos_y -= game->player.dir_y * MOVE_SPEED;
     }
     else if (keycode == 65363) /* Flèche gauche */
@@ -52,12 +54,5 @@ int key_press(int keycode, t_game *game)
         game->player.plane_y = old_plane_x * sin(-ROTATION_SPEED) 
                             + game->player.plane_y * cos(-ROTATION_SPEED);
     }
-    return (0);
-}
-
-int close_window(t_game *game)
-{
-    mlx_destroy_window(game->mlx, game->win);
-    exit(0);
     return (0);
 }

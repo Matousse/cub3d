@@ -1,3 +1,5 @@
+//raycasting.c
+
 #include "../../includes/cub3d.h"
 
 /* Fonction principale de raycasting avec textures */
@@ -44,22 +46,26 @@ void raycasting(t_game *game)
         }
 
         while (hit == 0)
-        {
-            if (side_dist_x < side_dist_y)
             {
-                side_dist_x += delta_dist_x;
-                map_x += step_x;
-                side = 0;
+                if (side_dist_x < side_dist_y)
+                {
+                    side_dist_x += delta_dist_x;
+                    map_x += step_x;
+                    side = 0;
+                }
+                else
+                {
+                    side_dist_y += delta_dist_y;
+                    map_y += step_y;
+                    side = 1;
+                }
+                // Vérifier que nous sommes dans les limites de la carte
+                if (map_x < 0 || map_x >= game->map_height || 
+                    map_y < 0 || map_y >= game->map_width)
+                    break;
+                if (game->map[map_x][map_y] == '1')
+                    hit = 1;
             }
-            else
-            {
-                side_dist_y += delta_dist_y;
-                map_y += step_y;
-                side = 1;
-            }
-            if (game->map[map_x][map_y] > 0)
-                hit = 1;
-        }
 
         double wall_x;
         if (side == 0)
