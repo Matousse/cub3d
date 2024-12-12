@@ -16,7 +16,6 @@ void cleanup_game(t_game *game)
 {
     if (game)
     {
-        // Libérer les textures
         destroy_textures(game);
 
         // Libérer la carte
@@ -31,15 +30,12 @@ void cleanup_game(t_game *game)
             game->map = NULL;
         }
 
-        // Libérer l'image principale
         if (game->img)
             mlx_destroy_image(game->mlx, game->img);
 
-        // Détruire la fenêtre
         if (game->win)
             mlx_destroy_window(game->mlx, game->win);
 
-        // Détruire le contexte MLX
         if (game->mlx)
         {
             mlx_destroy_display(game->mlx);
