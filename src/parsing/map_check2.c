@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 20:29:15 by dloisel           #+#    #+#             */
-/*   Updated: 2024/12/12 08:19:02 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/12/13 19:41:53 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,42 +61,4 @@ void	ft_invalid_char_check(t_game *game)
 		}
 		i++;
 	}
-}
-
-int	ft_find_player_pos(t_game *game)
-{
-	int	i;
-	int	j;
-
-	printf("Finding player in map of size %dx%d\n", game->map.width,
-		game->map.height);
-	i = 0;
-	while (i < game->map.height)
-	{
-		j = 0;
-		while (j < game->map.width)
-		{
-			printf("%c", game->map.fullmap[i][j]); // Print the map
-			if (game->map.fullmap[i][j] == 'N' || game->map.fullmap[i][j] == 'S'
-				|| game->map.fullmap[i][j] == 'E'
-				|| game->map.fullmap[i][j] == 'W')
-			{
-				game->map.player_x = j;
-				game->map.player_y = i;
-				game->map.player_dir = game->map.fullmap[i][j];
-				printf("\nFound player at (%d,%d) facing %c\n", j, i,
-					game->map.fullmap[i][j]);
-				return (1);
-			}
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-	return (0);
-}
-
-int	ft_is_player(char c)
-{
-	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }

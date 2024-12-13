@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:36:06 by dloisel           #+#    #+#             */
-/*   Updated: 2024/12/12 07:44:36 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/12/13 19:35:26 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ void	ft_free_array(char **array)
 	i++;
 	}
 	free(array);
+	array = NULL;
 }
 
 void	ft_error_map(char *msg, t_game *game)
 {
-	if (game->map.fullmap != NULL)
+	if (game->map.fullmap)
 		ft_free_array(game->map.fullmap);
 	if (msg)
 	{
@@ -37,7 +38,6 @@ void	ft_error_map(char *msg, t_game *game)
 		ft_printf("%s\n" RESET, msg);
 	}
 	game->map.is_map_valid = 1;
-	game->map.fullmap = NULL;
 }
 
 void	ft_free_map(t_game *game)

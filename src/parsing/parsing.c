@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:12:16 by dloisel           #+#    #+#             */
-/*   Updated: 2024/12/12 08:20:58 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/12/13 20:15:21 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	ft_parsing(int argc, char **argv, t_game *game)
 	ft_map_init(game, argv[1], 0);
 	ft_map_check(game);
 	ft_get_width_height(game);
-	ft_find_player_pos(game);
 	if (game->map.is_map_valid == 1)
 		ft_error_handling(game, NULL);
 }

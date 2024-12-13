@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2024/12/12 08:19:18 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/12/13 19:53:40 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,12 +138,15 @@ void	ft_invalid_char_check(t_game *game);
 void	ft_player_check(t_game *game, int i, int j);
 void	ft_free_array(char **array);
 void	ft_error_map(char *msg, t_game *game);
+void	ft_free_map(t_game *game);
 void	ft_arg_verif(int argc, char **argv, t_game *game);
 int		ft_zero_map_check(char **map, int i, int j);
-int		ft_find_player_pos(t_game *game);
-int		ft_is_player(char c);
 
 int		ft_error_handling(t_game *game, char *message);
+void 	cleanup_game(t_game *game);
+void 	debug_print_map(t_game *game);
+void 	destroy_textures(t_game *game);
+
 
 
 #endif

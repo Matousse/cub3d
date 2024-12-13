@@ -6,45 +6,57 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 07:34:21 by dloisel           #+#    #+#             */
-/*   Updated: 2024/12/12 07:35:59 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/12/13 19:54:20 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-// void	ft_cleanup_textures(t_bag *game)
-// {
-// 	if (game->no_texture.img)
-// 		mlx_destroy_image(game->mlx, game->no_texture.img);
-// 	if (game->so_texture.img)
-// 		mlx_destroy_image(game->mlx, game->so_texture.img);
-// 	if (game->we_texture.img)
-// 		mlx_destroy_image(game->mlx, game->we_texture.img);
-// 	if (game->ea_texture.img)
-// 		mlx_destroy_image(game->mlx, game->ea_texture.img);
-// }
+#include "../includes/cub3d.h"
 
-// // Fonction de cleanup générale à appeler à la fin
-// void	ft_cleanup(t_bag *game)
-// {
-// 	ft_cleanup_textures(game);
-// 	if (game->db_buff_img)
-// 		mlx_destroy_image(game->mlx, game->db_buff_img);
-// 	if (game->win)
-// 		mlx_destroy_window(game->mlx, game->win);
-// 	if (game->mlx)
-// 	{
-// 		mlx_destroy_display(game->mlx);
-// 		free(game->mlx);
-// 	}
-// 	ft_free_map(game);
-// 	free(game);
-// }
+void destroy_textures(t_game *game)
+{
+    if (game->textures.north.img)
+        mlx_destroy_image(game->mlx, game->textures.north.img);
+    if (game->textures.south.img)
+        mlx_destroy_image(game->mlx, game->textures.south.img);
+    if (game->textures.east.img)
+        mlx_destroy_image(game->mlx, game->textures.east.img);
+    if (game->textures.west.img)
+        mlx_destroy_image(game->mlx, game->textures.west.img);
+}
+
+void cleanup_game(t_game *game)
+{
+    if (game)
+    {
+        destroy_textures(game);
+        if (game->img)
+            mlx_destroy_image(game->mlx, game->img);
+
+        if (game->win)
+            mlx_destroy_window(game->mlx, game->win);
+
+        if (game->mlx)
+        {
+            mlx_destroy_display(game->mlx);
+            free(game->mlx);
+        }
+    }
+}
+
+int close_window(t_game *game)
+{
+    ft_free_map(game);
+    cleanup_game(game);
+    exit(0);
+    return (0);
+}
 
 int	ft_error_handling(t_game *game, char *message)
 {
-	// ft_cleanup(game);
-	(void)game;
+    ft_free_map(game);
+	cleanup_game(game);
 	if (message)
 	{
 		ft_printf(RED "%s\n", "Error");
