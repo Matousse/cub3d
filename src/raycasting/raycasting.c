@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 06:32:47 by dloisel           #+#    #+#             */
-/*   Updated: 2024/12/12 06:33:35 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/12/12 08:29:29 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,9 @@ void	raycasting(t_game *game)
 		}
 		/* Dessin du sol et du plafond */
 		for (int y = 0; y < draw_start; y++)
-			put_pixel(game, x, y, 0x00AAAAAA); /* Plafond */
+			put_pixel(game, x, y, 0x00AAAAAA); /* Plafond : remplacer la couleur par celle trouvée dans le parsing*/
 		for (int y = draw_end; y < WINDOW_HEIGHT; y++)
-			put_pixel(game, x, y, 0x00555555); /* Sol */
+			put_pixel(game, x, y, 0x00555555); /* Sol : même chose que pour le plafond*/
 	}
 }
 

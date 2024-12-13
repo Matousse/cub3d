@@ -34,13 +34,22 @@ INIT_SRC	= src/init/init.c \
 
 HOOKS_SRC	= src/hooks/hooks.c \
 
-MAIN_SRC	= $(SRC_DIR)/main.c
+MAIN_SRC	= $(SRC_DIR)/main.c \
+				$(SRC_DIR)/cleanup.c
 
 REN_SRC		= src/rendering/pixels.c \
 				src/rendering/textures.c
 
+PARS_SRC	= src/parsing/parsing.c \
+				src/parsing/parsing_utils.c \
+				src/parsing/map_init.c \
+				src/parsing/map_check1.c \
+				src/parsing/map_check2.c \
+				src/parsing/free_parsing.c \
+				src/parsing/arg_verif.c
+
 # Combine all sources
-SRCS		= $(MAIN_SRC) $(RAYCAST_SRC) $(INIT_SRC) $(HOOKS_SRC) $(REN_SRC)
+SRCS		= $(MAIN_SRC) $(RAYCAST_SRC) $(INIT_SRC) $(HOOKS_SRC) $(REN_SRC) $(PARS_SRC)
 
 # Object files
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

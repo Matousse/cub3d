@@ -6,65 +6,97 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 20:29:15 by dloisel           #+#    #+#             */
-/*   Updated: 2024/11/08 21:31:23 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/12/12 08:19:02 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void ft_player_check(t_map *map, int i, int j)
+void	ft_player_check(t_game *game, int i, int j)
 {
-    int player_count;
+	int	player_count;
 
-    player_count = 0;
-    printf("Checking for player starting at i=%d, j=%d\n", i, j);  // Debug
-    if (game->map->is_map_valid == 1)
-        return;
-    while (game->map->fullmap[i])
-    {
-        j = 0;
-        while (game->map->fullmap[i][j])
-        {
-            printf("Checking position [%d][%d]: '%c'\n", i, j, game->map->fullmap[i][j]);  // Debug
-            if (game->map->fullmap[i][j] == 'N' || 
-                game->map->fullmap[i][j] == 'S' || 
-                game->map->fullmap[i][j] == 'E' || 
-                game->map->fullmap[i][j] == 'W')
-            {
-                printf("Found player: pos=%d,%d dir=%c\n", j, i, game->map->fullmap[i][j]);  // Debug
-                game->map->player_x = j;
-                game->map->player_y = i;
-                game->map->player_dir = game->map->fullmap[i][j];
-                player_count++;
-            }
-            j++;
-        }
-        i++;
-    }
-    printf("Player count: %d\n", player_count);  // Debug
-    printf("Final player state: x=%d, y=%d, dir=%c\n", 
-           game->map->player_x, game->map->player_y, game->map->player_dir);  // Debug
+	player_count = 0;
+	if (game->map.is_map_valid == 1)
+		return ;
+	while (game->map.fullmap[i])
+	{
+		j = 0;
+		while (game->map.fullmap[i][j])
+		{
+			if (game->map.fullmap[i][j] == 'N' || \
+			game->map.fullmap[i][j] == 'S' || game->map.fullmap[i][j] == 'E' \
+			|| game->map.fullmap[i][j] == 'W')
+				player_count++;
+			j++;
+		}
+		i++;
+	}
+	if (player_count == 0)
+		return ((void)ft_error_map("No player is present within the map.", \
+		game));
+	else if (player_count > 1)
+		return ((void)ft_error_map("Two or more players are present \
+within the map, only one player is allowed to be on the map.", game));
 }
 
-void	ft_invalid_char_check(t_bag *game)
+void	ft_invalid_char_check(t_game *game)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (game->map->fullmap[i])
+	while (game->map.fullmap[i])
 	{
 		j = 0;
-		while (game->map->fullmap[i][j])
+		while (game->map.fullmap[i][j])
 		{
-			if (game->map->fullmap[i][j] != '1' && game->map->fullmap[i][j] != '0'
-			&& game->map->fullmap[i][j] != ' ' && game->map->fullmap[i][j] != 'N'
-			&& game->map->fullmap[i][j] != 'W' && game->map->fullmap[i][j] != 'E'
-			&&game->map->fullmap[i][j] != 'S')
+			if (game->map.fullmap[i][j] != '1' && game->map.fullmap[i][j] != '0'
+			&& game->map.fullmap[i][j] != ' ' && game->map.fullmap[i][j] != 'N'
+			&& game->map.fullmap[i][j] != 'W' && game->map.fullmap[i][j] != 'E'
+			&&game->map.fullmap[i][j] != 'S')
 				return ((void)ft_error_map("Invalid character within the map.", \
 				game));
 			j++;
 		}
 		i++;
 	}
+}
+
+int	ft_find_player_pos(t_game *game)
+{
+	int	i;
+	int	j;
+
+	printf("Finding player in map of size %dx%d\n", game->map.width,
+		game->map.height);
+	i = 0;
+	while (i < game->map.height)
+	{
+		j = 0;
+		while (j < game->map.width)
+		{
+			printf("%c", game->map.fullmap[i][j]); // Print the map
+			if (game->map.fullmap[i][j] == 'N' || game->map.fullmap[i][j] == 'S'
+				|| game->map.fullmap[i][j] == 'E'
+				|| game->map.fullmap[i][j] == 'W')
+			{
+				game->map.player_x = j;
+				game->map.player_y = i;
+				game->map.player_dir = game->map.fullmap[i][j];
+				printf("\nFound player at (%d,%d) facing %c\n", j, i,
+					game->map.fullmap[i][j]);
+				return (1);
+			}
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+	return (0);
+}
+
+int	ft_is_player(char c)
+{
+	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }

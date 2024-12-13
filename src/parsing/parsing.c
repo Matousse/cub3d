@@ -6,54 +6,55 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:12:16 by dloisel           #+#    #+#             */
-/*   Updated: 2024/11/08 21:06:53 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/12/12 08:20:58 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	ft_struct_map_init(t_map *map)
+void	ft_struct_map_init(t_game *game)
 {
-	map->fullmap = NULL;
-	map->width = 0;
-	map->height = 0;
-	map->is_map_valid = 0;
-	map->all_info = 0;
-	map->player_x = -1;
-	map->player_y = -1;
-	map->player_dir = '\0';
-	map->floor_color = 0;
-	map->ceiling_color = 0;
+	game->map.fullmap = NULL;
+	game->map.width = 0;
+	game->map.height = 0;
+	game->map.is_map_valid = 0;
+	game->map.all_info = 0;
+	game->map.player_x = -1;
+	game->map.player_y = -1;
+	game->map.player_dir = '\0';
+	game->map.floor_color = 0;
+	game->map.ceiling_color = 0;
 }
 
-void	ft_get_width_height(t_bag *game)
+void	ft_get_width_height(t_game *game)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	if (game->map->is_map_valid == 1)
+	if (game->map.is_map_valid == 1)
 		return ;
-	while (game->map->fullmap[i])
+	while (game->map.fullmap[i])
 	{
-		while (game->map->fullmap[i][j])
+		while (game->map.fullmap[i][j])
 			j++;
-		if (game->map->width < j)
-			game->map->width = j;
+		if (game->map.width < j)
+			game->map.width = j;
 		i++;
 	}
-	game->map->height = i;
+	game->map.height = i;
 }
 
-void	ft_parsing(int argc, char **argv, t_bag *game)
+void	ft_parsing(int argc, char **argv, t_game *game)
 {
 	ft_struct_map_init(game);
 	ft_arg_verif(argc, argv, game);
 	ft_map_init(game, argv[1], 0);
 	ft_map_check(game);
 	ft_get_width_height(game);
-	if (game->map->is_map_valid == 1)
+	ft_find_player_pos(game);
+	if (game->map.is_map_valid == 1)
 		ft_error_handling(game, NULL);
 }
 // Je check chaque ligne si le premier et dernier caractère est un 1

@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 06:34:15 by dloisel           #+#    #+#             */
-/*   Updated: 2024/12/12 06:34:30 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/12/12 07:59:03 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ int	key_press(int keycode, t_game *game)
 		exit(0);
 	else if (keycode == 122) /* Z - Avancer */
 	{
-		if (!game->map[(int)(game->player.pos_x + game->player.dir_x * MOVE_SPEED)]
-					  [(int)game->player.pos_y])
+		if (game->map.fullmap[(int)(game->player.pos_x + game->player.dir_x * MOVE_SPEED)]
+					  [(int)game->player.pos_y] == '0')
 			game->player.pos_x += game->player.dir_x * MOVE_SPEED;
-		if (!game->map[(int)game->player.pos_x]
+		if (game->map.fullmap[(int)game->player.pos_x]
 					  [(int)(game->player.pos_y + game->player.dir_y * MOVE_SPEED)])
 			game->player.pos_y += game->player.dir_y * MOVE_SPEED;
 	}
 	else if (keycode == 115) /* S - Reculer */
 	{
-		if (!game->map[(int)(game->player.pos_x - game->player.dir_x * MOVE_SPEED)]
-					  [(int)game->player.pos_y])
+		if (!game->map.fullmap[(int)(game->player.pos_x - game->player.dir_x * MOVE_SPEED)]
+					  [(int)game->player.pos_y] == '0')
 			game->player.pos_x -= game->player.dir_x * MOVE_SPEED;
-		if (!game->map[(int)game->player.pos_x]
-					  [(int)(game->player.pos_y - game->player.dir_y * MOVE_SPEED)])
+		if (game->map.fullmap[(int)game->player.pos_x]
+					  [(int)(game->player.pos_y - game->player.dir_y * MOVE_SPEED)] == '0')
 			game->player.pos_y -= game->player.dir_y * MOVE_SPEED;
 	}
 	else if (keycode == 65363) /* Flèche gauche */

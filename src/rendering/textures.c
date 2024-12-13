@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 06:32:01 by dloisel           #+#    #+#             */
-/*   Updated: 2024/12/12 06:32:04 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/12/12 07:47:38 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ int	load_texture(t_game *game, t_texture *texture, char *path)
 /* Fonction pour charger toutes les textures */
 int	load_textures(t_game *game)
 {
-	if (!load_texture(game, &game->textures.north, "./textures/north.xpm"))
+	if (!load_texture(game, &game->textures.north, game->map.no_texture))
 		return (0);
-	if (!load_texture(game, &game->textures.south, "./textures/south.xpm"))
+	if (!load_texture(game, &game->textures.south, game->map.so_texture))
 		return (0);
-	if (!load_texture(game, &game->textures.east, "./textures/east.xpm"))
+	if (!load_texture(game, &game->textures.east, game->map.ea_texture))
 		return (0);
-	if (!load_texture(game, &game->textures.west, "./textures/west.xpm"))
+	if (!load_texture(game, &game->textures.west, game->map.we_texture))
 		return (0);
 	return (1);
 }

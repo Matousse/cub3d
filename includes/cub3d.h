@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2024/11/18 14:15:14 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/12/12 08:19:18 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/* Colors for output */
+# define RED "\x1b[31m"
+# define GREEN "\x1b[32m"
+# define YELLOW "\x1b[33m"
+# define BLUE "\x1b[34m"
+# define MAGENTA "\x1b[35m"
+# define CYAN "\x1b[36m"
+# define RESET "\x1b[0m"
+
 /* Définition des constantes */
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
@@ -35,52 +44,68 @@
 #define TEX_WIDTH 64
 #define TEX_HEIGHT 64
 
+typedef struct s_map
+{
+	int			width;
+	int			height;
+	char		**fullmap;
+	char		*no_texture;
+	char		*so_texture;
+	char		*we_texture;
+	char		*ea_texture;
+	int			floor_color;
+	int			ceiling_color;
+	int			player_x;
+	int			player_y;
+	char		player_dir;
+	int			is_map_valid;
+	int			all_info;
+}				t_map;
+
 /* Structure pour stocker une texture */
 typedef struct s_texture {
-    void *img;
-    int *data;
-    int width;
-    int height;
-    int bits_per_pixel;
-    int line_length;
-    int endian;
+	void *img;
+	int *data;
+	int width;
+	int height;
+	int bits_per_pixel;
+	int line_length;
+	int endian;
 } t_texture;
 
 /* Structure pour stocker toutes les textures */
 typedef struct s_textures {
-    t_texture north;
-    t_texture south;
-    t_texture east;
-    t_texture west;
+	t_texture north;
+	t_texture south;
+	t_texture east;
+	t_texture west;
 } t_textures;
 
 /* Structure pour stocker les données du joueur */
 typedef struct s_player {
-    double pos_x;
-    double pos_y;
-    double dir_x;
-    double dir_y;
-    double plane_x;
-    double plane_y;
+	double pos_x;
+	double pos_y;
+	double dir_x;
+	double dir_y;
+	double plane_x;
+	double plane_y;
 } t_player;
 
 /* Structure pour la gestion de la fenêtre et du rendu */
 typedef struct s_game {
-    void *mlx;
-    void *win;
-    void *img;
-    char *addr;
-    int bits_per_pixel;
-    int line_length;
-    int endian;
-    t_player player;
-    t_textures textures;
-    int **map;
-    int map_width;
-    int map_height;
+	void *mlx;
+	void *win;
+	void *img;
+	char *addr;
+	int bits_per_pixel;
+	int line_length;
+	int endian;
+	t_player player;
+	t_textures textures;
+	t_map map;
 } t_game;
 
-extern int default_map[8][8]; 
+extern int default_map[8][8];
 
 
 void init_game(t_game *game);
@@ -91,6 +116,34 @@ void put_pixel(t_game *game, int x, int y, int color);
 int load_texture(t_game *game, t_texture *texture, char *path);
 int load_textures(t_game *game);
 int render(t_game *game);
+
+/*Parsing*/
+void	ft_parsing(int argc, char **argv, t_game *game);
+void	ft_get_width_height(t_game *game);
+void	ft_struct_map_init(t_game *game);
+int		ft_rgb_to_int(int r, int g, int b);
+int		ft_is_map_line(char *line);
+void	ft_copy_previous_map(char **new_map, char **old_map, int size);
+void	ft_map_init(t_game *game, char *argv, int fd);
+void	ft_extract_info(t_game *game, char *buff);
+int		ft_extract_color(char *buff, t_game *game);
+char	*ft_extract_line_info(char *buff, t_game *game);
+void	ft_extract_map(t_game *game, char *buff, int j, char **temp);
+void	ft_map_check(t_game *game);
+void	ft_emptyline_check(t_game *game);
+void	ft_wall_check1(t_game *game);
+void	ft_wall_check2(t_game *game);
+void	ft_wall_check3(t_game *game);
+void	ft_invalid_char_check(t_game *game);
+void	ft_player_check(t_game *game, int i, int j);
+void	ft_free_array(char **array);
+void	ft_error_map(char *msg, t_game *game);
+void	ft_arg_verif(int argc, char **argv, t_game *game);
+int		ft_zero_map_check(char **map, int i, int j);
+int		ft_find_player_pos(t_game *game);
+int		ft_is_player(char c);
+
+int		ft_error_handling(t_game *game, char *message);
 
 
 #endif

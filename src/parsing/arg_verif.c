@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arg_verif.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:04:14 by dloisel           #+#    #+#             */
-/*   Updated: 2024/10/29 22:00:47 by dmathis          ###   ########.fr       */
+/*   Updated: 2024/12/12 07:18:42 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-void	ft_arg_verif(int argc, char **argv, t_bag *game)
+void	ft_arg_verif(int argc, char **argv, t_game *game)
 {
 	char	*format;
 	int		len;
