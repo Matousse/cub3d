@@ -78,7 +78,6 @@ $(NAME): $(LIBFT) $(PRINTF) $(GNL) $(MLX_LIB) $(OBJS)
 # Object compilation
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@echo "$(BLUE)Compiling $<...$(RESET)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 # Libraries
@@ -96,7 +95,7 @@ $(GNL):
 
 $(MLX_LIB):
 	@echo "$(YELLOW)Making minilibx...$(RESET)"
-	@make --no-print-directory -C $(MLX_DIR)
+	@make --no-print-directory -C $(MLX_DIR) > /dev/null 2>&1
 
 # Utility targets
 pre_build:
@@ -111,7 +110,7 @@ clean:
 	@make clean --no-print-directory -C $(INC_DIR)/libft
 	@make clean --no-print-directory -C $(INC_DIR)/ft_printf
 	@make clean --no-print-directory -C $(INC_DIR)/get_next_line
-	@make clean --no-print-directory -C $(MLX_DIR)
+	@make clean --no-print-directory -C $(MLX_DIR) > /dev/null 2>&1
 
 fclean: clean
 	@echo "$(RED)Cleaning everything...$(RESET)"
