@@ -149,7 +149,37 @@ void raycasting(t_game *game)
 /* Boucle de rendu */
 int render(t_game *game)
 {
-	raycasting(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
-	return (0);
+    if (game->game_state == GAME_STATE_MENU)
+    {
+        draw_menu(game);
+        return (0);
+    }
+    
+    move_player(game);
+    raycasting(game);
+    
+    // Appliquer le fog si nécessaire
+    if (game->fog_intensity > 0)
+    {
+        for (int y = 0; y < WINDOW_HEIGHT; y++)
+            for (int x = 0; x < WINDOW_WIDTH; x++)
+            {
+                int current = *(unsigned int*)(game->addr + 
+                    (y * game->line_length + x * (game->bits_per_pixel / 8)));
+                int fog_color = 0x808080;  // Gris
+                int fogged = current * (1 - game->fog_intensity) + 
+                            fog_color * game->fog_intensity;
+                put_pixel(game, x, y, fogged);
+            }
+    }
+    
+    mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
+    
+    update_game_state(game);
+    draw_timer(game);
+    
+    if (game->game_state == GAME_STATE_GAMEOVER)
+        draw_gameover(game);
+    
+    return (0);
 }

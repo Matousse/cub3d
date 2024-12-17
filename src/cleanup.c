@@ -12,8 +12,6 @@
 
 #include "../../includes/cub3d.h"
 
-#include "../includes/cub3d.h"
-
 void destroy_textures(t_game *game)
 {
 	if (game->textures.north.img)

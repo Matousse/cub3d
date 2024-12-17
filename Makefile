@@ -35,10 +35,12 @@ INIT_SRC	= src/init/init.c \
 HOOKS_SRC	= src/hooks/hooks.c \
 
 MAIN_SRC	= $(SRC_DIR)/main.c \
-				$(SRC_DIR)/cleanup.c
+				$(SRC_DIR)/cleanup.c \
+				$(SRC_DIR)/game_state.c
 
 REN_SRC		= src/rendering/pixels.c \
-				src/rendering/textures.c
+				src/rendering/textures.c \
+				src/rendering/ui.c
 
 PARS_SRC	= src/parsing/parsing.c \
 				src/parsing/parsing_utils.c \

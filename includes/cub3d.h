@@ -24,6 +24,13 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
+
+#define GAME_STATE_MENU 0
+#define GAME_STATE_PLAYING 1
+#define GAME_STATE_GAMEOVER 2
+#define INITIAL_TIME 300  // 5 minutes en secondes
+#define FOG_INTERVAL 90   // 1.5 minutes en secondes
 
 /* Colors for output */
 # define RED "\x1b[31m"
@@ -38,8 +45,8 @@
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
 #define FOV 60
-#define MOVE_SPEED 0.1
-#define ROTATION_SPEED 0.05
+#define MOVE_SPEED 0.025
+#define ROTATION_SPEED 0.02
 #define PI 3.14159265359
 #define TEX_WIDTH 64
 #define TEX_HEIGHT 64
@@ -97,9 +104,19 @@ typedef struct s_game {
 	void *win;
 	void *img;
 	char *addr;
+	int move_forward;    // W
+    int move_backward;   // S
+    int move_left;       // A
+    int move_right;      // D
+    int rotate_left;     // Flèche gauche
+    int rotate_right;    // Flèche droite
 	int bits_per_pixel;
 	int line_length;
 	int endian;
+	int game_state;
+    time_t start_time;
+    time_t current_time;
+    float fog_intensity;
 	t_player player;
 	t_textures textures;
 	t_map map;
@@ -116,6 +133,13 @@ void put_pixel(t_game *game, int x, int y, int color);
 int load_texture(t_game *game, t_texture *texture, char *path);
 int load_textures(t_game *game);
 int render(t_game *game);
+int key_release(int keycode, t_game *game);
+void move_player(t_game *game);
+
+void draw_menu(t_game *game);
+void draw_gameover(t_game *game);
+void draw_timer(t_game *game);
+void update_game_state(t_game *game);
 
 /*Parsing*/
 void	ft_parsing(int argc, char **argv, t_game *game);

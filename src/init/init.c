@@ -5,6 +5,16 @@ void init_player_direction(t_game *game, char direction)
 {
 	printf("Setting player direction: %c\n", direction);
 
+	game->move_forward = 0;
+	game->move_backward = 0;
+	game->move_left = 0;
+	game->move_right = 0;
+	game->rotate_left = 0;
+	game->rotate_right = 0;
+
+	game->game_state = GAME_STATE_MENU;
+    game->fog_intensity = 0;
+
 	if (direction == 'N')
 	{
 		game->player.dir_x = -1.0;
