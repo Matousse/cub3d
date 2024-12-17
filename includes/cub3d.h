@@ -29,8 +29,10 @@
 #define GAME_STATE_MENU 0
 #define GAME_STATE_PLAYING 1
 #define GAME_STATE_GAMEOVER 2
-#define INITIAL_TIME 300  // 5 minutes en secondes
-#define FOG_INTERVAL 90   // 1.5 minutes en secondes
+#define INITIAL_TIME 180  // 3 minutes en secondes
+#define FOG_INTERVAL 5   // 1.5 minutes en secondes
+#define MAX_FOG_LEVELS 8  // Nombre de paliers de brouillard
+#define BASE_VIEW_DISTANCE 20.0  // Distance de vue de base
 
 /* Colors for output */
 # define RED "\x1b[31m"
@@ -116,6 +118,8 @@ typedef struct s_game {
 	int game_state;
     time_t start_time;
     time_t current_time;
+	int fog_level;       // Niveau actuel de brouillard (0 à MAX_FOG_LEVELS)
+    double view_distance; // Distance de vue actuelle
     float fog_intensity;
 	t_player player;
 	t_textures textures;
@@ -140,6 +144,7 @@ void draw_menu(t_game *game);
 void draw_gameover(t_game *game);
 void draw_timer(t_game *game);
 void update_game_state(t_game *game);
+int blend_color(int color1, int color2, double factor);
 
 /*Parsing*/
 void	ft_parsing(int argc, char **argv, t_game *game);
