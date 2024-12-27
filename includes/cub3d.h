@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2024/12/13 19:53:40 by dloisel          ###   ########.fr       */
+/*   Updated: 2024/12/23 00:42:28 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,13 @@
 #define TEX_WIDTH 64
 #define TEX_HEIGHT 64
 
+#define MINIMAP_SCALE 0.2
+#define MINIMAP_WIDTH (WINDOW_WIDTH * 0.25)
+#define MINIMAP_HEIGHT (WINDOW_HEIGHT * 0.25)
+#define MINIMAP_PLAYER_SIZE 3
+#define MINIMAP_BLUR_RADIUS 2
+#define MINIMAP_BLUR_SIGMA 1.0
+
 typedef struct s_map
 {
 	int			width;
@@ -82,6 +89,16 @@ typedef struct s_texture {
 	int endian;
 } t_texture;
 
+typedef struct s_minimap {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+} t_minimap;
+
 /* Structure pour stocker toutes les textures */
 typedef struct s_textures {
 	t_texture north;
@@ -107,23 +124,24 @@ typedef struct s_game {
 	void *img;
 	char *addr;
 	int move_forward;    // W
-    int move_backward;   // S
-    int move_left;       // A
-    int move_right;      // D
-    int rotate_left;     // Flèche gauche
-    int rotate_right;    // Flèche droite
+	int move_backward;   // S
+	int move_left;       // A
+	int move_right;      // D
+	int rotate_left;     // Flèche gauche
+	int rotate_right;    // Flèche droite
 	int bits_per_pixel;
 	int line_length;
 	int endian;
 	int game_state;
-    time_t start_time;
-    time_t current_time;
+	time_t start_time;
+	time_t current_time;
 	int fog_level;       // Niveau actuel de brouillard (0 à MAX_FOG_LEVELS)
-    double view_distance; // Distance de vue actuelle
-    float fog_intensity;
+	double view_distance; // Distance de vue actuelle
+	float fog_intensity;
 	t_player player;
 	t_textures textures;
 	t_map map;
+	t_minimap	*minimap;
 } t_game;
 
 extern int default_map[8][8];
@@ -176,6 +194,8 @@ void 	cleanup_game(t_game *game);
 void 	debug_print_map(t_game *game);
 void 	destroy_textures(t_game *game);
 
+void 	init_minimap(t_game *game);
+void	update_minimap(t_game *game);
 
 
 #endif

@@ -185,7 +185,7 @@ void raycasting(t_game *game)
             double floor_y = game->player.pos_y + row_distance * ray_dir_y0;
 
             int ceiling_color = 0x00AAAAAA;
-            
+
             if (game->fog_level > 0 && row_distance > floor_fog_start)
             {
                 double ceiling_fog = (row_distance - floor_fog_start) / (game->view_distance - floor_fog_start);
@@ -218,7 +218,7 @@ void raycasting(t_game *game)
             double floor_y = game->player.pos_y + row_distance * ray_dir_y0;
 
             int floor_color = 0x00555555;
-            
+
             if (game->fog_level > 0 && row_distance > floor_fog_start)
             {
                 double floor_fog = (row_distance - floor_fog_start) / (game->view_distance - floor_fog_start);
@@ -242,33 +242,35 @@ int render(t_game *game)
         draw_menu(game);
         return (0);
     }
-    
+
     move_player(game);
     raycasting(game);
-    
+
     // Appliquer le fog si nécessaire
     if (game->fog_intensity > 0)
     {
         for (int y = 0; y < WINDOW_HEIGHT; y++)
             for (int x = 0; x < WINDOW_WIDTH; x++)
             {
-                int current = *(unsigned int*)(game->addr + 
+                int current = *(unsigned int*)(game->addr +
                     (y * game->line_length + x * (game->bits_per_pixel / 8)));
                 int fog_color = 0x808080;  // Gris
-                int fogged = current * (1 - game->fog_intensity) + 
+                int fogged = current * (1 - game->fog_intensity) +
                             fog_color * game->fog_intensity;
                 put_pixel(game, x, y, fogged);
             }
     }
-    
+
     mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
-    
+
     update_game_state(game);
     draw_timer(game);
-    
+	update_minimap(game);
+	mlx_put_image_to_window(game->mlx, game->win, game->minimap->img, 10, 10);
+
     if (game->game_state == GAME_STATE_GAMEOVER)
         draw_gameover(game);
-    
+
     return (0);
 }
 

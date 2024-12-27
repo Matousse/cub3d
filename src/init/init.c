@@ -140,4 +140,5 @@ void init_game(t_game *game)
 		ft_error_handling(game, "loading textures failed");
 
 	find_player_position(game);
+	init_minimap(game);
 }

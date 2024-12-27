@@ -40,7 +40,8 @@ MAIN_SRC	= $(SRC_DIR)/main.c \
 
 REN_SRC		= src/rendering/pixels.c \
 				src/rendering/textures.c \
-				src/rendering/ui.c
+				src/rendering/ui.c \
+				src/rendering/minimap.c
 
 PARS_SRC	= src/parsing/parsing.c \
 				src/parsing/parsing_utils.c \
@@ -48,7 +49,7 @@ PARS_SRC	= src/parsing/parsing.c \
 				src/parsing/map_check1.c \
 				src/parsing/map_check2.c \
 				src/parsing/free_parsing.c \
-				src/parsing/arg_verif.c
+				src/parsing/arg_verif.c \
 
 # Combine all sources
 SRCS		= $(MAIN_SRC) $(RAYCAST_SRC) $(INIT_SRC) $(HOOKS_SRC) $(REN_SRC) $(PARS_SRC)
