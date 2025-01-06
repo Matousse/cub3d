@@ -25,5 +25,9 @@ int load_textures(t_game *game)
         return (0);
     if (!load_texture(game, &game->textures.west, game->map.we_texture))
         return (0);
+    if (!load_texture(game, &game->textures.key, "textures/key.xpm"))
+        return (0);
+    if (!load_texture(game, &game->textures.door, "textures/door.xpm"))
+        return (0);
     return (1);
 }

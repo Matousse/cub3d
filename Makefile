@@ -36,7 +36,7 @@ HOOKS_SRC	= src/hooks/hooks.c \
 
 MAIN_SRC	= $(SRC_DIR)/main.c \
 				$(SRC_DIR)/cleanup.c \
-				$(SRC_DIR)/game_state.c
+				$(SRC_DIR)/game_state.c \
 
 REN_SRC		= src/rendering/pixels.c \
 				src/rendering/textures.c \
@@ -51,8 +51,10 @@ PARS_SRC	= src/parsing/parsing.c \
 				src/parsing/free_parsing.c \
 				src/parsing/arg_verif.c \
 
+OTH_SRC		= src/other/items.c \
+
 # Combine all sources
-SRCS		= $(MAIN_SRC) $(RAYCAST_SRC) $(INIT_SRC) $(HOOKS_SRC) $(REN_SRC) $(PARS_SRC)
+SRCS		= $(MAIN_SRC) $(RAYCAST_SRC) $(INIT_SRC) $(HOOKS_SRC) $(REN_SRC) $(PARS_SRC) $(OTH_SRC)
 
 # Object files
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

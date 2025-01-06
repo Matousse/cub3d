@@ -46,6 +46,7 @@ void init_player_direction(t_game *game, char direction)
 		game->player.plane_x = -0.66;
 		game->player.plane_y = 0.0;
 	}
+	init_inventory(game);
 	printf("Player direction set to: dir_x=%f, dir_y=%f, plane_x=%f, plane_y=%f\n",
 		   game->player.dir_x, game->player.dir_y, game->player.plane_x, game->player.plane_y);
 }

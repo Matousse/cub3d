@@ -60,6 +60,8 @@
 #define MINIMAP_BLUR_RADIUS 2
 #define MINIMAP_BLUR_SIGMA 1.0
 
+#define MESSAGE_DURATION 100
+
 typedef struct s_map
 {
 	int			width;
@@ -105,6 +107,8 @@ typedef struct s_textures {
 	t_texture south;
 	t_texture east;
 	t_texture west;
+	t_texture key;
+	t_texture door;
 } t_textures;
 
 /* Structure pour stocker les données du joueur */
@@ -116,6 +120,12 @@ typedef struct s_player {
 	double plane_x;
 	double plane_y;
 } t_player;
+
+typedef struct s_inventory {
+    int keys;           
+    int show_message;   
+    int message_timer;
+} t_inventory;
 
 /* Structure pour la gestion de la fenêtre et du rendu */
 typedef struct s_game {
@@ -142,6 +152,7 @@ typedef struct s_game {
 	t_textures textures;
 	t_map map;
 	t_minimap	*minimap;
+	t_inventory inventory;
 } t_game;
 
 extern int default_map[8][8];
@@ -197,5 +208,11 @@ void 	destroy_textures(t_game *game);
 void 	init_minimap(t_game *game);
 void	update_minimap(t_game *game);
 
+void 	init_inventory(t_game *game);
+void 	collect_key(t_game *game, int map_x, int map_y);
+void 	try_open_door(t_game *game);
+void 	draw_inventory(t_game *game);
+
+void 	draw_key(t_game *game, int map_x, int map_y, double dist);
 
 #endif

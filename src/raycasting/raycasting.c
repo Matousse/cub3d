@@ -79,7 +79,8 @@ void raycasting(t_game *game)
                 break;
 
             // Vérification de collision avec un mur
-            if (game->map.fullmap[map_x][map_y] == '1')
+            if (game->map.fullmap[map_x][map_y] == '1' || 
+            game->map.fullmap[map_x][map_y] == 'D')
                 hit = 1;
         }
 
@@ -129,7 +130,9 @@ void raycasting(t_game *game)
 
         // Sélection de la texture selon le côté du mur
         t_texture *texture;
-        if (side == 0)
+        if (game->map.fullmap[map_x][map_y] == 'D')
+            texture = &game->textures.door;
+        else if (side == 0)
             texture = ray_dir_x > 0 ? &game->textures.east : &game->textures.west;
         else
             texture = ray_dir_y > 0 ? &game->textures.south : &game->textures.north;
@@ -246,6 +249,12 @@ int render(t_game *game)
     move_player(game);
     raycasting(game);
 
+    if (game->map.fullmap[(int)game->player.pos_x][(int)game->player.pos_y] == 'K')
+{
+    double dist = sqrt(pow(game->player.pos_x - (int)game->player.pos_x, 2) + 
+                      pow(game->player.pos_y - (int)game->player.pos_y, 2));
+    draw_key(game, (int)game->player.pos_x, (int)game->player.pos_y, dist);
+}
     // Appliquer le fog si nécessaire
     if (game->fog_intensity > 0)
     {
@@ -261,6 +270,7 @@ int render(t_game *game)
             }
     }
 
+    
     mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 
     update_game_state(game);
@@ -270,7 +280,7 @@ int render(t_game *game)
 
     if (game->game_state == GAME_STATE_GAMEOVER)
         draw_gameover(game);
-
+    draw_inventory(game);
     return (0);
 }
 
@@ -280,4 +290,55 @@ int blend_color(int color1, int color2, double factor)
     int g = ((color1 & 0x00FF00) >> 8) * factor + ((color2 & 0x00FF00) >> 8) * (1 - factor);
     int b = (color1 & 0x0000FF) * factor + (color2 & 0x0000FF) * (1 - factor);
     return (r << 16) | (g << 8) | b;
+}
+
+void draw_key(t_game *game, int map_x, int map_y, double dist)
+{
+    if (!game || dist <= 0)
+        return;
+
+    // Calculer la taille de la clé (plus petite que la hauteur des murs)
+    int key_height = (int)(WINDOW_HEIGHT / (dist * 3)); // Réduit la taille
+    int key_width = key_height;
+
+    // Position de la clé sur l'écran (un peu plus bas que le centre)
+    int draw_start_y = (WINDOW_HEIGHT / 2) + (key_height / 4); // Déplacé vers le bas
+    int draw_end_y = draw_start_y + key_height;
+    
+    // S'assurer que la clé reste dans les limites de l'écran
+    if (draw_start_y < 0) draw_start_y = 0;
+    if (draw_end_y >= WINDOW_HEIGHT) draw_end_y = WINDOW_HEIGHT - 1;
+
+    // Centrer horizontalement
+    int center_x = WINDOW_WIDTH / 2;
+    int draw_start_x = center_x - (key_width / 2);
+    int draw_end_x = center_x + (key_width / 2);
+
+    // Dessiner la clé pixel par pixel
+    for (int y = draw_start_y; y < draw_end_y; y++)
+    {
+        int tex_y = ((y - draw_start_y) * TEX_HEIGHT) / key_height;
+        
+        for (int x = draw_start_x; x < draw_end_x; x++)
+        {
+            if (x >= 0 && x < WINDOW_WIDTH)
+            {
+                int tex_x = ((x - draw_start_x) * TEX_WIDTH) / key_width;
+                int color = get_texture_color(&game->textures.key, tex_x, tex_y);
+                
+                // Ne dessiner que si la couleur n'est pas noire (transparente)
+                if (color != 0)
+                {
+                    // Ajouter un peu de profondeur à la couleur en fonction de la distance
+                    double fade = 1.0 / (1.0 + dist * 0.1);
+                    int r = ((color >> 16) & 0xFF) * fade;
+                    int g = ((color >> 8) & 0xFF) * fade;
+                    int b = (color & 0xFF) * fade;
+                    color = (r << 16) | (g << 8) | b;
+                    
+                    put_pixel(game, x, y, color);
+                }
+            }
+        }
+    }
 }

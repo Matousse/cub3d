@@ -65,7 +65,7 @@ static void apply_gaussian_blur(t_minimap *minimap)
 		for (int x = 0; x < MINIMAP_BLUR_RADIUS * 2 + 1; x++)
 			kernel[y][x] /= sum;
 
-	memcpy(temp, minimap->addr, minimap->height * minimap->line_length);
+	ft_memcpy(temp, minimap->addr, minimap->height * minimap->line_length);
 
 	// Application du flou
 	for (int y = MINIMAP_BLUR_RADIUS; y < minimap->height - MINIMAP_BLUR_RADIUS; y++)

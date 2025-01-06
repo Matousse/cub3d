@@ -52,9 +52,10 @@ void	ft_invalid_char_check(t_game *game)
 		while (game->map.fullmap[i][j])
 		{
 			if (game->map.fullmap[i][j] != '1' && game->map.fullmap[i][j] != '0'
-			&& game->map.fullmap[i][j] != ' ' && game->map.fullmap[i][j] != 'N'
-			&& game->map.fullmap[i][j] != 'W' && game->map.fullmap[i][j] != 'E'
-			&&game->map.fullmap[i][j] != 'S')
+				&& game->map.fullmap[i][j] != ' ' && game->map.fullmap[i][j] != 'N'
+				&& game->map.fullmap[i][j] != 'W' && game->map.fullmap[i][j] != 'E'
+				&& game->map.fullmap[i][j] != 'S' && game->map.fullmap[i][j] != 'K'
+				&& game->map.fullmap[i][j] != 'D')
 				return ((void)ft_error_map("Invalid character within the map.", \
 				game));
 			j++;
