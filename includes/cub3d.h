@@ -213,6 +213,4 @@ void 	collect_key(t_game *game, int map_x, int map_y);
 void 	try_open_door(t_game *game);
 void 	draw_inventory(t_game *game);
 
-void 	draw_key(t_game *game, int map_x, int map_y, double dist);
-
 #endif
