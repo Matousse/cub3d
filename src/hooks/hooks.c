@@ -23,8 +23,6 @@ int key_press(int keycode, t_game *game)
         game->move_right = 1;
     else if (keycode == 97)      /* A */
         game->move_left = 1;
-    else if (keycode == 101)     /* E */
-        try_open_door(game);
     return (0);
 }
 

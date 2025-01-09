@@ -51,10 +51,8 @@ PARS_SRC	= src/parsing/parsing.c \
 				src/parsing/free_parsing.c \
 				src/parsing/arg_verif.c \
 
-OTH_SRC		= src/other/items.c \
-
 # Combine all sources
-SRCS		= $(MAIN_SRC) $(RAYCAST_SRC) $(INIT_SRC) $(HOOKS_SRC) $(REN_SRC) $(PARS_SRC) $(OTH_SRC)
+SRCS		= $(MAIN_SRC) $(RAYCAST_SRC) $(INIT_SRC) $(HOOKS_SRC) $(REN_SRC) $(PARS_SRC)
 
 # Object files
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

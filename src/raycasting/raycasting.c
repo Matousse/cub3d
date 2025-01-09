@@ -162,7 +162,6 @@ int render(t_game *game)
 	mlx_put_image_to_window(game->mlx, game->win, game->minimap->img, 10, 10);
 	if (game->game_state == GAME_STATE_GAMEOVER)
 		draw_gameover(game);
-	draw_inventory(game);
 	return (0);
 }
 
