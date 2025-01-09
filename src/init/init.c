@@ -12,11 +12,7 @@ void init_player_direction(t_game *game, char direction)
 	game->rotate_left = 0;
 	game->rotate_right = 0;
 
-	game->fog_level = 0;
-    game->view_distance = BASE_VIEW_DISTANCE;
-
 	game->game_state = GAME_STATE_MENU;
-    game->fog_intensity = 0;
 
 	if (direction == 'N')
 	{

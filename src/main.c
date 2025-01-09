@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 07:24:01 by dloisel           #+#    #+#             */
-/*   Updated: 2024/12/14 01:01:32 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/09 23:27:45 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int main(int argc, char **argv)
 	mlx_hook(game.win, 2, 1L<<0, key_press, &game);
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_hook(game.win, 3, 1L<<1, key_release, &game);
+	mlx_hook(game.win, 6, 1L<<6, handle_mouse, &game);
 	mlx_loop_hook(game.mlx, render, &game);
 
 	// Démarrer la boucle principale

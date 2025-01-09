@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2024/12/23 00:42:28 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/10 00:10:39 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@
 #define GAME_STATE_PLAYING 1
 #define GAME_STATE_GAMEOVER 2
 #define INITIAL_TIME 180  // 3 minutes en secondes
-#define FOG_INTERVAL 5   // 1.5 minutes en secondes
-#define MAX_FOG_LEVELS 8  // Nombre de paliers de brouillard
-#define BASE_VIEW_DISTANCE 20.0  // Distance de vue de base
 
 /* Colors for output */
 # define RED "\x1b[31m"
@@ -121,12 +118,6 @@ typedef struct s_player {
 	double plane_y;
 } t_player;
 
-typedef struct s_inventory {
-    int keys;           
-    int show_message;   
-    int message_timer;
-} t_inventory;
-
 /* Structure pour la gestion de la fenêtre et du rendu */
 typedef struct s_game {
 	void *mlx;
@@ -145,14 +136,10 @@ typedef struct s_game {
 	int game_state;
 	time_t start_time;
 	time_t current_time;
-	int fog_level;       // Niveau actuel de brouillard (0 à MAX_FOG_LEVELS)
-	double view_distance; // Distance de vue actuelle
-	float fog_intensity;
 	t_player player;
 	t_textures textures;
 	t_map map;
 	t_minimap	*minimap;
-	t_inventory inventory;
 } t_game;
 
 extern int default_map[8][8];
@@ -212,5 +199,7 @@ void 	init_inventory(t_game *game);
 void 	collect_key(t_game *game, int map_x, int map_y);
 void 	try_open_door(t_game *game);
 void 	draw_inventory(t_game *game);
+
+int 	handle_mouse(int x, int y, t_game *game);
 
 #endif
