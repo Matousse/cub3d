@@ -1,35 +1,40 @@
-# Colors for pretty output
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/01/10 18:46:16 by dloisel           #+#    #+#              #
+#    Updated: 2025/01/10 18:48:40 by dloisel          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 GRAY		= \033[30m
-RED		= \033[31m
+RED			= \033[31m
 GREEN		= \033[32m
 YELLOW		= \033[33m
 BLUE		= \033[34m
 RESET		= \033[0m
 
-# Project configuration
 NAME		= cub3d
 NAME_BONUS	= cub3d_bonus
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -g3
 DEBUGFLAGS	= -g
 
-# Directories
 SRC_DIR		= ./mandatory/src
 BONUS_SRC_DIR	= ./bonus/src
-OBJ_DIR		= ./.obj
 INC_DIR		= ./includes
 MLX_DIR		= $(INC_DIR)/minilibx-linux
 
-# Libraries
 LIBFT		= $(INC_DIR)/libft/libft.a
 PRINTF		= $(INC_DIR)/ft_printf/libftprintf.a
-GNL		= $(INC_DIR)/get_next_line/get_next_line.a
-MLX		= $(MLX_DIR)/libmlx.a
+GNL			= $(INC_DIR)/get_next_line/get_next_line.a
+MLX			= $(MLX_DIR)/libmlx.a
 
-# MLX configuration
 MLX_FLAGS	= -L$(MLX_DIR) -lXext -lX11 -lm -lz
 
-# Mandatory source files
 RAYCAST_SRC	= $(SRC_DIR)/raycasting/raycasting.c \
 		  $(SRC_DIR)/raycasting/raycasting2.c \
 		  $(SRC_DIR)/raycasting/raycasting3.c \
@@ -55,7 +60,6 @@ PARS_SRC	= $(SRC_DIR)/parsing/parsing.c \
 		  $(SRC_DIR)/parsing/free_parsing.c \
 		  $(SRC_DIR)/parsing/arg_verif.c
 
-# Bonus source files
 BONUS_RAYCAST_SRC = $(BONUS_SRC_DIR)/raycasting/raycasting_bonus.c \
 		    $(BONUS_SRC_DIR)/raycasting/raycasting2_bonus.c \
 		    $(BONUS_SRC_DIR)/raycasting/raycasting3_bonus.c \
@@ -85,27 +89,21 @@ BONUS_PARS_SRC = $(BONUS_SRC_DIR)/parsing/parsing_bonus.c \
 		 $(BONUS_SRC_DIR)/parsing/free_parsing2_bonus.c \
 		 $(BONUS_SRC_DIR)/parsing/arg_verif_bonus.c
 
-# Combine all sources
 SRCS		= $(MAIN_SRC) $(RAYCAST_SRC) $(INIT_SRC) $(HOOKS_SRC) $(REN_SRC) $(PARS_SRC)
 BONUS_SRCS	= $(BONUS_MAIN_SRC) $(BONUS_RAYCAST_SRC) $(BONUS_INIT_SRC) $(BONUS_HOOKS_SRC) $(BONUS_REN_SRC) $(BONUS_PARS_SRC)
 
-# Object files
-OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-BONUS_OBJS	= $(BONUS_SRCS:$(BONUS_SRC_DIR)/%.c=$(OBJ_DIR)/bonus/%.o)
+OBJS		= $(SRCS:.c=.o)
+BONUS_OBJS	= $(BONUS_SRCS:.c=.o)
 
-# Include directories
 INCLUDES	= -I$(INC_DIR)
 INCLUDES_BONUS	= -I$(INC_DIR)
 
-# Additional flags
 LDFLAGS		= -lreadline
 
-# Main targets
 all: pre_build $(NAME)
 
 bonus: pre_build $(NAME_BONUS)
 
-# Main compilation
 $(NAME): $(LIBFT) $(PRINTF) $(GNL) $(MLX) $(OBJS)
 	@$(CC) $(OBJS) $(LIBFT) $(PRINTF) $(GNL) $(MLX) $(MLX_FLAGS) -o $(NAME) $(LDFLAGS)
 	@echo
@@ -128,16 +126,9 @@ $(NAME_BONUS): $(LIBFT) $(PRINTF) $(GNL) $(MLX) $(BONUS_OBJS)
 	@echo "$(GREEN) ╚════╝  ╚═════╝ ╚═════╝ ╚═════╝ ╚═════╝     ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ╚══════╝"
 	@echo
 
-# Object compilation
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(dir $@)
+%.o: %.c
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(OBJ_DIR)/bonus/%.o: $(BONUS_SRC_DIR)/%.c
-	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) $(INCLUDES_BONUS) -c $< -o $@
-
-# Libraries
 $(LIBFT):
 	@echo "$(YELLOW)Making libft...$(RESET)"
 	@make bonus --no-print-directory -C $(INC_DIR)/libft
@@ -154,7 +145,6 @@ $(MLX):
 	@echo "$(YELLOW)Making minilibx...$(RESET)"
 	@make --no-print-directory -C $(MLX_DIR) > /dev/null 2>&1
 
-# Utility targets
 pre_build:
 	@echo "$(BLUE)Starting build process...$(RESET)"
 
@@ -163,7 +153,7 @@ debug: re
 
 clean:
 	@echo "$(RED)Cleaning object files...$(RESET)"
-	@rm -rf $(OBJ_DIR)
+	@find $(SRC_DIR) $(BONUS_SRC_DIR) -name "*.o" -type f -delete
 	@make clean --no-print-directory -C $(INC_DIR)/libft
 	@make clean --no-print-directory -C $(INC_DIR)/ft_printf
 	@make clean --no-print-directory -C $(INC_DIR)/get_next_line
