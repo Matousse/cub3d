@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check2_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 20:29:15 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 18:19:17 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/10 22:18:18 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	ft_invalid_char_check(t_game *game)
 					&& game->map.fullmap[i][j] != 'E'
 				&& game->map.fullmap[i][j] != 'S'
 					&& game->map.fullmap[i][j] != 'D'
-				&& game->map.fullmap[i][j] != 'T')
+				&& game->map.fullmap[i][j] != 'T'
+					&& game->map.fullmap[i][j] != 'X')
 			{
 				ft_error_map("Invalid character within the map.", game);
 			}
