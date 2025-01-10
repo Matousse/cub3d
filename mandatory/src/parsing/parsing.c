@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:12:16 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 18:25:48 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/10 23:58:20 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,17 @@ void	ft_struct_map_init(t_game *game)
 
 void	ft_get_width_height(t_game *game)
 {
-	int	i;
-	int	j;
+	int		i;
+	size_t	len;
 
 	i = 0;
-	j = 0;
 	if (game->map.is_map_valid == 1)
 		return ;
 	while (game->map.fullmap[i])
 	{
-		while (game->map.fullmap[i][j])
-			j++;
-		if (game->map.width < j)
-			game->map.width = j;
+		len = ft_strlen(game->map.fullmap[i]);
+		if ((size_t)game->map.width < len)
+			game->map.width = (int)len;
 		i++;
 	}
 	game->map.height = i;

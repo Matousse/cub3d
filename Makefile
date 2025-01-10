@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+         #
+#    By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/10 18:46:16 by dloisel           #+#    #+#              #
-#    Updated: 2025/01/10 22:21:17 by dloisel          ###   ########.fr        #
+#    Updated: 2025/01/11 00:10:29 by dmathis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ REN_SRC		= $(SRC_DIR)/rendering/pixels.c \
 PARS_SRC	= $(SRC_DIR)/parsing/parsing.c \
 		  	$(SRC_DIR)/parsing/parsing_utils.c \
 		  	$(SRC_DIR)/parsing/map_init.c \
+			$(SRC_DIR)/parsing/map_init2.c \
 		  	$(SRC_DIR)/parsing/map_check1.c \
 		  	$(SRC_DIR)/parsing/map_check2.c \
 		  	$(SRC_DIR)/parsing/free_parsing.c \

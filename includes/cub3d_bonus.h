@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 21:44:48 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/10 23:13:29 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_animation
 	int		frame_count;
 	int		current_frame;
 	double	last_update;
+	int		win_frame;
 }	t_animation;
 
 typedef struct s_keys
@@ -99,6 +100,7 @@ typedef struct s_map
 	char	*door_texture;
 	char	*wallsmiley1_texture;
 	char	*wallsmiley2_texture;
+	char    *win_textures[9];
 }	t_map;
 
 typedef struct s_minimap_coords
@@ -164,6 +166,7 @@ typedef struct s_textures
 	t_texture	door;
 	t_texture	wallsmiley1;
 	t_texture	wallsmiley2;
+	t_texture    win[9];
 }	t_textures;
 
 /* Structure pour stocker les données du joueur */
@@ -256,6 +259,8 @@ void		cleanup_game(t_game *game);
 void		debug_print_map(t_game *game);
 void		destroy_textures(t_game *game);
 
+int			ft_check_texture_prefix(char *buff);
+
 /*Init*/
 void		init_player_direction2(t_game *game, char direction);
 int			init_mlx_window(t_game *game);
@@ -313,8 +318,7 @@ void		process_cell(t_game *game, t_minimap_coords *mc, t_map_iter *iter);
 void		update_map_cells(t_game *game, t_minimap_coords *mc);
 void		update_minimap(t_game *game);
 void		draw_player(t_game *game, t_minimap_coords *mc);
-void    	draw_minimap_border(t_game *game, int x, int y, int border_thickness);
-
+void		draw_minimap_border(t_game *game, int x, int y, int border_thickness);
 
 void		ft_free_map(t_game *game);
 void		ft_free_map1(t_game *game);

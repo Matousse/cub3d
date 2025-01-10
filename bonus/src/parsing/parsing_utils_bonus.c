@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 10:24:15 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 22:38:13 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/10 23:09:04 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	ft_is_map_line(t_game *game, char *line)
 
 	i = 0;
 	has_valid_char = 0;
+	ft_printf("%s\n", line);
 	while (line[i])
 	{
 		if (line[i] == '\n')

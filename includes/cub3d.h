@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 02:15:17 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 00:17:23 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void		ft_map_init(t_game *game, char *argv, int fd);
 void		ft_extract_info(t_game *game, char *buff);
 int			ft_extract_color(char *buff, t_game *game);
 char		*ft_extract_line_info(char *buff, t_game *game);
-void		ft_extract_map(t_game *game, char *buff, int j, char **temp);
+void		ft_extract_map(t_game *game, char *buff, char **temp);
 void		ft_map_check(t_game *game);
 void		ft_emptyline_check(t_game *game);
 void		ft_wall_check1(t_game *game);
@@ -168,6 +168,10 @@ int			ft_error_handling(t_game *game, char *message);
 void		cleanup_game(t_game *game);
 void		debug_print_map(t_game *game);
 void		destroy_textures(t_game *game);
+
+void		ft_allocate_new_line(t_game *game, size_t len, int i);
+size_t		ft_get_line_length(char *buff);
+void		ft_copy_line(t_game *game, char *buff, size_t len, int i);
 
 /*Init*/
 void		init_player_direction2(t_game *game, char direction);

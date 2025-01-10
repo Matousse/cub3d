@@ -5,6 +5,18 @@ EA ./bonus/textures/east.xpm
 D  ./bonus/textures/door.xpm
 SM1 ./bonus/textures/wallsmiley1.xpm
 SM2 ./bonus/textures/wallsmiley2.xpm
+WIN1 ./bonus/textures/win1.xpm
+WIN2 ./bonus/textures/win2.xpm
+WIN3 ./bonus/textures/win3.xpm
+WIN4 ./bonus/textures/win4.xpm
+WIN5 ./bonus/textures/win5.xpm
+WIN6 ./bonus/textures/win6.xpm
+WIN7 ./bonus/textures/win7.xpm
+WIN8 ./bonus/textures/win8.xpm
+WIN9 ./bonus/textures/win9.xpm
+WIN9 ./bonus/textures/win9.xpm
+WIN9 ./bonus/textures/win9.xpm
+WIN9 ./bonus/textures/win9.xpm
 
 F 189,126,0
 C 208,211,211
@@ -12,5 +24,5 @@ C 208,211,211
         1111111111111111111111111
         10000000001101D10000T11111111111111111111111111111111111
         10110000011100000000X00000000000000000000000000000000001
-        10010000000D00000000000000000000000000111111000000000001
+        10010000000D00000000000000000N00000000111111000000000001
 1111111111111111111111111111111111111111111111     1111111111111

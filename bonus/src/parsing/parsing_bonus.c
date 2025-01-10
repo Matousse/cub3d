@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:12:16 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 18:41:36 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/10 23:12:53 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,19 @@ void	ft_parsing(int argc, char **argv, t_game *game)
 	ft_get_width_height(game);
 	if (game->map.is_map_valid == 1)
 		ft_error_handling(game, NULL);
+}
+
+int	ft_check_texture_prefix(char *buff)
+{
+	return (!ft_strncmp(buff, "NO ", 3) || !ft_strncmp(buff, "SO ", 3)
+		|| !ft_strncmp(buff, "WE ", 3) || !ft_strncmp(buff, "EA ", 3)
+		|| !ft_strncmp(buff, "F ", 2) || !ft_strncmp(buff, "C ", 2)
+		|| !ft_strncmp(buff, "D ", 2) || !ft_strncmp(buff, "SM1 ", 4)
+		|| !ft_strncmp(buff, "SM2 ", 4) || !ft_strncmp(buff, "WIN1 ", 5)
+		|| !ft_strncmp(buff, "WIN2 ", 5) || !ft_strncmp(buff, "WIN3 ", 5)
+		|| !ft_strncmp(buff, "WIN4 ", 5) || !ft_strncmp(buff, "WIN5 ", 5)
+		|| !ft_strncmp(buff, "WIN6 ", 5) || !ft_strncmp(buff, "WIN7 ", 5)
+		|| !ft_strncmp(buff, "WIN8 ", 5) || !ft_strncmp(buff, "WIN9 ", 5));
 }
 // Je check chaque ligne si le premier et dernier caractère est un 1
 // Si je croise un espace je regarde si il est

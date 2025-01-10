@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:32:33 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 19:23:25 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/10 23:36:17 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	ft_extract_color(char *buff, t_game *game)
 	int	g;
 	int	b;
 
-	game->map.all_info++;
 	while (*buff == 'F' || *buff == 'C' || *buff == ' ')
 		buff++;
 	r = ft_atoi(buff);
@@ -93,8 +92,10 @@ int	ft_extract_color(char *buff, t_game *game)
 	return (ft_rgb_to_int(r, g, b));
 }
 
-void	ft_extract_info(t_game *game, char *buff)
+void ft_extract_info(t_game *game, char *buff)
 {
+	int	index;
+
 	while (*buff == ' ' || *buff == '\t')
 		buff++;
 	if (!ft_strncmp(buff, "NO ", 3))
@@ -115,6 +116,13 @@ void	ft_extract_info(t_game *game, char *buff)
 		game->map.wallsmiley1_texture = ft_extract_line_info(buff, game);
 	else if (!ft_strncmp(buff, "SM2 ", 4))
 		game->map.wallsmiley2_texture = ft_extract_line_info(buff, game);
+	else if (!ft_strncmp(buff, "WIN", 3) && buff[3] >= '1' && buff[3] <= '9')
+	{
+		index = buff[3] - '1';
+		printf("Extracting WIN%d texture path\n", index + 1);
+		game->map.win_textures[index] = ft_extract_line_info(buff + 4, game);
+		printf("Path: %s\n", game->map.win_textures[index]);
+	}
 }
 
 void	ft_map_init(t_game *game, char *argv, int fd)
@@ -131,15 +139,13 @@ void	ft_map_init(t_game *game, char *argv, int fd)
 		buff = get_next_line(fd);
 		if (buff == NULL)
 			break ;
-		if (!ft_strncmp(buff, "NO ", 3) || !ft_strncmp(buff, "SO ", 3)
-			|| !ft_strncmp(buff, "WE ", 3) || !ft_strncmp(buff, "EA ", 3)
-			|| !ft_strncmp(buff, "F ", 2) || !ft_strncmp(buff, "C ", 2)
-			|| !ft_strncmp(buff, "D ", 2) || !ft_strncmp(buff, "SM1 ", 4)
-			|| !ft_strncmp(buff, "SM2 ", 4))
+		if (ft_check_texture_prefix(buff))
 			ft_extract_info(game, buff);
 		else if (ft_is_map_line(game, buff))
 			ft_extract_map(game, buff, 0, NULL);
 		free(buff);
 	}
 	close(fd);
+	if (game->map.all_info < 16)
+		ft_error_map("Missing elements in .cub file or multiples elements of the same kind.", game);
 }
