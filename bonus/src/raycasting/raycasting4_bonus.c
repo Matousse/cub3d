@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting4_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 00:56:39 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 18:38:06 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/10 19:23:58 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ t_texture	*select_texture(t_ray *ray, t_game *game)
 
 int	is_door_open(t_game *game, int x, int y)
 {
-	int	i;
-	size_t map_length;
+	int		i;
+	size_t	map_length;
 
 	if (!game || !game->map.doors || game->map.nb_doors <= 0)
 		return (0);

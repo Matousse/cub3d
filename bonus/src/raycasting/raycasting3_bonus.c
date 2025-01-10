@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting3_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 00:52:07 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 18:36:36 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/10 19:24:12 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_map_bounds(t_ray *ray, t_game *game)
 {
-	size_t map_length;
+	size_t	map_length;
 
 	if (ray->map_x < 0 || ray->map_x >= game->map.height || ray->map_y < 0)
 		return (0);

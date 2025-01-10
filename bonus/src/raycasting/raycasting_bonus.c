@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 00:32:57 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 18:19:31 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/10 19:27:14 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,18 @@ void	draw_floor_ceiling(t_game *game, t_ray *ray, int x)
 	}
 }
 
-void    perform_dda(t_ray *ray, t_game *game)
+void	perform_dda(t_ray *ray, t_game *game)
 {
 	ray->hit = 0;
 	while (ray->hit == 0)
 	{
 		perform_dda_step(ray);
 		if (!check_map_bounds(ray, game))
-			break;
-		if (game->map.fullmap[ray->map_x][ray->map_y] == '1' ||
-			game->map.fullmap[ray->map_x][ray->map_y] == 'T' ||
-			(game->map.fullmap[ray->map_x][ray->map_y] == 'D' && 
-			 !is_door_open(game, ray->map_x, ray->map_y)))
+			break ;
+		if (game->map.fullmap[ray->map_x][ray->map_y] == '1'
+			|| game->map.fullmap[ray->map_x][ray->map_y] == 'T'
+			|| (game->map.fullmap[ray->map_x][ray->map_y] == 'D'
+			&& !is_door_open(game, ray->map_x, ray->map_y)))
 			ray->hit = 1;
 	}
 }
@@ -95,15 +95,16 @@ void	raycasting(t_game *game)
 	}
 }
 
-int render(t_game *game)
+int	render(t_game *game)
 {
 	game->animation.frame_count++;
+	update_movement(game);
 	raycasting(game);
-	mlx_mouse_move(game->mlx, game->win, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+	mlx_mouse_move(game->mlx, game->win, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 	update_minimap(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->minimap->img, 10, 10);
+	mlx_put_image_to_window(game->mlx, game->win,
+		game->minimap->img, 10, 10);
 	usleep(10000);
 	return (0);
 }
-	

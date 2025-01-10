@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 18:21:12 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/10 19:14:56 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,16 @@ typedef struct s_animation
 	int		current_frame;
 	double	last_update;
 }	t_animation;
+
+typedef struct s_keys
+{
+	int	w;
+	int	s;
+	int	a;
+	int	d;
+	int	left;
+	int	right;
+}	t_keys;
 
 typedef struct s_map
 {
@@ -205,6 +215,7 @@ typedef struct s_game
 	t_textures	textures;
 	t_map		map;
 	t_minimap	*minimap;
+	t_keys		keys;
 }	t_game;
 
 int			key_press(int keycode, t_game *game);
@@ -263,6 +274,10 @@ void		handle_rotation_left(t_game *game);
 void		handle_rotation(int keycode, t_game *game);
 void		handle_lateral(int keycode, t_game *game);
 int			handle_mouse(int x, int y, t_game *game);
+void		init_key_states(t_game *game);
+void		update_movement(t_game *game);
+int			key_release(int keycode, t_game *game);
+void		toggle_door(t_game *game);
 
 /*Raycasting*/
 void		init_ray_dir(t_ray *ray, t_game *game, int x);

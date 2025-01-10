@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks2_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 00:00:55 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 18:38:44 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/10 19:14:03 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,18 @@ int	key_press(int keycode, t_game *game)
 {
 	if (keycode == 65307)
 		close_window(game);
-	else if (keycode == 119 || keycode == 115)
-		handle_forward_backward(keycode, game);
-	else if (keycode == 65363 || keycode == 65361)
-		handle_rotation(keycode, game);
-	else if (keycode == 100 || keycode == 97)
-		handle_lateral(keycode, game);
+	else if (keycode == 119)
+		game->keys.w = 1;
+	else if (keycode == 115)
+		game->keys.s = 1;
+	else if (keycode == 97)
+		game->keys.a = 1;
+	else if (keycode == 100)
+		game->keys.d = 1;
+	else if (keycode == 65361)
+		game->keys.left = 1;
+	else if (keycode == 65363)
+		game->keys.right = 1;
 	else if (keycode == 101)
 		toggle_door(game);
 	return (0);

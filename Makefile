@@ -6,7 +6,7 @@
 #    By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/10 18:46:16 by dloisel           #+#    #+#              #
-#    Updated: 2025/01/10 18:48:40 by dloisel          ###   ########.fr        #
+#    Updated: 2025/01/10 19:22:06 by dloisel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,58 +36,60 @@ MLX			= $(MLX_DIR)/libmlx.a
 MLX_FLAGS	= -L$(MLX_DIR) -lXext -lX11 -lm -lz
 
 RAYCAST_SRC	= $(SRC_DIR)/raycasting/raycasting.c \
-		  $(SRC_DIR)/raycasting/raycasting2.c \
-		  $(SRC_DIR)/raycasting/raycasting3.c \
-		  $(SRC_DIR)/raycasting/raycasting4.c
+		  	$(SRC_DIR)/raycasting/raycasting2.c \
+		  	$(SRC_DIR)/raycasting/raycasting3.c \
+		  	$(SRC_DIR)/raycasting/raycasting4.c
 
 INIT_SRC	= $(SRC_DIR)/init/init.c \
-		  $(SRC_DIR)/init/init2.c
+		  	$(SRC_DIR)/init/init2.c
 
 HOOKS_SRC	= $(SRC_DIR)/hooks/hooks.c \
-		  $(SRC_DIR)/hooks/hooks2.c
+			$(SRC_DIR)/hooks/hooks2.c \
 
 MAIN_SRC	= $(SRC_DIR)/main.c \
-		  $(SRC_DIR)/cleanup.c
+		  	$(SRC_DIR)/cleanup.c
 
 REN_SRC		= $(SRC_DIR)/rendering/pixels.c \
-		  $(SRC_DIR)/rendering/textures.c
+		  	$(SRC_DIR)/rendering/textures.c
 
 PARS_SRC	= $(SRC_DIR)/parsing/parsing.c \
-		  $(SRC_DIR)/parsing/parsing_utils.c \
-		  $(SRC_DIR)/parsing/map_init.c \
-		  $(SRC_DIR)/parsing/map_check1.c \
-		  $(SRC_DIR)/parsing/map_check2.c \
-		  $(SRC_DIR)/parsing/free_parsing.c \
-		  $(SRC_DIR)/parsing/arg_verif.c
+		  	$(SRC_DIR)/parsing/parsing_utils.c \
+		  	$(SRC_DIR)/parsing/map_init.c \
+		  	$(SRC_DIR)/parsing/map_check1.c \
+		  	$(SRC_DIR)/parsing/map_check2.c \
+		  	$(SRC_DIR)/parsing/free_parsing.c \
+		  	$(SRC_DIR)/parsing/arg_verif.c
 
 BONUS_RAYCAST_SRC = $(BONUS_SRC_DIR)/raycasting/raycasting_bonus.c \
-		    $(BONUS_SRC_DIR)/raycasting/raycasting2_bonus.c \
-		    $(BONUS_SRC_DIR)/raycasting/raycasting3_bonus.c \
-		    $(BONUS_SRC_DIR)/raycasting/raycasting4_bonus.c
+		    		$(BONUS_SRC_DIR)/raycasting/raycasting2_bonus.c \
+		    		$(BONUS_SRC_DIR)/raycasting/raycasting3_bonus.c \
+		    		$(BONUS_SRC_DIR)/raycasting/raycasting4_bonus.c
 
 BONUS_INIT_SRC = $(BONUS_SRC_DIR)/init/init_bonus.c \
-		 $(BONUS_SRC_DIR)/init/init2_bonus.c
+		 		$(BONUS_SRC_DIR)/init/init2_bonus.c
 
 BONUS_HOOKS_SRC = $(BONUS_SRC_DIR)/hooks/hooks_bonus.c \
-		  $(BONUS_SRC_DIR)/hooks/hooks2_bonus.c
+		  		$(BONUS_SRC_DIR)/hooks/hooks2_bonus.c \
+				$(BONUS_SRC_DIR)/hooks/hooks3_bonus.c \
+				$(BONUS_SRC_DIR)/hooks/hooks4_bonus.c
 
 BONUS_MAIN_SRC = $(BONUS_SRC_DIR)/main_bonus.c \
-		 $(BONUS_SRC_DIR)/cleanup_bonus.c
+		 		$(BONUS_SRC_DIR)/cleanup_bonus.c
 
 BONUS_REN_SRC = $(BONUS_SRC_DIR)/rendering/pixels_bonus.c \
-		$(BONUS_SRC_DIR)/rendering/textures.c \
-		$(BONUS_SRC_DIR)/rendering/minimap_bonus.c \
-		$(BONUS_SRC_DIR)/rendering/minimap2_bonus.c \
-		$(BONUS_SRC_DIR)/rendering/minimap3_bonus.c
+				$(BONUS_SRC_DIR)/rendering/textures.c \
+				$(BONUS_SRC_DIR)/rendering/minimap_bonus.c \
+				$(BONUS_SRC_DIR)/rendering/minimap2_bonus.c \
+				$(BONUS_SRC_DIR)/rendering/minimap3_bonus.c
 
 BONUS_PARS_SRC = $(BONUS_SRC_DIR)/parsing/parsing_bonus.c \
-		 $(BONUS_SRC_DIR)/parsing/parsing_utils_bonus.c \
-		 $(BONUS_SRC_DIR)/parsing/map_init_bonus.c \
-		 $(BONUS_SRC_DIR)/parsing/map_check1_bonus.c \
-		 $(BONUS_SRC_DIR)/parsing/map_check2_bonus.c \
-		 $(BONUS_SRC_DIR)/parsing/free_parsing_bonus.c \
-		 $(BONUS_SRC_DIR)/parsing/free_parsing2_bonus.c \
-		 $(BONUS_SRC_DIR)/parsing/arg_verif_bonus.c
+		 		$(BONUS_SRC_DIR)/parsing/parsing_utils_bonus.c \
+				$(BONUS_SRC_DIR)/parsing/map_init_bonus.c \
+		 		$(BONUS_SRC_DIR)/parsing/map_check1_bonus.c \
+		 		$(BONUS_SRC_DIR)/parsing/map_check2_bonus.c \
+		 		$(BONUS_SRC_DIR)/parsing/free_parsing_bonus.c \
+		 		$(BONUS_SRC_DIR)/parsing/free_parsing2_bonus.c \
+		 		$(BONUS_SRC_DIR)/parsing/arg_verif_bonus.c
 
 SRCS		= $(MAIN_SRC) $(RAYCAST_SRC) $(INIT_SRC) $(HOOKS_SRC) $(REN_SRC) $(PARS_SRC)
 BONUS_SRCS	= $(BONUS_MAIN_SRC) $(BONUS_RAYCAST_SRC) $(BONUS_INIT_SRC) $(BONUS_HOOKS_SRC) $(BONUS_REN_SRC) $(BONUS_PARS_SRC)

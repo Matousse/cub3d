@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:32:33 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 18:19:21 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/10 19:23:25 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_extract_map(t_game *game, char *buff, int j, char **temp)
 {
 	static int	i;
-	//pk un static ici jai limpression quil faut lenlever ten dis quoi ? ---> C'est pour gagner une ligne à cause de la norme mdr
+
 	j = 0;
 	if (buff[0] == '\n' && game->map.fullmap == NULL)
 		return ;
