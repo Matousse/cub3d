@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/11 00:17:23 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 00:26:51 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ void		destroy_textures(t_game *game);
 void		ft_allocate_new_line(t_game *game, size_t len, int i);
 size_t		ft_get_line_length(char *buff);
 void		ft_copy_line(t_game *game, char *buff, size_t len, int i);
+void		ft_extract_info2(t_game *game, char *buff);
 
 /*Init*/
 void		init_player_direction2(t_game *game, char direction);

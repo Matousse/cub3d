@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 00:31:19 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 21:44:51 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/11 00:23:26 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,5 @@ void	update_minimap(t_game *game)
 	update_map_cells(game, &mc);
 	draw_player(game, &mc);
 	draw_direction(game, &mc);
-	draw_minimap_border(game, 0, 0, 0);
+	draw_minimap_border(game, 0, 0, 5);
 }

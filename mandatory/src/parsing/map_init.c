@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:32:33 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/11 00:17:10 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 00:42:10 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,35 @@ char	*ft_extract_line_info(char *buff, t_game *game)
 	return (info);
 }
 
-int	ft_extract_color(char *buff, t_game *game)
+int ft_extract_color(char *buff, t_game *game)
 {
-	int	r;
-	int	g;
-	int	b;
+	int r;
+	int g;
+	int b;
+	char *temp;
 
 	while (*buff == 'F' || *buff == 'C' || *buff == ' ')
 		buff++;
-	r = ft_atoi(buff);
-	while (*buff && *buff != ',')
-		buff++;
-	buff++;
-	g = ft_atoi(buff);
-	while (*buff && *buff != ',')
-		buff++;
-	buff++;
-	b = ft_atoi(buff);
+	temp = buff;
+	r = ft_atoi(temp);
+	while (*temp && *temp != ',')
+		temp++;
+	if (!*temp || *(temp + 1) == '\0')
+		return (ft_error_map("Missing G and B values.", game), 0);
+	temp++;
+	g = ft_atoi(temp);
+	while (*temp && *temp != ',')
+		temp++;
+	if (!*temp || *(temp + 1) == '\0')
+		return (ft_error_map("Missing B value.", game), 0);
+	temp++;
+	if (!*temp)
+		return (ft_error_map("Missing B value.", game), 0);
+	b = ft_atoi(temp);
+	while (*temp && (*temp == ' ' || (*temp >= '0' && *temp <= '9')))
+		temp++;
+	if (*temp == ',')
+		return (ft_error_map("Invalid color format.", game), 0);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 		return (ft_error_map("RGB values are incorrect.", game), 0);
 	return (ft_rgb_to_int(r, g, b));
@@ -104,24 +116,8 @@ void	ft_extract_info(t_game *game, char *buff)
 		if (!game->map.we_texture)
 			game->map.we_texture = ft_extract_line_info(buff, game);
 	}
-	else if (!ft_strncmp(buff, "EA ", 3))
-	{
-		game->map.all_info++;
-		if (!game->map.ea_texture)
-			game->map.ea_texture = ft_extract_line_info(buff, game);
-	}
-	else if (!ft_strncmp(buff, "F ", 2))
-	{
-		game->map.all_info++;
-		if (!game->map.floor_color)
-			game->map.floor_color = ft_extract_color(buff, game);
-	}
-	else if (!ft_strncmp(buff, "C ", 2))
-	{
-		game->map.all_info++;
-		if (!game->map.ceiling_color)
-			game->map.ceiling_color = ft_extract_color(buff, game);
-	}
+	else
+		ft_extract_info2(game, buff);
 }
 
 void	ft_map_init(t_game *game, char *argv, int fd)
