@@ -6,7 +6,7 @@
 #    By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/10 18:46:16 by dloisel           #+#    #+#              #
-#    Updated: 2025/01/10 21:45:27 by dloisel          ###   ########.fr        #
+#    Updated: 2025/01/10 22:21:17 by dloisel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,7 +102,7 @@ INCLUDES_BONUS	= -I$(INC_DIR)
 
 LDFLAGS		= -lreadline
 
-all: pre_build $(NAME) $(NAME_BONUS)
+all: pre_build $(NAME)
 
 bonus: pre_build $(NAME_BONUS)
 
