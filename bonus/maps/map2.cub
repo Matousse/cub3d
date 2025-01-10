@@ -1,0 +1,17 @@
+NO ./textures/north.xpm
+SO ./textures/south.xpm
+WE ./textures/west.xpm
+EA ./textures/east.xpm
+D  ./textures/door.xpm
+SM1 ./path_to/wallsmiley1.xpm
+SM2 ./path_to/wallsmiley2.xpm
+
+F 189,126,0
+C 208,211,211
+
+
+1111111111111111111111111
+1S00000000110000000000001
+1011000001110000000000001
+1001000000000000000000001
+1111111111111111111111111

@@ -12,7 +12,9 @@
 
 #include "../../includes/cub3d.h"
 
-void destroy_textures(t_game *game)
+#include "../includes/cub3d.h"
+
+void	destroy_textures(t_game *game)
 {
 	if (game->textures.north.img)
 		mlx_destroy_image(game->mlx, game->textures.north.img);
@@ -24,17 +26,15 @@ void destroy_textures(t_game *game)
 		mlx_destroy_image(game->mlx, game->textures.west.img);
 }
 
-void cleanup_game(t_game *game)
+void	cleanup_game(t_game *game)
 {
 	if (game)
 	{
 		destroy_textures(game);
 		if (game->img)
 			mlx_destroy_image(game->mlx, game->img);
-
 		if (game->win)
 			mlx_destroy_window(game->mlx, game->win);
-
 		if (game->mlx)
 		{
 			mlx_destroy_display(game->mlx);
@@ -43,7 +43,7 @@ void cleanup_game(t_game *game)
 	}
 }
 
-int close_window(t_game *game)
+int	close_window(t_game *game)
 {
 	ft_free_map(game);
 	cleanup_game(game);

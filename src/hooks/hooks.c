@@ -1,129 +1,103 @@
-//hooks.c
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/09 23:48:27 by dmathis           #+#    #+#             */
+/*   Updated: 2025/01/10 00:19:38 by dmathis          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-/* Gestion des touches */
-int key_press(int keycode, t_game *game)
+void	handle_forward_backward(int keycode, t_game *game)
 {
-    if (game->game_state == GAME_STATE_MENU && keycode == 65293) // Touche Entrée
-    {
-        game->game_state = GAME_STATE_PLAYING;
-        game->start_time = time(NULL);
-        return (0);
-    }
-    if (game->game_state != GAME_STATE_PLAYING)
-        return (0);
-	if (keycode == 65307)        /* ESC */
-        close_window(game);
-    else if (keycode == 119)     /* W */
-        game->move_forward = 1;
-    else if (keycode == 115)     /* S */
-        game->move_backward = 1;
-    else if (keycode == 100)     /* D */
-        game->rotate_right = 1;
-    else if (keycode == 97)      /* A */
-        game->rotate_left = 1;
-    else if (keycode == 65361)   /* Flèche gauche */
-        game->move_left = 1;
-    else if (keycode == 65363)   /* Flèche droite */
-        game->move_right = 1;
-    else if (keycode == 101)     /* E */
-        try_open_door(game);
-    return (0);
+	if (keycode == 119)
+	{
+		if (game->map.fullmap[(int)(game->player.pos_x + game->player.dir_x
+				* MOVE_SPEED)][(int)game->player.pos_y] != '1')
+			game->player.pos_x += game->player.dir_x * MOVE_SPEED;
+		if (game->map.fullmap[(int)game->player.pos_x]
+			[(int)(game->player.pos_y
+				+ game->player.dir_y * MOVE_SPEED)] != '1')
+			game->player.pos_y += game->player.dir_y * MOVE_SPEED;
+	}
+	else if (keycode == 115)
+	{
+		if (game->map.fullmap[(int)(game->player.pos_x - game->player.dir_x
+				* MOVE_SPEED)][(int)game->player.pos_y] != '1')
+			game->player.pos_x -= game->player.dir_x * MOVE_SPEED;
+		if (game->map.fullmap[(int)game->player.pos_x]
+			[(int)(game->player.pos_y - game->player.dir_y
+				* MOVE_SPEED)] != '1')
+			game->player.pos_y -= game->player.dir_y * MOVE_SPEED;
+	}
 }
 
-int key_release(int keycode, t_game *game)
+void	handle_rotation_right(t_game *game)
 {
-    if (keycode == 119)          /* W */
-        game->move_forward = 0;
-    else if (keycode == 115)     /* S */
-        game->move_backward = 0;
-    else if (keycode == 100)     /* D */
-        game->rotate_right = 0;
-    else if (keycode == 97)      /* A */
-        game->rotate_left = 0;
-    else if (keycode == 65361)   /* Flèche gauche */
-        game->move_left = 0;
-    else if (keycode == 65363)   /* Flèche droite */
-        game->move_right = 0;
-    return (0);
+	double	old_dir_x;
+	double	old_plane_x;
+
+	old_dir_x = game->player.dir_x;
+	game->player.dir_x = game->player.dir_x * cos(-ROTATION_SPEED)
+		- game->player.dir_y * sin(-ROTATION_SPEED);
+	game->player.dir_y = old_dir_x * sin(-ROTATION_SPEED)
+		+ game->player.dir_y * cos(-ROTATION_SPEED);
+	old_plane_x = game->player.plane_x;
+	game->player.plane_x = game->player.plane_x
+		* cos(-ROTATION_SPEED) - game->player.plane_y * sin(-ROTATION_SPEED);
+	game->player.plane_y = old_plane_x * sin(-ROTATION_SPEED)
+		+ game->player.plane_y * cos(-ROTATION_SPEED);
 }
 
-void move_player(t_game *game)
+void	handle_rotation_left(t_game *game)
 {
-    // Gestion du mouvement avant/arrière
-    if (game->move_forward)
-    {
-        if (game->map.fullmap[(int)(game->player.pos_x + game->player.dir_x * MOVE_SPEED)]
-                     [(int)game->player.pos_y] != '1' &&
-            game->map.fullmap[(int)(game->player.pos_x + game->player.dir_x * MOVE_SPEED)]
-                     [(int)game->player.pos_y] != 'D')
-            game->player.pos_x += game->player.dir_x * MOVE_SPEED;
-        if (game->map.fullmap[(int)game->player.pos_x]
-                     [(int)(game->player.pos_y + game->player.dir_y * MOVE_SPEED)] != '1' &&
-            game->map.fullmap[(int)game->player.pos_x]
-                     [(int)(game->player.pos_y + game->player.dir_y * MOVE_SPEED)] != 'D')
-            game->player.pos_y += game->player.dir_y * MOVE_SPEED;
-    }
-    if (game->move_backward)
-    {
-        if (game->map.fullmap[(int)(game->player.pos_x - game->player.dir_x * MOVE_SPEED)]
-                     [(int)game->player.pos_y] != '1' &&
-            game->map.fullmap[(int)(game->player.pos_x - game->player.dir_x * MOVE_SPEED)]
-                     [(int)game->player.pos_y] != 'D')
-            game->player.pos_x -= game->player.dir_x * MOVE_SPEED;
-        if (game->map.fullmap[(int)game->player.pos_x]
-                     [(int)(game->player.pos_y - game->player.dir_y * MOVE_SPEED)] != '1' &&
-            game->map.fullmap[(int)game->player.pos_x]
-                     [(int)(game->player.pos_y - game->player.dir_y * MOVE_SPEED)] != 'D')
-            game->player.pos_y -= game->player.dir_y * MOVE_SPEED;
-    }
+	double	old_dir_x;
+	double	old_plane_x;
 
-    // Gestion du mouvement latéral
-    if (game->move_left)
-    {
-        if (game->map.fullmap[(int)game->player.pos_x]
-                     [(int)(game->player.pos_y + game->player.dir_x * MOVE_SPEED)] != '1' &&
-            game->map.fullmap[(int)game->player.pos_x]
-                     [(int)(game->player.pos_y + game->player.dir_x * MOVE_SPEED)] != 'D')
-            game->player.pos_y += game->player.dir_x * MOVE_SPEED;
-        if (game->map.fullmap[(int)(game->player.pos_x - game->player.dir_y * MOVE_SPEED)]
-                     [(int)game->player.pos_y] != '1' &&
-            game->map.fullmap[(int)(game->player.pos_x - game->player.dir_y * MOVE_SPEED)]
-                     [(int)game->player.pos_y] != 'D')
-            game->player.pos_x -= game->player.dir_y * MOVE_SPEED;
-    }
-    if (game->move_right)
-    {
-        if (game->map.fullmap[(int)game->player.pos_x]
-                     [(int)(game->player.pos_y - game->player.dir_x * MOVE_SPEED)] != '1' &&
-            game->map.fullmap[(int)game->player.pos_x]
-                     [(int)(game->player.pos_y - game->player.dir_x * MOVE_SPEED)] != 'D')
-            game->player.pos_y -= game->player.dir_x * MOVE_SPEED;
-        if (game->map.fullmap[(int)(game->player.pos_x + game->player.dir_y * MOVE_SPEED)]
-                     [(int)game->player.pos_y] != '1' &&
-            game->map.fullmap[(int)(game->player.pos_x + game->player.dir_y * MOVE_SPEED)]
-                     [(int)game->player.pos_y] != 'D')
-            game->player.pos_x += game->player.dir_y * MOVE_SPEED;
-    }
+	old_dir_x = game->player.dir_x;
+	game->player.dir_x = game->player.dir_x
+		* cos(ROTATION_SPEED) - game->player.dir_y * sin(ROTATION_SPEED);
+	game->player.dir_y = old_dir_x * sin(ROTATION_SPEED) + game->player.dir_y
+		* cos(ROTATION_SPEED);
+	old_plane_x = game->player.plane_x;
+	game->player.plane_x = game->player.plane_x
+		* cos(ROTATION_SPEED) - game->player.plane_y * sin(ROTATION_SPEED);
+	game->player.plane_y = old_plane_x
+		* sin(ROTATION_SPEED) + game->player.plane_y * cos(ROTATION_SPEED);
+}
 
-    // Gestion de la rotation
-    if (game->rotate_right || game->rotate_left)
-    {
-        double rot_speed = game->rotate_right ? -ROTATION_SPEED : ROTATION_SPEED;
-        double old_dir_x = game->player.dir_x;
-        double old_plane_x = game->player.plane_x;
+void	handle_rotation(int keycode, t_game *game)
+{
+	if (keycode == 100)
+		handle_rotation_right(game);
+	else if (keycode == 97)
+		handle_rotation_left(game);
+}
 
-        game->player.dir_x = game->player.dir_x * cos(rot_speed)
-                          - game->player.dir_y * sin(rot_speed);
-        game->player.dir_y = old_dir_x * sin(rot_speed)
-                          + game->player.dir_y * cos(rot_speed);
-        game->player.plane_x = game->player.plane_x * cos(rot_speed)
-                            - game->player.plane_y * sin(rot_speed);
-        game->player.plane_y = old_plane_x * sin(rot_speed)
-                            + game->player.plane_y * cos(rot_speed);
-    }
-
-    // Vérification pour la collecte de clé
-    collect_key(game, (int)game->player.pos_x, (int)game->player.pos_y);
+void	handle_lateral(int keycode, t_game *game)
+{
+	if (keycode == 65361)
+	{
+		if (game->map.fullmap[(int)(game->player.pos_x)]
+			[(int)(game->player.pos_y + game->player.dir_x
+							* MOVE_SPEED)] != '1')
+			game->player.pos_y += game->player.dir_x * MOVE_SPEED;
+		if (game->map.fullmap[(int)(game->player.pos_x - game->player.dir_y
+				* MOVE_SPEED)][(int)game->player.pos_y] != '1')
+			game->player.pos_x -= game->player.dir_y * MOVE_SPEED;
+	}
+	else if (keycode == 65363)
+	{
+		if (game->map.fullmap[(int)(game->player.pos_x)]
+			[(int)(game->player.pos_y - game->player.dir_x
+							* MOVE_SPEED)] != '1')
+			game->player.pos_y -= game->player.dir_x * MOVE_SPEED;
+		if (game->map.fullmap[(int)(game->player.pos_x + game->player.dir_y
+				* MOVE_SPEED)][(int)game->player.pos_y] != '1')
+			game->player.pos_x += game->player.dir_y * MOVE_SPEED;
+	}
 }

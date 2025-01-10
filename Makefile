@@ -29,19 +29,21 @@ MLX_FLAGS	= -L$(MLX_DIR) -lXext -lX11 -lm -lz
 
 # Source files
 RAYCAST_SRC	= src/raycasting/raycasting.c \
+				src/raycasting/raycasting2.c \
+				src/raycasting/raycasting3.c \
+				src/raycasting/raycasting4.c \
 
 INIT_SRC	= src/init/init.c \
+				src/init/init2.c \
 
 HOOKS_SRC	= src/hooks/hooks.c \
+				src/hooks/hooks2.c \
 
 MAIN_SRC	= $(SRC_DIR)/main.c \
-				$(SRC_DIR)/cleanup.c \
-				$(SRC_DIR)/game_state.c \
+				$(SRC_DIR)/cleanup.c
 
 REN_SRC		= src/rendering/pixels.c \
-				src/rendering/textures.c \
-				src/rendering/ui.c \
-				src/rendering/minimap.c
+				src/rendering/textures.c
 
 PARS_SRC	= src/parsing/parsing.c \
 				src/parsing/parsing_utils.c \
@@ -49,12 +51,10 @@ PARS_SRC	= src/parsing/parsing.c \
 				src/parsing/map_check1.c \
 				src/parsing/map_check2.c \
 				src/parsing/free_parsing.c \
-				src/parsing/arg_verif.c \
-
-OTH_SRC		= src/other/items.c \
+				src/parsing/arg_verif.c
 
 # Combine all sources
-SRCS		= $(MAIN_SRC) $(RAYCAST_SRC) $(INIT_SRC) $(HOOKS_SRC) $(REN_SRC) $(PARS_SRC) $(OTH_SRC)
+SRCS		= $(MAIN_SRC) $(RAYCAST_SRC) $(INIT_SRC) $(HOOKS_SRC) $(REN_SRC) $(PARS_SRC)
 
 # Object files
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

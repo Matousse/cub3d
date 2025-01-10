@@ -1,388 +1,101 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/10 00:32:57 by dmathis           #+#    #+#             */
+/*   Updated: 2025/01/10 02:14:08 by dmathis          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
-void raycasting(t_game *game)
+void	draw_wall_line(t_game *game, t_ray *ray, int x, int y)
 {
-    for (int x = 0; x < WINDOW_WIDTH; x++)
-    {
-        // Calcul de la direction du rayon
-        double camera_x = 2 * x / (double)WINDOW_WIDTH - 1;
-        double ray_dir_x = game->player.dir_x + game->player.plane_x * camera_x;
-        double ray_dir_y = game->player.dir_y + game->player.plane_y * camera_x;
+	double		step;
+	double		tex_pos;
+	int			tex_y;
+	int			color;
+	t_texture	*texture;
 
-        // Position actuelle sur la carte
-        int map_x = (int)game->player.pos_x;
-        int map_y = (int)game->player.pos_y;
+	texture = select_texture(ray, game);
+	step = 1.0 * TEX_HEIGHT / ray->line_height;
+	tex_pos = (ray->draw_start - WINDOW_HEIGHT / 2
+			+ ray->line_height / 2) * step;
+	y = ray->draw_start;
+	while (y < ray->draw_end)
+	{
+		tex_y = (int)tex_pos & (TEX_HEIGHT - 1);
+		tex_pos += step;
+		color = get_texture_color(texture, ray->tex_x, tex_y);
+		if (ray->side == 1)
+			color = (color >> 1) & 0x7F7F7F;
+		put_pixel(game, x, y, color);
+		y++;
+	}
+}
 
-        // Longueur du rayon d'un côté à l'autre
-        double delta_dist_x = fabs(1 / ray_dir_x);
-        double delta_dist_y = fabs(1 / ray_dir_y);
+void	draw_floor_ceiling(t_game *game, t_ray *ray, int x)
+{
+	int	y;
 
-        // Variables pour l'algorithme DDA
-        double side_dist_x;
-        double side_dist_y;
-        int step_x;
-        int step_y;
-        int hit = 0;
-        int side;
+	y = 0;
+	while (y < ray->draw_start)
+	{
+		put_pixel(game, x, y, game->map.ceiling_color);
+		y++;
+	}
+	y = ray->draw_end;
+	while (y < WINDOW_HEIGHT)
+	{
+		put_pixel(game, x, y, game->map.floor_color);
+		y++;
+	}
+}
 
-        // Calcul du pas et de la distance initiale
-        if (ray_dir_x < 0)
-        {
-            step_x = -1;
-            side_dist_x = (game->player.pos_x - map_x) * delta_dist_x;
-        }
-        else
-        {
-            step_x = 1;
-            side_dist_x = (map_x + 1.0 - game->player.pos_x) * delta_dist_x;
-        }
-        if (ray_dir_y < 0)
-        {
-            step_y = -1;
-            side_dist_y = (game->player.pos_y - map_y) * delta_dist_y;
-        }
-        else
-        {
-            step_y = 1;
-            side_dist_y = (map_y + 1.0 - game->player.pos_y) * delta_dist_y;
-        }
+void	perform_dda(t_ray *ray, t_game *game)
+{
+	ray->hit = 0;
+	while (ray->hit == 0)
+	{
+		perform_dda_step(ray);
+		if (!check_map_bounds(ray, game))
+			break ;
+		if (game->map.fullmap[ray->map_x][ray->map_y] == '1')
+			ray->hit = 1;
+	}
+}
 
-        // Algorithme DDA (Digital Differential Analysis)
-        int key_found = 0;  // Flag pour savoir si on a trouvé une clé
-        double key_dist;    // Distance à la clé si trouvée
-        int key_map_x;      // Position x de la clé
-        int key_map_y;      // Position y de la clé
-        int key_side;       // Side pour la clé
+void	raycasting(t_game *game)
+{
+	t_ray	ray;
+	int		x;
 
-        while (hit == 0)
-        {
-            if (side_dist_x < side_dist_y)
-            {
-                side_dist_x += delta_dist_x;
-                map_x += step_x;
-                side = 0;
-            }
-            else
-            {
-                side_dist_y += delta_dist_y;
-                map_y += step_y;
-                side = 1;
-            }
-
-            // Vérification des limites de la carte
-            if (map_x < 0 || map_x >= game->map.height || map_y < 0)
-                break;
-
-            // Vérification de la longueur de la ligne actuelle
-            size_t row_length = ft_strlen(game->map.fullmap[map_x]);
-            if (map_y >= row_length)
-                break;
-
-            // Vérifier si on trouve une clé avant un mur
-            if (game->map.fullmap[map_x][map_y] == 'K' && !key_found)
-            {
-                key_found = 1;
-                key_map_x = map_x;
-                key_map_y = map_y;
-                key_side = side;
-                if (side == 0)
-                    key_dist = (map_x - game->player.pos_x + (1 - step_x) / 2) / ray_dir_x;
-                else
-                    key_dist = (map_y - game->player.pos_y + (1 - step_y) / 2) / ray_dir_y;
-            }
-
-            // Vérification de collision avec un mur
-            if (game->map.fullmap[map_x][map_y] == '1' || game->map.fullmap[map_x][map_y] == 'D')
-                hit = 1;
-        }
-
-        // Calcul de la distance au mur (perpendiculaire)
-        double perp_wall_dist;
-        if (side == 0)
-            perp_wall_dist = (map_x - game->player.pos_x + (1 - step_x) / 2) / ray_dir_x;
-        else
-            perp_wall_dist = (map_y - game->player.pos_y + (1 - step_y) / 2) / ray_dir_y;
-
-        // Application du brouillard basé sur la distance
-        double fog_factor = 1.0;
-        if (game->fog_level > 0)
-        {
-            fog_factor = 1.0 - (perp_wall_dist / game->view_distance);
-            if (fog_factor < 0)
-                fog_factor = 0;
-            if (fog_factor > 1)
-                fog_factor = 1;
-        }
-
-        // Calcul de la hauteur du mur à l'écran
-        int line_height = (int)(WINDOW_HEIGHT / perp_wall_dist);
-
-        // Calcul des pixels le plus bas et le plus haut à remplir
-        int draw_start = -line_height / 2 + WINDOW_HEIGHT / 2;
-        if (draw_start < 0)
-            draw_start = 0;
-        int draw_end = line_height / 2 + WINDOW_HEIGHT / 2;
-        if (draw_end >= WINDOW_HEIGHT)
-            draw_end = WINDOW_HEIGHT - 1;
-
-        // Calcul de la coordonnée x du mur (pour la texture)
-        double wall_x;
-        if (side == 0)
-            wall_x = game->player.pos_y + perp_wall_dist * ray_dir_y;
-        else
-            wall_x = game->player.pos_x + perp_wall_dist * ray_dir_x;
-        wall_x -= floor(wall_x);
-
-        // Calcul des coordonnées de texture
-        int tex_x = (int)(wall_x * TEX_WIDTH);
-        if (side == 0 && ray_dir_x > 0)
-            tex_x = TEX_WIDTH - tex_x - 1;
-        if (side == 1 && ray_dir_y < 0)
-            tex_x = TEX_WIDTH - tex_x - 1;
-
-        // Sélection de la texture selon le côté du mur
-        t_texture *texture;
-        if (game->map.fullmap[map_x][map_y] == 'D')
-            texture = &game->textures.door;
-        else if (side == 0)
-            texture = ray_dir_x > 0 ? &game->textures.east : &game->textures.west;
-        else
-            texture = ray_dir_y > 0 ? &game->textures.south : &game->textures.north;
-
-        // Calcul du pas de texture et de la position de départ
-        double step = 1.0 * TEX_HEIGHT / line_height;
-        double tex_pos = (draw_start - WINDOW_HEIGHT / 2 + line_height / 2) * step;
-
-        // Dessin du mur texturé avec brouillard
-        for (int y = draw_start; y < draw_end; y++)
-        {
-            int tex_y = (int)tex_pos & (TEX_HEIGHT - 1);
-            tex_pos += step;
-
-            int color = get_texture_color(texture, tex_x, tex_y);
-
-            // Assombrir les côtés y
-            if (side == 1)
-                color = (color >> 1) & 0x7F7F7F;
-
-            // Appliquer le brouillard
-            if (game->fog_level > 0)
-            {
-                int fog_color = 0x808080;
-                int r = ((color & 0xFF0000) >> 16) * fog_factor + ((fog_color & 0xFF0000) >> 16) * (1 - fog_factor);
-                int g = ((color & 0x00FF00) >> 8) * fog_factor + ((fog_color & 0x00FF00) >> 8) * (1 - fog_factor);
-                int b = (color & 0x0000FF) * fog_factor + (fog_color & 0x0000FF) * (1 - fog_factor);
-                color = (r << 16) | (g << 8) | b;
-            }
-
-            put_pixel(game, x, y, color);
-        }
-
-        // Si une clé a été trouvée et qu'elle est plus proche que le mur, on la dessine
-        if (key_found && key_dist < perp_wall_dist)
-        {
-            // Calculer la hauteur de la clé à l'écran
-            int key_height = (int)(WINDOW_HEIGHT / (key_dist * 2)); // Plus petite que les murs
-
-            // Position de la clé sur l'écran
-            int key_start = (WINDOW_HEIGHT - key_height) / 2;
-            if (key_start < 0) 
-                key_start = 0;
-            int key_end = (WINDOW_HEIGHT + key_height) / 2;
-            if (key_end >= WINDOW_HEIGHT) 
-                key_end = WINDOW_HEIGHT - 1;
-
-            // Calculer la position x de la clé
-            double key_x;
-            if (key_side == 0)
-                key_x = game->player.pos_y + key_dist * ray_dir_y;
-            else
-                key_x = game->player.pos_x + key_dist * ray_dir_x;
-            key_x -= floor(key_x);
-
-            // Coordonnées de texture
-            int key_tex_x = (int)(key_x * TEX_WIDTH);
-            
-            // Dessiner la clé
-            double key_step = 1.0 * TEX_HEIGHT / key_height;
-            double key_tex_pos = (key_start - WINDOW_HEIGHT / 2 + key_height / 2) * key_step;
-
-            for (int y = key_start; y < key_end; y++)
-            {
-                int tex_y = (int)key_tex_pos & (TEX_HEIGHT - 1);
-                key_tex_pos += key_step;
-
-                int color = get_texture_color(&game->textures.key, key_tex_x, tex_y);
-                
-                // Ne dessiner que si la couleur n'est pas transparente
-                if (color != 0)
-                {
-                    if (game->fog_level > 0)
-                    {
-                        double key_fog = 1.0 - (key_dist / game->view_distance);
-                        if (key_fog < 0) key_fog = 0;
-                        if (key_fog > 1) key_fog = 1;
-
-                        int fog_color = 0x808080;
-                        int r = ((color & 0xFF0000) >> 16) * key_fog + ((fog_color & 0xFF0000) >> 16) * (1 - key_fog);
-                        int g = ((color & 0x00FF00) >> 8) * key_fog + ((fog_color & 0x00FF00) >> 8) * (1 - key_fog);
-                        int b = (color & 0x0000FF) * key_fog + (fog_color & 0x0000FF) * (1 - key_fog);
-                        color = (r << 16) | (g << 8) | b;
-                    }
-                    put_pixel(game, x, y, color);
-                }
-            }
-        }
-
-        // Distance de brouillard pour le sol et le plafond
-        double floor_fog_start = game->view_distance * 0.5;
-
-        // Dessin du plafond avec brouillard
-        for (int y = 0; y < draw_start; y++)
-        {
-            double ray_dir_x0 = game->player.dir_x - game->player.plane_x;
-            double ray_dir_y0 = game->player.dir_y - game->player.plane_y;
-            double ray_dir_x1 = game->player.dir_x + game->player.plane_x;
-            double ray_dir_y1 = game->player.dir_y + game->player.plane_y;
-
-            int p = y - WINDOW_HEIGHT / 2;
-            double pos_z = 0.5 * WINDOW_HEIGHT;
-            double row_distance = pos_z / p;
-
-            double floor_step_x = row_distance * (ray_dir_x1 - ray_dir_x0) / WINDOW_WIDTH;
-            double floor_step_y = row_distance * (ray_dir_y1 - ray_dir_y0) / WINDOW_WIDTH;
-
-            double floor_x = game->player.pos_x + row_distance * ray_dir_x0;
-            double floor_y = game->player.pos_y + row_distance * ray_dir_y0;
-
-            int ceiling_color = 0x00AAAAAA;
-
-            if (game->fog_level > 0 && row_distance > floor_fog_start)
-            {
-                double ceiling_fog = (row_distance - floor_fog_start) / (game->view_distance - floor_fog_start);
-                if (ceiling_fog > 1) ceiling_fog = 1;
-                int r = ((ceiling_color & 0xFF0000) >> 16) * (1 - ceiling_fog) + ((0x808080 & 0xFF0000) >> 16) * ceiling_fog;
-                int g = ((ceiling_color & 0x00FF00) >> 8) * (1 - ceiling_fog) + ((0x808080 & 0x00FF00) >> 8) * ceiling_fog;
-                int b = (ceiling_color & 0x0000FF) * (1 - ceiling_fog) + (0x808080 & 0x0000FF) * ceiling_fog;
-                ceiling_color = (r << 16) | (g << 8) | b;
-            }
-
-            put_pixel(game, x, y, ceiling_color);
-        }
-
-        // Dessin du plafond avec brouillard
-        for (int y = 0; y < draw_start; y++)
-        {
-            double ray_dir_x0 = game->player.dir_x - game->player.plane_x;
-            double ray_dir_y0 = game->player.dir_y - game->player.plane_y;
-            double ray_dir_x1 = game->player.dir_x + game->player.plane_x;
-            double ray_dir_y1 = game->player.dir_y + game->player.plane_y;
-
-            int p = y - WINDOW_HEIGHT / 2;
-            double pos_z = 0.5 * WINDOW_HEIGHT;
-            double row_distance = pos_z / p;
-
-            double floor_step_x = row_distance * (ray_dir_x1 - ray_dir_x0) / WINDOW_WIDTH;
-            double floor_step_y = row_distance * (ray_dir_y1 - ray_dir_y0) / WINDOW_WIDTH;
-
-            double floor_x = game->player.pos_x + row_distance * ray_dir_x0;
-            double floor_y = game->player.pos_y + row_distance * ray_dir_y0;
-
-            int ceiling_color = 0x00AAAAAA;
-
-            if (game->fog_level > 0 && row_distance > floor_fog_start)
-            {
-                double ceiling_fog = (row_distance - floor_fog_start) / (game->view_distance - floor_fog_start);
-                if (ceiling_fog > 1) ceiling_fog = 1;
-                int r = ((ceiling_color & 0xFF0000) >> 16) * (1 - ceiling_fog) + ((0x808080 & 0xFF0000) >> 16) * ceiling_fog;
-                int g = ((ceiling_color & 0x00FF00) >> 8) * (1 - ceiling_fog) + ((0x808080 & 0x00FF00) >> 8) * ceiling_fog;
-                int b = (ceiling_color & 0x0000FF) * (1 - ceiling_fog) + (0x808080 & 0x0000FF) * ceiling_fog;
-                ceiling_color = (r << 16) | (g << 8) | b;
-            }
-
-            put_pixel(game, x, y, ceiling_color);
-        }
-
-        // Dessin du sol avec brouillard
-        for (int y = draw_end; y < WINDOW_HEIGHT; y++)
-        {
-            double ray_dir_x0 = game->player.dir_x - game->player.plane_x;
-            double ray_dir_y0 = game->player.dir_y - game->player.plane_y;
-            double ray_dir_x1 = game->player.dir_x + game->player.plane_x;
-            double ray_dir_y1 = game->player.dir_y + game->player.plane_y;
-
-            int p = y - WINDOW_HEIGHT / 2;
-            double pos_z = 0.5 * WINDOW_HEIGHT;
-            double row_distance = pos_z / p;
-
-            double floor_step_x = row_distance * (ray_dir_x1 - ray_dir_x0) / WINDOW_WIDTH;
-            double floor_step_y = row_distance * (ray_dir_y1 - ray_dir_y0) / WINDOW_WIDTH;
-
-            double floor_x = game->player.pos_x + row_distance * ray_dir_x0;
-            double floor_y = game->player.pos_y + row_distance * ray_dir_y0;
-
-            int floor_color = 0x00555555;
-
-            if (game->fog_level > 0 && row_distance > floor_fog_start)
-            {
-                double floor_fog = (row_distance - floor_fog_start) / (game->view_distance - floor_fog_start);
-                if (floor_fog > 1) floor_fog = 1;
-                int r = ((floor_color & 0xFF0000) >> 16) * (1 - floor_fog) + ((0x808080 & 0xFF0000) >> 16) * floor_fog;
-                int g = ((floor_color & 0x00FF00) >> 8) * (1 - floor_fog) + ((0x808080 & 0x00FF00) >> 8) * floor_fog;
-                int b = (floor_color & 0x0000FF) * (1 - floor_fog) + (0x808080 & 0x0000FF) * floor_fog;
-                floor_color = (r << 16) | (g << 8) | b;
-            }
-
-            put_pixel(game, x, y, floor_color);
-        }
-    }
+	x = 0;
+	while (x < WINDOW_WIDTH)
+	{
+		init_ray_dir(&ray, game, x);
+		init_ray_pos(&ray, game);
+		calc_delta_dist(&ray);
+		init_step_x(&ray, game);
+		init_step_y(&ray, game);
+		perform_dda(&ray, game);
+		calc_wall_distance(&ray, game);
+		calc_wall_height(&ray);
+		calc_wall_x(&ray, game);
+		calc_texture_x(&ray);
+		draw_wall_line(game, &ray, x, 0);
+		draw_floor_ceiling(game, &ray, x);
+		x++;
+	}
 }
 
 /* Boucle de rendu */
-int render(t_game *game)
+int	render(t_game *game)
 {
-    if (game->game_state == GAME_STATE_MENU)
-    {
-        draw_menu(game);
-        return (0);
-    }
-
-    move_player(game);
-    raycasting(game);
-
-    // Appliquer le fog si nécessaire
-    if (game->fog_intensity > 0)
-    {
-        for (int y = 0; y < WINDOW_HEIGHT; y++)
-            for (int x = 0; x < WINDOW_WIDTH; x++)
-            {
-                int current = *(unsigned int*)(game->addr +
-                    (y * game->line_length + x * (game->bits_per_pixel / 8)));
-                int fog_color = 0x808080;  // Gris
-                int fogged = current * (1 - game->fog_intensity) +
-                            fog_color * game->fog_intensity;
-                put_pixel(game, x, y, fogged);
-            }
-    }
-
-    
-    mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
-
-    update_game_state(game);
-    draw_timer(game);
-	update_minimap(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->minimap->img, 10, 10);
-
-    if (game->game_state == GAME_STATE_GAMEOVER)
-        draw_gameover(game);
-    draw_inventory(game);
-    return (0);
-}
-
-int blend_color(int color1, int color2, double factor)
-{
-    int r = ((color1 & 0xFF0000) >> 16) * factor + ((color2 & 0xFF0000) >> 16) * (1 - factor);
-    int g = ((color1 & 0x00FF00) >> 8) * factor + ((color2 & 0x00FF00) >> 8) * (1 - factor);
-    int b = (color1 & 0x0000FF) * factor + (color2 & 0x0000FF) * (1 - factor);
-    return (r << 16) | (g << 8) | b;
+	raycasting(game);
+	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
+	return (0);
 }
