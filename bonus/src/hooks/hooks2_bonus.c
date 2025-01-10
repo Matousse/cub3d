@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks2_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 00:00:55 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 19:14:03 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/10 22:19:37 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ void	toggle_door(t_game *game)
 	{
 		check_distance = sqrt(pow(game->player.pos_x - game->map.doors[i].x, 2)
 				+ pow(game->player.pos_y - game->map.doors[i].y, 2));
-		if (check_distance < 2.0)
+		if (check_distance < 2.0
+			&& !(player_map_x == game->map.doors[i].x
+				&& player_map_y == game->map.doors[i].y))
 		{
 			if (game->map.doors[i].state == 1)
 				game->map.doors[i].state = 0;
