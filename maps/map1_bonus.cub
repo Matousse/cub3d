@@ -1,0 +1,16 @@
+NO ./bonus/textures/north.xpm
+SO ./bonus/textures/south.xpm
+WE ./bonus/textures/west.xpm
+EA ./bonus/textures/east.xpm
+D  ./bonus/textures/door.xpm
+SM1 ./bonus/textures/wallsmiley1.xpm
+SM2 ./bonus/textures/wallsmiley2.xpm
+
+F 189,126,0
+C 208,211,211
+
+        1111111111111111111111111
+        10000000001101D10000T1111
+        1011000001110000000000001
+        10010000000D0000N00000001
+111111111111111111111111111111111

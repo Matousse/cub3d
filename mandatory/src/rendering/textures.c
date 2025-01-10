@@ -6,23 +6,20 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:00:12 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 18:20:29 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/10 18:26:06 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // textures.c
 
-#include "../../../includes/cub3d_bonus.h"
+#include "../../../includes/cub3d.h"
 
-/* Fonction pour charger une texture */
 int	load_texture(t_game *game, t_texture *texture, char *path)
 {
 	texture->img = mlx_xpm_file_to_image(game->mlx, path,
 			&texture->width, &texture->height);
 	if (!texture->img)
-	{
 		return (0);
-	}
 	texture->data = (int *)mlx_get_data_addr(texture->img,
 			&texture->bits_per_pixel, &texture->line_length, &texture->endian);
 	return (1);
@@ -38,19 +35,5 @@ int	load_textures(t_game *game)
 		return (0);
 	if (!load_texture(game, &game->textures.west, game->map.we_texture))
 		return (0);
-	if (!load_texture(game, &game->textures.door, game->map.door_texture))
-		return (0);
-	if (game->map.wallsmiley1_texture)
-	{
-		if (!load_texture(game, &game->textures.wallsmiley1,
-				game->map.wallsmiley1_texture))
-			printf("Failed to load smiley1\n");
-	}
-	if (game->map.wallsmiley2_texture)
-	{
-		if (!load_texture(game, &game->textures.wallsmiley2,
-				game->map.wallsmiley2_texture))
-			printf("Failed to load smiley2\n");
-	}
 	return (1);
 }
