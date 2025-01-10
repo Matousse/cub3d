@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 19:13:21 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 21:57:11 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 00:31:50 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,12 @@ void	apply_movement(t_game *game, double move_x, double move_y)
 	next_pos_x = (int)(game->player.pos_x + move_x);
 	next_pos_y = (int)(game->player.pos_y + move_y);
 	if (game->map.fullmap[next_pos_x][(int)game->player.pos_y]
-		!= '1' && (game->map.fullmap[next_pos_x][(int)game->player.pos_y]
+		!= '1' && game->map.fullmap[next_pos_x][(int)game->player.pos_y]
+		!= 'X' && (game->map.fullmap[next_pos_x][(int)game->player.pos_y]
 		!= 'D' || is_door_open(game, next_pos_x, (int)game->player.pos_y)))
 		game->player.pos_x += move_x;
 	if (game->map.fullmap[(int)game->player.pos_x][next_pos_y] != '1'
+		&& game->map.fullmap[(int)game->player.pos_x][next_pos_y] != 'X'
 		&& (game->map.fullmap[(int)game->player.pos_x][next_pos_y] != 'D'
 		|| is_door_open(game, (int)game->player.pos_x, next_pos_y)))
 		game->player.pos_y += move_y;

@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 00:00:55 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 22:19:37 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 00:30:15 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ int	key_press(int keycode, t_game *game)
 	else if (keycode == 65363)
 		game->keys.right = 1;
 	else if (keycode == 101)
+	{
+		toggle_victory(game);
 		toggle_door(game);
+	}
 	return (0);
 }
 

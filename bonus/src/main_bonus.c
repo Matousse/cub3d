@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 07:24:01 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 19:00:26 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/11 00:24:21 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,15 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(game.mlx, render, &game);
 	mlx_loop(game.mlx);
 	return (0);
+}
+void	display_victory_screen(void)
+{
+	printf("\n\n");
+	printf("    🌟 ⭐️ ✨ CONGRATULATIONS! ✨ ⭐️ 🌟\n");
+	printf("    ═══════════════════════════════\n");
+	printf("         You have completed\n");
+	printf("        the amazing maze!\n\n");
+	printf("    Thanks for playing this game!\n");
+	printf("    ═══════════════════════════════\n");
+	printf("\n\n");
 }

@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 00:32:57 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 23:17:22 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 00:22:35 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,28 +55,21 @@ void	draw_floor_ceiling(t_game *game, t_ray *ray, int x)
 	}
 }
 
-void    perform_dda(t_ray *ray, t_game *game)
+void	perform_dda(t_ray *ray, t_game *game)
 {
-    ray->hit = 0;
-    while (ray->hit == 0)
-    {
-        perform_dda_step(ray);
-        if (!check_map_bounds(ray, game))
-            break ;
-        
-        // Ajout du debug
-        if (game->map.fullmap[ray->map_x][ray->map_y] == 'X')
-        {
-            printf("Found X at position [%d][%d]\n", ray->map_x, ray->map_y);
-        }
-
-        if (game->map.fullmap[ray->map_x][ray->map_y] == '1'
-            || game->map.fullmap[ray->map_x][ray->map_y] == 'T'
-            || (game->map.fullmap[ray->map_x][ray->map_y] == 'D'
-            && !is_door_open(game, ray->map_x, ray->map_y))
-            || game->map.fullmap[ray->map_x][ray->map_y] == 'X')  // Ajout de X ici
-            ray->hit = 1;
-    }
+	ray->hit = 0;
+	while (ray->hit == 0)
+	{
+		perform_dda_step(ray);
+		if (!check_map_bounds(ray, game))
+			break ;
+				if (game->map.fullmap[ray->map_x][ray->map_y] == '1'
+			|| game->map.fullmap[ray->map_x][ray->map_y] == 'T'
+			|| (game->map.fullmap[ray->map_x][ray->map_y] == 'D'
+			&& !is_door_open(game, ray->map_x, ray->map_y))
+			|| game->map.fullmap[ray->map_x][ray->map_y] == 'X')
+			ray->hit = 1;
+	}
 }
 
 void	raycasting(t_game *game)

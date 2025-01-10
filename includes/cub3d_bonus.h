@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 23:13:29 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 00:26:28 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,6 +228,8 @@ void		put_pixel(t_game *game, int x, int y, int color);
 int			load_texture(t_game *game, t_texture *texture, char *path);
 int			load_textures(t_game *game);
 int			is_door_open(t_game *game, int x, int y);
+void		display_victory_screen(void);
+void		toggle_victory(t_game *game);
 
 /*Parsing*/
 void		ft_parsing(int argc, char **argv, t_game *game);

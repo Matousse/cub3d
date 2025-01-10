@@ -6,53 +6,33 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 00:29:15 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 23:17:51 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 00:36:34 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/cub3d_bonus.h"
 
-void    init_game(t_game *game)
+void	init_game(t_game *game)
 {
-    int i;
+	int	i;
 
-    if (!init_mlx_window(game))
-        ft_error_handling(game, "MLX initialization failed");
-    if (!init_mlx_image(game))
-    {
-        if (game->img)
-            mlx_destroy_image(game->mlx, game->img);
-        mlx_destroy_window(game->mlx, game->win);
-        ft_error_handling(game, "Image initialization failed");
-    }
-    
-    // Debug avant le chargement des textures
-    printf("Checking WIN textures paths:\n");
-    for (i = 0; i < 9; i++)
-    {
-        if (game->map.win_textures[i])
-            printf("WIN%d path: %s\n", i+1, game->map.win_textures[i]);
-        else
-            printf("WIN%d path: NULL\n", i+1);
-    }
-
-    if (!load_textures(game))
-        ft_error_handling(game, "Loading textures failed");
-    
-    // Debug après le chargement des textures
-    printf("Checking WIN textures loading:\n");
-    for (i = 0; i < 9; i++)
-    {
-        printf("WIN%d loaded: %s\n", i+1, 
-               game->textures.win[i].img ? "yes" : "no");
-    }
-
-    find_player_position(game);
-    init_minimap(game);
-    init_doors(game);
-    game->animation.frame_count = 0;
-    game->animation.current_frame = 0;
-    game->animation.last_update = 0;
+	if (!init_mlx_window(game))
+		ft_error_handling(game, "MLX initialization failed");
+	if (!init_mlx_image(game))
+	{
+		if (game->img)
+			mlx_destroy_image(game->mlx, game->img);
+		mlx_destroy_window(game->mlx, game->win);
+		ft_error_handling(game, "Image initialization failed");
+	}
+	if (!load_textures(game))
+		ft_error_handling(game, "Loading textures failed");
+	find_player_position(game);
+	init_minimap(game);
+	init_doors(game);
+	game->animation.frame_count = 0;
+	game->animation.current_frame = 0;
+	game->animation.last_update = 0;
 }
 
 int	count_doors(t_game *game)

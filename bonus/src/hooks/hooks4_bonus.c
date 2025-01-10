@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks4_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 19:17:57 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 19:18:16 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/11 00:36:47 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,27 @@ int	key_release(int keycode, t_game *game)
 	else if (keycode == 65363)
 		game->keys.right = 0;
 	return (0);
+}
+
+void	toggle_victory(t_game *game)
+{
+	int		player_map_x;
+	int		player_map_y;
+	int		x;
+	int		y;
+
+	player_map_x = (int)game->player.pos_x;
+	player_map_y = (int)game->player.pos_y;
+	for (x = player_map_x - 1; x <= player_map_x + 1; x++)
+	{
+		for (y = player_map_y - 1; y <= player_map_y + 1; y++)
+		{
+			if (x >= 0 && y >= 0 && game->map.fullmap[x]
+				&& game->map.fullmap[x][y] == 'X')
+			{
+				display_victory_screen();
+				close_window(game);
+			}
+		}
+	}
 }
