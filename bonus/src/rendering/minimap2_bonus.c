@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap2_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 02:40:31 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 18:19:47 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/10 22:53:59 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 int	get_cell_color(char cell_type)
 {
-	if (cell_type == '1')
+	if (cell_type == '1' || cell_type == 'T')
 		return (0x9c0c0b);
 	if (cell_type == '0' || cell_type == 'N' || cell_type == 'S'
 		|| cell_type == 'E' || cell_type == 'W')
 		return (0xc28805);
+	if (cell_type == 'D')
+		return (0x3d87cf);
 	return (0x000000);
 }
 
