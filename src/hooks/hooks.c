@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 23:48:27 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 00:19:38 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/10 17:09:21 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,15 @@ void	handle_rotation_left(t_game *game)
 
 void	handle_rotation(int keycode, t_game *game)
 {
-	if (keycode == 100)
+	if (keycode == 65363)
 		handle_rotation_right(game);
-	else if (keycode == 97)
+	else if (keycode == 65361)
 		handle_rotation_left(game);
 }
 
 void	handle_lateral(int keycode, t_game *game)
 {
-	if (keycode == 65361)
+	if (keycode == 97)
 	{
 		if (game->map.fullmap[(int)(game->player.pos_x)]
 			[(int)(game->player.pos_y + game->player.dir_x
@@ -90,7 +90,7 @@ void	handle_lateral(int keycode, t_game *game)
 				* MOVE_SPEED)][(int)game->player.pos_y] != '1')
 			game->player.pos_x -= game->player.dir_y * MOVE_SPEED;
 	}
-	else if (keycode == 65363)
+	else if (keycode == 100)
 	{
 		if (game->map.fullmap[(int)(game->player.pos_x)]
 			[(int)(game->player.pos_y - game->player.dir_x

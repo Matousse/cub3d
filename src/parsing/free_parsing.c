@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:36:06 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 01:28:41 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/10 17:08:44 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ft_error_map(char *msg, t_game *game)
 		ft_printf("%s\n" RESET, msg);
 	}
 	game->map.is_map_valid = 1;
+	game->map.fullmap = NULL;
 }
 
 void	ft_free_map(t_game *game)
