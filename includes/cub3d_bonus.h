@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 19:14:56 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/10 21:44:48 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,6 +313,8 @@ void		process_cell(t_game *game, t_minimap_coords *mc, t_map_iter *iter);
 void		update_map_cells(t_game *game, t_minimap_coords *mc);
 void		update_minimap(t_game *game);
 void		draw_player(t_game *game, t_minimap_coords *mc);
+void    	draw_minimap_border(t_game *game, int x, int y, int border_thickness);
+
 
 void		ft_free_map(t_game *game);
 void		ft_free_map1(t_game *game);
