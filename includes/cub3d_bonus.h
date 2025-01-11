@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/11 02:36:34 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 03:34:35 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,6 +282,7 @@ void		init_doors(t_game *game);
 void		init_doors2(t_game *game);
 int			load_textures2(t_game *game);
 int			load_textures3(t_game *game);
+int			load_textures4(t_game *game);
 
 /*Hooks*/
 int			key_press(int keycode, t_game *game);

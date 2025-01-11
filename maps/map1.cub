@@ -3,7 +3,7 @@ SO ./mandatory/textures/south.xpm
 WE ./mandatory/textures/west.xpm
 EA ./mandatory/textures/east.xpm
 
-F 0,255,255
+F 0,255,25
 C 0,255,255
 
         1111111111111111111111111
