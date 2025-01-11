@@ -6,7 +6,7 @@
 #    By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/10 18:46:16 by dloisel           #+#    #+#              #
-#    Updated: 2025/01/11 01:11:15 by dloisel          ###   ########.fr        #
+#    Updated: 2025/01/11 15:48:34 by dloisel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ PARS_SRC	= $(SRC_DIR)/parsing/parsing.c \
 		  	$(SRC_DIR)/parsing/parsing_utils.c \
 		  	$(SRC_DIR)/parsing/map_init.c \
 			$(SRC_DIR)/parsing/map_init2.c \
+			$(SRC_DIR)/parsing/map_init3.c \
 		  	$(SRC_DIR)/parsing/map_check1.c \
 		  	$(SRC_DIR)/parsing/map_check2.c \
 		  	$(SRC_DIR)/parsing/free_parsing.c \
@@ -105,11 +106,12 @@ INCLUDES_BONUS	= -I$(INC_DIR)
 
 LDFLAGS		= -lreadline
 
-all: pre_build $(NAME)
+all: $(LIBFT) $(PRINTF) $(GNL) $(MLX) $(NAME)
 
-bonus: pre_build $(NAME_BONUS)
+bonus: $(LIBFT) $(PRINTF) $(GNL) $(MLX) $(NAME_BONUS)
 
-$(NAME): $(LIBFT) $(PRINTF) $(GNL) $(MLX) $(OBJS)
+$(NAME): $(OBJS)
+	@printf "$(BLUE)Building $(NAME)...$(RESET)\n"
 	@$(CC) $(OBJS) $(LIBFT) $(PRINTF) $(GNL) $(MLX) $(MLX_FLAGS) -o $(NAME) $(LDFLAGS)
 	@echo
 	@echo "$(GREEN) █████╗ ██╗   ██╗██████╗ ██████╗ ██████╗ "
@@ -120,7 +122,8 @@ $(NAME): $(LIBFT) $(PRINTF) $(GNL) $(MLX) $(OBJS)
 	@echo "$(GREEN) ╚════╝  ╚═════╝ ╚═════╝ ╚═════╝ ╚═════╝ "
 	@echo
 
-$(NAME_BONUS): $(LIBFT) $(PRINTF) $(GNL) $(MLX) $(BONUS_OBJS)
+$(NAME_BONUS): $(BONUS_OBJS)
+	@printf "$(BLUE)Building $(NAME_BONUS)...$(RESET)\n"
 	@$(CC) $(BONUS_OBJS) $(LIBFT) $(PRINTF) $(GNL) $(MLX) $(MLX_FLAGS) -o $(NAME_BONUS) $(LDFLAGS)
 	@echo
 	@echo "$(GREEN) █████╗ ██╗   ██╗██████╗ ██████╗ ██████╗     ██████╗  ██████╗ ███╗   ██╗██╗   ██╗███████╗"
@@ -132,6 +135,7 @@ $(NAME_BONUS): $(LIBFT) $(PRINTF) $(GNL) $(MLX) $(BONUS_OBJS)
 	@echo
 
 %.o: %.c
+	@printf "$(GRAY)Compiling $<...$(RESET)\n"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
@@ -150,15 +154,12 @@ $(MLX):
 	@echo "$(YELLOW)Making minilibx...$(RESET)"
 	@make --no-print-directory -C $(MLX_DIR) > /dev/null 2>&1
 
-pre_build:
-	@echo "$(BLUE)Starting build process...$(RESET)"
-
 debug: CFLAGS += $(DEBUGFLAGS)
 debug: re
 
 clean:
 	@echo "$(RED)Cleaning object files...$(RESET)"
-	@find $(SRC_DIR) $(BONUS_SRC_DIR) -name "*.o" -type f -delete
+	@rm -f $(OBJS) $(BONUS_OBJS)
 	@make clean --no-print-directory -C $(INC_DIR)/libft
 	@make clean --no-print-directory -C $(INC_DIR)/ft_printf
 	@make clean --no-print-directory -C $(INC_DIR)/get_next_line
@@ -173,4 +174,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re debug pre_build bonus
+.PHONY: all clean fclean re debug bonus

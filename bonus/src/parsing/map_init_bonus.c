@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:32:33 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/11 01:25:46 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/11 15:34:58 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,23 +62,25 @@ char	*ft_extract_line_info(char *buff, t_game *game)
 
 int	ft_extract_color(char *buff, t_game *game)
 {
-	int	r;
-	int	g;
-	int	b;
+	int		r;
+	int		g;
+	int		b;
+	char	*temp;
 
-	while (*buff == 'F' || *buff == 'C' || *buff == ' ')
-		buff++;
-	r = ft_atoi(buff);
-	while (*buff && *buff != ',')
-		buff++;
-	buff++;
-	g = ft_atoi(buff);
-	while (*buff && *buff != ',')
-		buff++;
-	buff++;
-	b = ft_atoi(buff);
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		return (ft_error_map("RGB values are incorrect.", game), 0);
+	if (!check_color_values(buff, &r, &g, &b))
+		return (ft_error_map("Invalid RGB format or values.", game), 0);
+	temp = buff;
+	while (*temp && *temp != ',')
+		temp++;
+	temp++;
+	while (*temp && *temp != ',')
+		temp++;
+	temp++;
+	b = ft_atoi(temp);
+	while (*temp && (*temp == ' ' || (*temp >= '0' && *temp <= '9')))
+		temp++;
+	if (*temp == ',')
+		return (ft_error_map("Invalid RGB format or values.", game), 0);
 	return (ft_rgb_to_int(r, g, b));
 }
 

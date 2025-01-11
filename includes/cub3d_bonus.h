@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/11 02:36:34 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 15:07:35 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,6 +270,7 @@ void		ft_copy_line(t_game *game, char *buff, size_t len, int i);
 void		ft_extract_info2(t_game *game, char *buff);
 void		ft_extract_info3(t_game *game, char *buff);
 void		ft_extract_info4(t_game *game, char *buff);
+int			check_color_values(char *buff, int *r, int *g, int *b);
 
 /*Init*/
 void		init_player_direction2(t_game *game, char direction);
