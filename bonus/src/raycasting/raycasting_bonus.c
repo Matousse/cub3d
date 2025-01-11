@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 00:32:57 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/11 00:22:35 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 02:18:25 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	perform_dda(t_ray *ray, t_game *game)
 		perform_dda_step(ray);
 		if (!check_map_bounds(ray, game))
 			break ;
-				if (game->map.fullmap[ray->map_x][ray->map_y] == '1'
+		if (game->map.fullmap[ray->map_x][ray->map_y] == '1'
 			|| game->map.fullmap[ray->map_x][ray->map_y] == 'T'
 			|| (game->map.fullmap[ray->map_x][ray->map_y] == 'D'
 			&& !is_door_open(game, ray->map_x, ray->map_y))

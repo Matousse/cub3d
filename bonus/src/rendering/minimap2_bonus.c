@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 02:40:31 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 18:19:47 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 02:29:23 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ void	put_pixel_minimap(t_minimap *minimap, int x, int y, int color)
 	}
 }
 
-void	draw_cell_pixels(t_game *game, t_minimap_coords *mc,
-			int px, int py)
+void	draw_cell_pixels(t_game *game, t_minimap_coords *mc, int px, int py)
 {
 	int	draw_x;
 	int	draw_y;
@@ -59,7 +58,10 @@ void	draw_cell_pixels(t_game *game, t_minimap_coords *mc,
 	draw_x = mc->mini_x - (mc->cell_size / 2) + px;
 	draw_y = mc->mini_y - (mc->cell_size / 2) + py;
 	if (draw_x >= 0 && draw_x < game->minimap->width
-		&& draw_y >= 0 && draw_y < game->minimap->height)
+		&& draw_y >= 0 && draw_y < game->minimap->height
+		&& mc->map_y >= 0 && mc->map_y < game->map.height
+		&& mc->map_x >= 0
+		&& mc->map_x < (int)ft_strlen(game->map.fullmap[mc->map_y]))
 	{
 		color = get_cell_color(game->map.fullmap[mc->map_y][mc->map_x]);
 		if (px == 0 || px == mc->cell_size - 1

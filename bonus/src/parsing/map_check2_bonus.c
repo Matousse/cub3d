@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 20:29:15 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 23:10:35 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 02:18:10 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,10 @@ void	ft_invalid_char_check(t_game *game)
 		}
 		i++;
 	}
+}
+
+int	ft_needs_wall_check(char c)
+{
+	return (c == '0' || c == 'T' || c == 'X'
+		|| c == 'N' || c == 'W' || c == 'E' || c == 'S');
 }

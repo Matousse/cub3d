@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 19:17:57 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/11 00:36:47 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 02:34:17 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ void	toggle_victory(t_game *game)
 
 	player_map_x = (int)game->player.pos_x;
 	player_map_y = (int)game->player.pos_y;
-	for (x = player_map_x - 1; x <= player_map_x + 1; x++)
+	x = player_map_x - 1;
+	while (x <= player_map_x + 1)
 	{
-		for (y = player_map_y - 1; y <= player_map_y + 1; y++)
+		y = player_map_y - 1;
+		while (y <= player_map_y + 1)
 		{
 			if (x >= 0 && y >= 0 && game->map.fullmap[x]
 				&& game->map.fullmap[x][y] == 'X')
@@ -48,6 +50,8 @@ void	toggle_victory(t_game *game)
 				display_victory_screen();
 				close_window(game);
 			}
+			y++;
 		}
+		x++;
 	}
 }

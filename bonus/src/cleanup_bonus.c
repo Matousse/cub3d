@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 07:34:21 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 18:20:52 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 02:29:02 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	destroy_textures(t_game *game)
 {
+	int	i;
+
 	if (game->textures.north.img)
 		mlx_destroy_image(game->mlx, game->textures.north.img);
 	if (game->textures.south.img)
@@ -28,12 +30,20 @@ void	destroy_textures(t_game *game)
 		mlx_destroy_image(game->mlx, game->textures.wallsmiley1.img);
 	if (game->textures.wallsmiley2.img)
 		mlx_destroy_image(game->mlx, game->textures.wallsmiley2.img);
+	i = 0;
+	while (i < 9)
+	{
+		if (game->textures.win[i].img)
+			mlx_destroy_image(game->mlx, game->textures.win[i].img);
+		i++;
+	}
 }
 
 void	cleanup_game(t_game *game)
 {
 	if (game)
 	{
+		ft_free_map(game);
 		destroy_textures(game);
 		if (game->img)
 			mlx_destroy_image(game->mlx, game->img);

@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 00:20:50 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 18:17:09 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 02:11:19 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,17 +81,11 @@ int	init_mlx_window(t_game *game)
 {
 	game->mlx = mlx_init();
 	if (!game->mlx)
-	{
-		ft_printf("Error: mlx initialization failed\n");
 		return (0);
-	}
 	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH,
 			WINDOW_HEIGHT, "Cub3D");
 	if (!game->win)
-	{
-		ft_printf("Error: window creation failed\n");
 		return (0);
-	}
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:36:06 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 22:58:07 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 02:23:42 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ void	ft_free_map1(t_game *game)
 
 void	ft_free_textures(t_game *game)
 {
-	int	i;
-
 	if (game->map.no_texture)
 	{
 		free(game->map.no_texture);
@@ -101,14 +99,5 @@ void	ft_free_textures(t_game *game)
 		game->map.we_texture = NULL;
 	}
 	ft_free_textures2(game);
-	i = 0;
-	while (i < 9)
-	{
-		if (game->map.win_textures[i])
-		{
-			free(game->map.win_textures[i]);
-			game->map.win_textures[i] = NULL;
-		}
-		i++;
-	}
+	ft_free_win_textures(game);
 }

@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 07:34:21 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 18:26:19 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 02:28:38 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,6 @@ void	cleanup_game(t_game *game)
 	}
 }
 
-int	close_window(t_game *game)
-{
-	ft_free_map(game);
-	cleanup_game(game);
-	exit(0);
-	return (0);
-}
-
 int	ft_error_handling(t_game *game, char *message)
 {
 	ft_free_map(game);
@@ -58,6 +50,14 @@ int	ft_error_handling(t_game *game, char *message)
 		ft_printf(RED "%s\n", "Error");
 		ft_printf("%s\n" RESET, message);
 	}
+	exit(0);
+	return (0);
+}
+
+int	close_window(t_game *game)
+{
+	ft_free_map(game);
+	cleanup_game(game);
 	exit(0);
 	return (0);
 }

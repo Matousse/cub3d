@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check1_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:57:44 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 22:44:03 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/11 02:18:14 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,12 @@ void	ft_wall_check3(t_game *game)
 		j = 1;
 		while (game->map.fullmap[i][j + 1] != '\0')
 		{
-			if ((game->map.fullmap[i][j] == '0' \
-			&& !ft_zero_map_check(game->map.fullmap, i, j)) || (game->map.fullmap[i][j] == 'T' \
-			&& !ft_zero_map_check(game->map.fullmap, i, j)) || (game->map.fullmap[i][j] == 'X' \
-			&& !ft_zero_map_check(game->map.fullmap, i, j)) || (game->map.fullmap[i][j] == 'N' \
-			&& !ft_zero_map_check(game->map.fullmap, i, j)) || (game->map.fullmap[i][j] == 'W' \
-			&& !ft_zero_map_check(game->map.fullmap, i, j)) || (game->map.fullmap[i][j] == 'E' \
-			&& !ft_zero_map_check(game->map.fullmap, i, j)) || (game->map.fullmap[i][j] == 'S' \
-			&& !ft_zero_map_check(game->map.fullmap, i, j)))
-				return ((void)ft_error_map("Missing wall within the map.", \
-				game));
+			if (ft_needs_wall_check(game->map.fullmap[i][j])
+				&& !ft_zero_map_check(game->map.fullmap, i, j))
+			{
+				ft_error_map("Missing wall within the map.", game);
+				return ;
+			}
 			j++;
 		}
 		i++;

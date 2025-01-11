@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/11 01:13:05 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/11 02:36:34 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef struct s_map
 	char	*door_texture;
 	char	*wallsmiley1_texture;
 	char	*wallsmiley2_texture;
-	char    *win_textures[9];
+	char	*win_textures[9];
 }	t_map;
 
 typedef struct s_minimap_coords
@@ -166,7 +166,7 @@ typedef struct s_textures
 	t_texture	door;
 	t_texture	wallsmiley1;
 	t_texture	wallsmiley2;
-	t_texture    win[9];
+	t_texture	win[9];
 }	t_textures;
 
 /* Structure pour stocker les données du joueur */
@@ -230,6 +230,8 @@ int			load_textures(t_game *game);
 int			is_door_open(t_game *game, int x, int y);
 void		display_victory_screen(void);
 void		toggle_victory(t_game *game);
+int			ft_needs_wall_check(char c);
+void		ft_free_win_textures(t_game *game);
 
 /*Parsing*/
 void		ft_parsing(int argc, char **argv, t_game *game);
@@ -278,6 +280,8 @@ void		find_player_position(t_game *game);
 int			count_doors(t_game *game);
 void		init_doors(t_game *game);
 void		init_doors2(t_game *game);
+int			load_textures2(t_game *game);
+int			load_textures3(t_game *game);
 
 /*Hooks*/
 int			key_press(int keycode, t_game *game);
@@ -326,7 +330,8 @@ void		process_cell(t_game *game, t_minimap_coords *mc, t_map_iter *iter);
 void		update_map_cells(t_game *game, t_minimap_coords *mc);
 void		update_minimap(t_game *game);
 void		draw_player(t_game *game, t_minimap_coords *mc);
-void		draw_minimap_border(t_game *game, int x, int y, int border_thickness);
+void		draw_minimap_border(t_game *game, int x, int y,
+				int border_thickness);
 
 void		ft_free_map(t_game *game);
 void		ft_free_map1(t_game *game);
