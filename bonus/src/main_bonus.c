@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 07:24:01 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/11 00:45:41 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/11 01:21:44 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int argc, char **argv)
 	mlx_loop(game.mlx);
 	return (0);
 }
+
 void	display_victory_screen(void)
 {
 	printf("\n\n");
