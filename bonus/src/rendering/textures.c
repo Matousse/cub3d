@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:00:12 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/11 02:33:46 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 03:34:57 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 #include "../../../includes/cub3d_bonus.h"
 
-/* Fonction pour charger une texture */
 int	load_texture(t_game *game, t_texture *texture, char *path)
 {
 	texture->img = mlx_xpm_file_to_image(game->mlx, path,
@@ -49,9 +48,36 @@ int	load_textures2(t_game *game)
 	if (game->map.win_textures[1] && !load_texture(game, &game->textures.win[1],
 			game->map.win_textures[1]))
 		ft_error_handling(game, "Failed to load win texture 2");
+	if (game->map.win_textures[2] && !load_texture(game, &game->textures.win[2],
+			game->map.win_textures[2]))
+		ft_error_handling(game, "Failed to load win texture 3");
+	if (game->map.win_textures[3] && !load_texture(game, &game->textures.win[3],
+			game->map.win_textures[3]))
+		ft_error_handling(game, "Failed to load win texture 4");
+	if (game->map.win_textures[4] && !load_texture(game, &game->textures.win[4],
+			game->map.win_textures[4]))
+		ft_error_handling(game, "Failed to load win texture 5");
 	if (!load_textures3(game))
 		return (0);
+	load_textures4(game);
 	return (1);
+}
+
+int	load_textures4(t_game *game)
+{
+	if (game->map.win_textures[5] && !load_texture(game, &game->textures.win[5],
+			game->map.win_textures[5]))
+		ft_error_handling(game, "Failed to load win texture 6");
+	if (game->map.win_textures[6] && !load_texture(game, &game->textures.win[6],
+			game->map.win_textures[6]))
+		ft_error_handling(game, "Failed to load win texture 7");
+	if (game->map.win_textures[7] && !load_texture(game, &game->textures.win[7],
+			game->map.win_textures[7]))
+		ft_error_handling(game, "Failed to load win texture 8");
+	if (game->map.win_textures[8] && !load_texture(game, &game->textures.win[8],
+			game->map.win_textures[8]))
+		ft_error_handling(game, "Failed to load win texture 9");
+	return (0);
 }
 
 int	load_textures(t_game *game)

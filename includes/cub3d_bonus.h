@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/11 15:07:35 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/12 00:42:26 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,6 +283,7 @@ void		init_doors(t_game *game);
 void		init_doors2(t_game *game);
 int			load_textures2(t_game *game);
 int			load_textures3(t_game *game);
+int			load_textures4(t_game *game);
 
 /*Hooks*/
 int			key_press(int keycode, t_game *game);
