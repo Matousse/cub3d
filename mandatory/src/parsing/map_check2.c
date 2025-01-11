@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 20:29:15 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 23:08:09 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 01:46:26 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_invalid_char_check(t_game *game)
 			if (game->map.fullmap[i][j] != '1' && game->map.fullmap[i][j] != '0'
 			&& game->map.fullmap[i][j] != ' ' && game->map.fullmap[i][j] != 'N'
 			&& game->map.fullmap[i][j] != 'W' && game->map.fullmap[i][j] != 'E'
-			&&game->map.fullmap[i][j] != 'S')
+			&& game->map.fullmap[i][j] != 'S')
 				return ((void)ft_error_map("Invalid character within the map.", \
 				game));
 			j++;

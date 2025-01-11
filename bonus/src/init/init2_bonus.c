@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init2_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 00:29:15 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/11 00:36:34 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 01:05:02 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	init_game(t_game *game)
 {
-	int	i;
-
 	if (!init_mlx_window(game))
 		ft_error_handling(game, "MLX initialization failed");
 	if (!init_mlx_image(game))

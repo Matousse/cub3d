@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   map_init_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:32:33 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 23:36:17 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/11 01:25:46 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/cub3d_bonus.h"
 
-void	ft_extract_map(t_game *game, char *buff, int j, char **temp)
+void	ft_extract_map(t_game *game, char *buff, char **temp)
 {
-	static int	i;
+	static int		i;
+	int				len;
 
-	j = 0;
 	if (buff[0] == '\n' && game->map.fullmap == NULL)
 		return ;
 	temp = game->map.fullmap;
@@ -24,18 +24,9 @@ void	ft_extract_map(t_game *game, char *buff, int j, char **temp)
 	if (!game->map.fullmap)
 		ft_error_map("Allocation error.", game);
 	ft_copy_previous_map(game->map.fullmap, temp, i);
-	game->map.fullmap[i] = malloc(sizeof(char) * (ft_strlen(buff) + 1));
-	if (!game->map.fullmap[i])
-		return (free(game->map.fullmap),
-			(void)ft_error_map("Allocation error.", game));
-	j = 0;
-	while (buff[j] && buff[j] != '\n')
-	{
-		game->map.fullmap[i][j] = buff[j];
-		j++;
-	}
-	game->map.fullmap[i][j] = '\0';
-	game->map.fullmap[i + 1] = NULL;
+	len = ft_get_line_length(buff);
+	ft_allocate_new_line(game, len, i);
+	ft_copy_line(game, buff, len, i);
 	i++;
 	if (temp)
 		free(temp);
@@ -50,7 +41,6 @@ char	*ft_extract_line_info(char *buff, t_game *game)
 
 	i = 0;
 	k = 0;
-	game->map.all_info++;
 	while (buff[i] && (buff[i] == 'N' || buff[i] == 'S' || buff[i] == 'W'
 			|| buff[i] == 'E' || buff[i] == 'A' || buff[i] == 'O' || buff[i]
 			== 'D' || buff[i] == 'M' || buff[i] == '1' || buff[i] == '2'
@@ -92,37 +82,30 @@ int	ft_extract_color(char *buff, t_game *game)
 	return (ft_rgb_to_int(r, g, b));
 }
 
-void ft_extract_info(t_game *game, char *buff)
+void	ft_extract_info(t_game *game, char *buff)
 {
-	int	index;
-
 	while (*buff == ' ' || *buff == '\t')
 		buff++;
 	if (!ft_strncmp(buff, "NO ", 3))
-		game->map.no_texture = ft_extract_line_info(buff, game);
-	else if (!ft_strncmp(buff, "SO ", 3))
-		game->map.so_texture = ft_extract_line_info(buff, game);
-	else if (!ft_strncmp(buff, "WE ", 3))
-		game->map.we_texture = ft_extract_line_info(buff, game);
-	else if (!ft_strncmp(buff, "EA ", 3))
-		game->map.ea_texture = ft_extract_line_info(buff, game);
-	else if (!ft_strncmp(buff, "F ", 2))
-		game->map.floor_color = ft_extract_color(buff, game);
-	else if (!ft_strncmp(buff, "C ", 2))
-		game->map.ceiling_color = ft_extract_color(buff, game);
-	else if (!ft_strncmp(buff, "D ", 2))
-		game->map.door_texture = ft_extract_line_info(buff, game);
-	else if (!ft_strncmp(buff, "SM1 ", 4))
-		game->map.wallsmiley1_texture = ft_extract_line_info(buff, game);
-	else if (!ft_strncmp(buff, "SM2 ", 4))
-		game->map.wallsmiley2_texture = ft_extract_line_info(buff, game);
-	else if (!ft_strncmp(buff, "WIN", 3) && buff[3] >= '1' && buff[3] <= '9')
 	{
-		index = buff[3] - '1';
-		printf("Extracting WIN%d texture path\n", index + 1);
-		game->map.win_textures[index] = ft_extract_line_info(buff + 4, game);
-		printf("Path: %s\n", game->map.win_textures[index]);
+		game->map.all_info++;
+		if (!game->map.no_texture)
+			game->map.no_texture = ft_extract_line_info(buff, game);
 	}
+	else if (!ft_strncmp(buff, "SO ", 3))
+	{
+		game->map.all_info++;
+		if (!game->map.so_texture)
+			game->map.so_texture = ft_extract_line_info(buff, game);
+	}
+	else if (!ft_strncmp(buff, "WE ", 3))
+	{
+		game->map.all_info++;
+		if (!game->map.we_texture)
+			game->map.we_texture = ft_extract_line_info(buff, game);
+	}
+	else
+		ft_extract_info2(game, buff);
 }
 
 void	ft_map_init(t_game *game, char *argv, int fd)
@@ -142,10 +125,10 @@ void	ft_map_init(t_game *game, char *argv, int fd)
 		if (ft_check_texture_prefix(buff))
 			ft_extract_info(game, buff);
 		else if (ft_is_map_line(game, buff))
-			ft_extract_map(game, buff, 0, NULL);
+			ft_extract_map(game, buff, NULL);
 		free(buff);
 	}
 	close(fd);
-	if (game->map.all_info < 16)
-		ft_error_map("Missing elements in .cub file or multiples elements of the same kind.", game);
+	if (game->map.all_info != 18)
+		ft_error_map("Wrong elements in .cub file.", game);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+         #
+#    By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/10 18:46:16 by dloisel           #+#    #+#              #
-#    Updated: 2025/01/11 00:10:29 by dmathis          ###   ########.fr        #
+#    Updated: 2025/01/11 01:11:15 by dloisel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,6 +86,8 @@ BONUS_REN_SRC = $(BONUS_SRC_DIR)/rendering/pixels_bonus.c \
 BONUS_PARS_SRC = $(BONUS_SRC_DIR)/parsing/parsing_bonus.c \
 		 		$(BONUS_SRC_DIR)/parsing/parsing_utils_bonus.c \
 				$(BONUS_SRC_DIR)/parsing/map_init_bonus.c \
+				$(BONUS_SRC_DIR)/parsing/map_init2_bonus.c \
+				$(BONUS_SRC_DIR)/parsing/map_init3_bonus.c \
 		 		$(BONUS_SRC_DIR)/parsing/map_check1_bonus.c \
 		 		$(BONUS_SRC_DIR)/parsing/map_check2_bonus.c \
 		 		$(BONUS_SRC_DIR)/parsing/free_parsing_bonus.c \
