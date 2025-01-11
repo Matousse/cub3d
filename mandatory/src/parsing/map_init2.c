@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 00:06:37 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/11 00:39:18 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/11 01:00:05 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,27 @@ void	ft_extract_info2(t_game *game, char *buff)
 		if (!game->map.ceiling_color)
 			game->map.ceiling_color = ft_extract_color(buff, game);
 	}
+}
+
+int	check_color_values(char *buff, int *r, int *g, t_game *game)
+{
+	char	*temp;
+
+	while (*buff == 'F' || *buff == 'C' || *buff == ' ')
+		buff++;
+	if (!(*buff >= '0' && *buff <= '9'))
+		return (ft_error_map("Missing RGB values.", game), 0);
+	temp = buff;
+	*r = ft_atoi(temp);
+	while (*temp && *temp != ',')
+		temp++;
+	if (!*temp || !*(temp + 1) || !(*(temp + 1) >= '0' && *(temp + 1) <= '9'))
+		return (ft_error_map("Missing or invalid G value.", game), 0);
+	temp++;
+	*g = ft_atoi(temp);
+	while (*temp && *temp != ',')
+		temp++;
+	if (!*temp || !*(temp + 1) || !(*(temp + 1) >= '0' && *(temp + 1) <= '9'))
+		return (ft_error_map("Missing or invalid B value.", game), 0);
+	return (1);
 }

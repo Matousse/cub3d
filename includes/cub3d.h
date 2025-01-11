@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/11 00:26:51 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/11 00:56:36 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ void		ft_error_map(char *msg, t_game *game);
 void		ft_free_map(t_game *game);
 void		ft_arg_verif(int argc, char **argv, t_game *game);
 int			ft_zero_map_check(char **map, int i, int j);
-
+int			check_color_values(char *buff, int *r, int *g, t_game *game);
 int			ft_error_handling(t_game *game, char *message);
 void		cleanup_game(t_game *game);
 void		debug_print_map(t_game *game);
