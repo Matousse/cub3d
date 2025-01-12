@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 00:32:57 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 18:25:51 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/12 00:56:52 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	raycasting(t_game *game)
 	}
 }
 
-/* Boucle de rendu */
 int	render(t_game *game)
 {
 	raycasting(game);

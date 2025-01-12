@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/11 15:34:17 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/12 00:55:48 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-
-/* Includes nécessaires */
 
 # include "ft_printf/ft_printf.h"
 # include "get_next_line/get_next_line.h"
@@ -25,7 +23,6 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-/* Colors for output */
 # define RED "\x1b[31m"
 # define GREEN "\x1b[32m"
 # define YELLOW "\x1b[33m"
@@ -34,7 +31,6 @@
 # define CYAN "\x1b[36m"
 # define RESET "\x1b[0m"
 
-/* Définition des constantes */
 # define WINDOW_WIDTH 1024
 # define WINDOW_HEIGHT 768
 # define FOV 60
@@ -62,7 +58,6 @@ typedef struct s_map
 	int		all_info;
 }	t_map;
 
-/* Structure pour stocker une texture */
 typedef struct s_texture
 {
 	void	*img;
@@ -74,7 +69,6 @@ typedef struct s_texture
 	int		endian;
 }	t_texture;
 
-/* Structure pour stocker toutes les textures */
 typedef struct s_textures
 {
 	t_texture	north;
@@ -83,7 +77,6 @@ typedef struct s_textures
 	t_texture	west;
 }	t_textures;
 
-/* Structure pour stocker les données du joueur */
 typedef struct s_player
 {
 	double	pos_x;
@@ -117,7 +110,6 @@ typedef struct s_ray
 	int		tex_x;
 }	t_ray;
 
-/* Structure pour la gestion de la fenêtre et du rendu */
 typedef struct s_game
 {
 	void		*mlx;

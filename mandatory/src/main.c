@@ -6,13 +6,12 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 07:24:01 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 18:26:16 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/12 00:57:56 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-/* Point d'entrée */
 int	main(int argc, char **argv)
 {
 	t_game	game;
