@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/12 00:55:48 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/12 15:42:56 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ int			ft_error_handling(t_game *game, char *message);
 void		cleanup_game(t_game *game);
 void		debug_print_map(t_game *game);
 void		destroy_textures(t_game *game);
+int			ft_needs_wall_check(char c);
 
 void		ft_allocate_new_line(t_game *game, size_t len, int i);
 size_t		ft_get_line_length(char *buff);

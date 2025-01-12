@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:57:44 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/10 18:25:39 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/12 15:42:18 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ void	ft_wall_check3(t_game *game)
 		j = 1;
 		while (game->map.fullmap[i][j + 1] != '\0')
 		{
-			if (game->map.fullmap[i][j] == '0' \
-			&& !ft_zero_map_check(game->map.fullmap, i, j))
-				return ((void)ft_error_map("Missing wall within the map.", \
-				game));
+			if (ft_needs_wall_check(game->map.fullmap[i][j])
+				&& !ft_zero_map_check(game->map.fullmap, i, j))
+			{
+				ft_error_map("Missing wall within the map.", game);
+				return ;
+			}
 			j++;
 		}
 		i++;
@@ -122,11 +124,21 @@ void	ft_map_check(t_game *game)
 	if (game->map.is_map_valid == 1)
 		return ;
 	if (!game->map.fullmap)
-		return ((void)ft_error_handling(game, "No map in the .cub file."));
-	ft_emptyline_check(game);
+		return ((void)ft_error_map("No map in the .cub file.", game));
 	ft_invalid_char_check(game);
+	if (game->map.is_map_valid == 1)
+		return ;
+	ft_emptyline_check(game);
+	if (game->map.is_map_valid == 1)
+		return ;
 	ft_wall_check1(game);
+	if (game->map.is_map_valid == 1)
+		return ;
 	ft_wall_check2(game);
+	if (game->map.is_map_valid == 1)
+		return ;
 	ft_wall_check3(game);
+	if (game->map.is_map_valid == 1)
+		return ;
 	ft_player_check(game, 0, 0);
 }
