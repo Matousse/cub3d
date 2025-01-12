@@ -6,7 +6,7 @@
 /*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 23:48:27 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/11 01:19:44 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/12 01:20:34 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,24 +83,27 @@ void	handle_rotation(int keycode, t_game *game)
 
 void	handle_lateral(int keycode, t_game *game)
 {
+	double	margin;
+
+	margin = 0.1;
 	if (keycode == 97)
 	{
 		if (game->map.fullmap[(int)(game->player.pos_x)]
 			[(int)(game->player.pos_y + game->player.dir_x
-							* MOVE_SPEED)] != '1')
+							* (MOVE_SPEED + margin))] != '1')
 			game->player.pos_y += game->player.dir_x * MOVE_SPEED;
 		if (game->map.fullmap[(int)(game->player.pos_x - game->player.dir_y
-				* MOVE_SPEED)][(int)game->player.pos_y] != '1')
+				* (MOVE_SPEED + margin))][(int)game->player.pos_y] != '1')
 			game->player.pos_x -= game->player.dir_y * MOVE_SPEED;
 	}
 	else if (keycode == 100)
 	{
 		if (game->map.fullmap[(int)(game->player.pos_x)]
 			[(int)(game->player.pos_y - game->player.dir_x
-							* MOVE_SPEED)] != '1')
+							* (MOVE_SPEED + margin))] != '1')
 			game->player.pos_y -= game->player.dir_x * MOVE_SPEED;
 		if (game->map.fullmap[(int)(game->player.pos_x + game->player.dir_y
-				* MOVE_SPEED)][(int)game->player.pos_y] != '1')
+				* (MOVE_SPEED + margin))][(int)game->player.pos_y] != '1')
 			game->player.pos_x += game->player.dir_y * MOVE_SPEED;
 	}
 }
