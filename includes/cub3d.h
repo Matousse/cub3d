@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/12 16:43:03 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/12 17:46:48 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
 
-# include "minilibx-linux/mlx.h"
+# include "/home/dloisel/sgoinfre/minilibx-linux/mlx.h"
 
 # include <math.h>
 # include <stdlib.h>

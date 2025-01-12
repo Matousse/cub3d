@@ -6,7 +6,7 @@
 #    By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/10 18:46:16 by dloisel           #+#    #+#              #
-#    Updated: 2025/01/12 16:42:45 by dloisel          ###   ########.fr        #
+#    Updated: 2025/01/12 17:46:19 by dloisel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ DEBUGFLAGS	= -g
 SRC_DIR		= ./mandatory/src
 BONUS_SRC_DIR	= ./bonus/src
 INC_DIR		= ./includes
-MLX_DIR		= $(INC_DIR)/minilibx-linux
+MLX_DIR		= /home/dloisel/sgoinfre/minilibx-linux
 
 LIBFT		= $(INC_DIR)/libft/libft.a
 PRINTF		= $(INC_DIR)/ft_printf/libftprintf.a
