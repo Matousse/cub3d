@@ -1,14 +1,22 @@
-NO ./textures/north.xpm
-SO ./textures/south.xpm
-WE ./textures/west.xpm
-EA ./textures/east.xpm
-D  ./textures/door.xpm
-SM1 ./path_to/wallsmiley1.xpm
-SM2 ./path_to/wallsmiley2.xpm
+NO ./bonus/textures/north.xpm
+SO ./bonus/textures/south.xpm
+WE ./bonus/textures/west.xpm
+EA ./bonus/textures/east.xpm
+D  ./bonus/textures/door.xpm
+SM1 ./bonus/textures/wallsmiley1.xpm
+SM2 ./bonus/textures/wallsmiley2.xpm
+WIN1 ./bonus/textures/win1.xpm
+WIN2 ./bonus/textures/win2.xpm
+WIN3 ./bonus/textures/win3.xpm
+WIN4 ./bonus/textures/win4.xpm
+WIN5 ./bonus/textures/win5.xpm
+WIN6 ./bonus/textures/win6.xpm
+WIN7 ./bonus/textures/win7.xpm
+WIN8 ./bonus/textures/win8.xpm
+WIN9 ./bonus/textures/win9.xpm
 
 F 189,126,0
 C 208,211,211
-
 
 1111111111111111111111111
 1S00000000110000000000001

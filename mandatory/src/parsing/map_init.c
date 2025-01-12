@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:32:33 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/11 15:34:51 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/12 17:13:32 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int	ft_extract_color(char *buff, t_game *game)
 	int		b;
 	char	*temp;
 
+	if (game->map.is_map_valid == 1)
+		return (0);
 	if (!check_color_values(buff, &r, &g, &b))
 		return (ft_error_map("Invalid RGB format or values.", game), 0);
 	temp = buff;

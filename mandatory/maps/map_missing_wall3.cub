@@ -1,0 +1,13 @@
+NO ./mandatory/textures/north.xpm
+SO ./mandatory/textures/south.xpm
+WE ./mandatory/textures/west.xpm
+EA ./mandatory/textures/east.xpm
+
+F 0,255,25
+C 0,255,255
+
+111111111111111111S111111
+1000000000110000000000001
+1011000001110000000000001
+1001000000000000000000001
+1111111111111111111111111
