@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 07:24:01 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/11 01:21:44 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/12 00:54:16 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
-/* Point d'entrée */
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -36,12 +35,12 @@ int	main(int argc, char **argv)
 
 void	display_victory_screen(void)
 {
-	printf("\n\n");
-	printf("    🌟 ⭐️ ✨ CONGRATULATIONS! ✨ ⭐️ 🌟\n");
-	printf("    ═══════════════════════════════\n");
-	printf("         You have completed\n");
-	printf("        the amazing maze!\n\n");
-	printf("    Thanks for playing this game!\n");
-	printf("    ═══════════════════════════════\n");
-	printf("\n\n");
+	ft_printf("\n\n");
+	ft_printf("    🌟 ⭐️ ✨ CONGRATULATIONS! ✨ ⭐️ 🌟\n");
+	ft_printf("    ═══════════════════════════════\n");
+	ft_printf("         You have completed\n");
+	ft_printf("        the amazing maze!\n\n");
+	ft_printf("    Thanks for playing this game!\n");
+	ft_printf("    ═══════════════════════════════\n");
+	ft_printf("\n\n");
 }

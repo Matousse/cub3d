@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 00:31:19 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/11 00:23:26 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/12 00:53:56 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/cub3d_bonus.h"
-
-// Fonctions pour la minimap
 
 void	draw_direction(t_game *game, t_minimap_coords *mc)
 {

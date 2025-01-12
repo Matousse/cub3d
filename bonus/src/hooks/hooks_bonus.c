@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 23:48:27 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/10 19:17:26 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/12 00:52:04 by dmathis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,27 @@
 
 void	handle_forward_backward(int keycode, t_game *game)
 {
+	double	margin;
+
+	margin = 0.1;
 	if (keycode == 119)
 	{
 		if (game->map.fullmap[(int)(game->player.pos_x + game->player.dir_x
-				* MOVE_SPEED)][(int)game->player.pos_y] != '1')
+				* (MOVE_SPEED + margin))][(int)game->player.pos_y] != '1')
 			game->player.pos_x += game->player.dir_x * MOVE_SPEED;
 		if (game->map.fullmap[(int)game->player.pos_x]
 			[(int)(game->player.pos_y
-				+ game->player.dir_y * MOVE_SPEED)] != '1')
+				+ game->player.dir_y * (MOVE_SPEED + margin))] != '1')
 			game->player.pos_y += game->player.dir_y * MOVE_SPEED;
 	}
 	else if (keycode == 115)
 	{
 		if (game->map.fullmap[(int)(game->player.pos_x - game->player.dir_x
-				* MOVE_SPEED)][(int)game->player.pos_y] != '1')
+				* (MOVE_SPEED + margin))][(int)game->player.pos_y] != '1')
 			game->player.pos_x -= game->player.dir_x * MOVE_SPEED;
 		if (game->map.fullmap[(int)game->player.pos_x]
 			[(int)(game->player.pos_y - game->player.dir_y
-				* MOVE_SPEED)] != '1')
+				* (MOVE_SPEED + margin))] != '1')
 			game->player.pos_y -= game->player.dir_y * MOVE_SPEED;
 	}
 }
