@@ -6,7 +6,7 @@
 #    By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/10 18:46:16 by dloisel           #+#    #+#              #
-#    Updated: 2025/01/11 15:48:34 by dloisel          ###   ########.fr        #
+#    Updated: 2025/01/12 16:42:45 by dloisel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,8 @@ PARS_SRC	= $(SRC_DIR)/parsing/parsing.c \
 		  	$(SRC_DIR)/parsing/map_check1.c \
 		  	$(SRC_DIR)/parsing/map_check2.c \
 		  	$(SRC_DIR)/parsing/free_parsing.c \
-		  	$(SRC_DIR)/parsing/arg_verif.c
+		  	$(SRC_DIR)/parsing/arg_verif.c \
+			$(SRC_DIR)/parsing/parsing_utils2.c
 
 BONUS_RAYCAST_SRC = $(BONUS_SRC_DIR)/raycasting/raycasting_bonus.c \
 		    		$(BONUS_SRC_DIR)/raycasting/raycasting2_bonus.c \
@@ -93,7 +94,8 @@ BONUS_PARS_SRC = $(BONUS_SRC_DIR)/parsing/parsing_bonus.c \
 		 		$(BONUS_SRC_DIR)/parsing/map_check2_bonus.c \
 		 		$(BONUS_SRC_DIR)/parsing/free_parsing_bonus.c \
 		 		$(BONUS_SRC_DIR)/parsing/free_parsing2_bonus.c \
-		 		$(BONUS_SRC_DIR)/parsing/arg_verif_bonus.c
+		 		$(BONUS_SRC_DIR)/parsing/arg_verif_bonus.c \
+				$(BONUS_SRC_DIR)/parsing/parsing_utils2_bonus.c
 
 SRCS		= $(MAIN_SRC) $(RAYCAST_SRC) $(INIT_SRC) $(HOOKS_SRC) $(REN_SRC) $(PARS_SRC)
 BONUS_SRCS	= $(BONUS_MAIN_SRC) $(BONUS_RAYCAST_SRC) $(BONUS_INIT_SRC) $(BONUS_HOOKS_SRC) $(BONUS_REN_SRC) $(BONUS_PARS_SRC)

@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/12 15:42:56 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/12 16:43:03 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ void		cleanup_game(t_game *game);
 void		debug_print_map(t_game *game);
 void		destroy_textures(t_game *game);
 int			ft_needs_wall_check(char c);
+int			ft_zero_map_check2(char **map, int i, int j);
 
 void		ft_allocate_new_line(t_game *game, size_t len, int i);
 size_t		ft_get_line_length(char *buff);

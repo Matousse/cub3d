@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 10:24:15 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/11 02:11:38 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/12 16:26:01 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,17 @@ void	ft_copy_previous_map(char **new_map, char **old_map, int size)
 
 int	ft_zero_map_check(char **map, int i, int j)
 {
+	int	curr_len;
+	int	prev_len;
+	int	next_len;
+
 	if (!map || !map[i] || i <= 0 || !map[i - 1] || !map[i + 1])
 		return (0);
-	if ((map[i - 1][j] != '1' && map[i - 1][j] != '0' && map[i - 1][j] != 'N' &&
-		map[i - 1][j] != 'S' && map[i - 1][j] != 'W' && map[i - 1][j] != 'E' &&
-		map[i - 1][j] != 'D' && map[i - 1][j] != 'T' && map[i - 1][j] != 'X') ||
-		(map[i + 1][j] != '1' && map[i + 1][j] != '0' && map[i + 1][j] != 'N' &&
-		map[i + 1][j] != 'S' && map[i + 1][j] != 'W' && map[i + 1][j] != 'E' &&
-		map[i + 1][j] != 'D' && map[i + 1][j] != 'T' && map[i + 1][j] != 'X') ||
-		(map[i][j - 1] != '1' && map[i][j - 1] != '0' && map[i][j - 1] != 'N' &&
-		map[i][j - 1] != 'S' && map[i][j - 1] != 'W' && map[i][j - 1] != 'E' &&
-		map[i][j - 1] != 'D' && map[i][j - 1] != 'T' && map[i][j - 1] != 'X') ||
-		(map[i][j + 1] != '1' && map[i][j + 1] != '0' && map[i][j + 1] != 'N' &&
-		map[i][j + 1] != 'S' && map[i][j + 1] != 'W' && map[i][j + 1] != 'E' &&
-		map[i][j + 1] != 'D' && map[i][j + 1] != 'T' && map[i][j + 1] != 'X'))
+	curr_len = ft_strlen(map[i]);
+	prev_len = ft_strlen(map[i - 1]);
+	next_len = ft_strlen(map[i + 1]);
+	if (j <= 0 || j >= curr_len - 1 || j >= prev_len
+		|| j >= next_len)
 		return (0);
-	return (1);
+	return (ft_zero_map_check2(map, i, j));
 }

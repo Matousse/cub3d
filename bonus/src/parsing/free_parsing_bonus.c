@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_parsing_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:36:06 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/11 02:23:42 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/12 16:36:30 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,7 @@ void	ft_error_map(char *msg, t_game *game)
 {
 	if (game->map.fullmap)
 		ft_free_array(game->map.fullmap);
-	if (game->map.no_texture)
-		free(game->map.no_texture);
-	if (game->map.so_texture)
-		free(game->map.so_texture);
-	if (game->map.we_texture)
-		free(game->map.we_texture);
-	if (game->map.ea_texture)
-		free(game->map.ea_texture);
-	if (game->map.door_texture)
-		free(game->map.door_texture);
-	if (game->map.doors)
-		free(game->map.doors);
+	ft_free_textures(game);
 	if (msg)
 	{
 		ft_printf(RED "%s\n", "Error");

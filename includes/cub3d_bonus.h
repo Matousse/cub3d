@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmathis <dmathis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:29:53 by dmathis           #+#    #+#             */
-/*   Updated: 2025/01/12 00:55:14 by dmathis          ###   ########.fr       */
+/*   Updated: 2025/01/12 16:24:24 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,6 +251,7 @@ int			ft_error_handling(t_game *game, char *message);
 void		cleanup_game(t_game *game);
 void		debug_print_map(t_game *game);
 void		destroy_textures(t_game *game);
+int			ft_zero_map_check2(char **map, int i, int j);
 
 int			ft_check_texture_prefix(char *buff);
 size_t		ft_get_line_length(char *buff);

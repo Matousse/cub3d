@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "catos": "cpp"
+        "catos": "cpp",
+        "cub3d_bonus.h": "c"
     }
 }
