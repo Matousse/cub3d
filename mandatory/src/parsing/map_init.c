@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:32:33 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/12 17:13:32 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/12 20:50:28 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,19 +90,19 @@ void	ft_extract_info(t_game *game, char *buff)
 {
 	while (*buff == ' ' || *buff == '\t')
 		buff++;
-	if (!ft_strncmp(buff, "NO ", 3))
+	if (!ft_strncmp(buff, "NO ", 3) && game->map.all_info == 0)
 	{
 		game->map.all_info++;
 		if (!game->map.no_texture)
 			game->map.no_texture = ft_extract_line_info(buff, game);
 	}
-	else if (!ft_strncmp(buff, "SO ", 3))
+	else if (!ft_strncmp(buff, "SO ", 3) && game->map.all_info == 1)
 	{
 		game->map.all_info++;
 		if (!game->map.so_texture)
 			game->map.so_texture = ft_extract_line_info(buff, game);
 	}
-	else if (!ft_strncmp(buff, "WE ", 3))
+	else if (!ft_strncmp(buff, "WE ", 3) && game->map.all_info == 2)
 	{
 		game->map.all_info++;
 		if (!game->map.we_texture)

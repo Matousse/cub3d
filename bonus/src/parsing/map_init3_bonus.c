@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 01:00:29 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/11 15:32:42 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/12 21:07:53 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ void	ft_extract_info4(t_game *game, char *buff)
 		i = buff[3] - '1';
 		if (!game->map.win_textures[i])
 			game->map.win_textures[i] = ft_extract_line_info(buff + 4, game);
+	}
+	else if (*buff != '\n' && *buff != ' ' && *buff != '\t')
+	{
+		printf("%s\n", buff);
+		return ((void)ft_error_map("Wrong elements in .cub file", game));
 	}
 }
 

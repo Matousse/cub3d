@@ -2,6 +2,10 @@ NO ./bonus/textures/north.xpm
 SO ./bonus/textures/south.xpm
 WE ./bonus/textures/west.xpm
 EA ./bonus/textures/east.xpm
+
+F 189,126,0
+C 208,211,211
+
 D  ./bonus/textures/door.xpm
 SM1 ./bonus/textures/wallsmiley1.xpm
 SM2 ./bonus/textures/wallsmiley2.xpm
@@ -14,9 +18,6 @@ WIN6 ./bonus/textures/win6.xpm
 WIN7 ./bonus/textures/win7.xpm
 WIN8 ./bonus/textures/win8.xpm
 WIN9 ./bonus/textures/win9.xpm
-
-F 189,126,0
-C 208,211,211
 
 111111111111111111111
 100010010000000000001

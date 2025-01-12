@@ -6,7 +6,7 @@
 /*   By: dloisel <dloisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 00:47:35 by dloisel           #+#    #+#             */
-/*   Updated: 2025/01/11 01:17:18 by dloisel          ###   ########.fr       */
+/*   Updated: 2025/01/12 21:04:28 by dloisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,19 @@ void	ft_copy_line(t_game *game, char *buff, size_t len, int i)
 
 void	ft_extract_info2(t_game *game, char *buff)
 {
-	if (!ft_strncmp(buff, "EA ", 3))
+	if (!ft_strncmp(buff, "EA ", 3) && game->map.all_info == 3)
 	{
 		game->map.all_info++;
 		if (!game->map.ea_texture)
 			game->map.ea_texture = ft_extract_line_info(buff, game);
 	}
-	else if (!ft_strncmp(buff, "F ", 2))
+	else if (!ft_strncmp(buff, "F ", 2) && game->map.all_info == 4)
 	{
 		game->map.all_info++;
 		if (!game->map.floor_color)
 			game->map.floor_color = ft_extract_color(buff, game);
 	}
-	else if (!ft_strncmp(buff, "C ", 2))
+	else if (!ft_strncmp(buff, "C ", 2) && game->map.all_info == 5)
 	{
 		game->map.all_info++;
 		if (!game->map.ceiling_color)
